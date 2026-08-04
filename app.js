@@ -1941,7 +1941,140 @@ function setupPrayAnimation() {
     createPrayFloatAnimation
   );
 }
+function setupRogerAboutModal() {
+  const aboutButton =
+    document.getElementById("aboutRogerBtn");
 
+  const aboutModal =
+    document.getElementById("aboutRogerModal");
+
+  const closeAboutButton =
+    document.getElementById("closeAboutRogerBtn");
+
+  const openRelationshipButton =
+    document.getElementById("openRelationshipBtn");
+
+  const relationshipModal =
+    document.getElementById("relationshipModal");
+
+  const closeRelationshipButton =
+    document.getElementById("closeRelationshipBtn");
+
+  const backToAboutButton =
+    document.getElementById("backToAboutBtn");
+
+  if (
+    !aboutButton ||
+    !aboutModal ||
+    !closeAboutButton ||
+    !openRelationshipButton ||
+    !relationshipModal ||
+    !closeRelationshipButton ||
+    !backToAboutButton
+  ) {
+    console.warn("找不到羅傑介紹視窗所需的 HTML 元素");
+    return;
+  }
+
+  function updateBodyScroll() {
+    const hasOpenModal =
+      aboutModal.classList.contains("is-open") ||
+      relationshipModal.classList.contains("is-open");
+
+    document.body.classList.toggle(
+      "roger-modal-open",
+      hasOpenModal
+    );
+  }
+
+  function openModal(modal) {
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    updateBodyScroll();
+  }
+
+  function closeModal(modal) {
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    updateBodyScroll();
+  }
+
+  function openAboutModal() {
+    closeModal(relationshipModal);
+    openModal(aboutModal);
+  }
+
+  function closeAllRogerModals() {
+    closeModal(aboutModal);
+    closeModal(relationshipModal);
+  }
+
+  aboutButton.addEventListener(
+    "click",
+    openAboutModal
+  );
+
+  closeAboutButton.addEventListener(
+    "click",
+    () => closeModal(aboutModal)
+  );
+
+  openRelationshipButton.addEventListener(
+    "click",
+    () => {
+      closeModal(aboutModal);
+      openModal(relationshipModal);
+    }
+  );
+
+  closeRelationshipButton.addEventListener(
+    "click",
+    () => closeModal(relationshipModal)
+  );
+
+  backToAboutButton.addEventListener(
+    "click",
+    openAboutModal
+  );
+
+  document
+    .querySelectorAll("[data-close-roger-modal]")
+    .forEach((backdrop) => {
+      backdrop.addEventListener(
+        "click",
+        () => closeModal(aboutModal)
+      );
+    });
+
+  document
+    .querySelectorAll(
+      "[data-close-relationship-modal]"
+    )
+    .forEach((backdrop) => {
+      backdrop.addEventListener(
+        "click",
+        () => closeModal(relationshipModal)
+      );
+    });
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key === "Escape") {
+        closeAllRogerModals();
+      }
+    }
+  );
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    setupRogerAboutModal
+  );
+} else {
+  setupRogerAboutModal();
+}
   renderSocials();
   render();
   
