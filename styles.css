@@ -787,3 +787,331 @@
     font-size: 22px;
   }
 }
+/* =========================
+   關於羅傑
+========================= */
+
+.about-roger-btn {
+  color: #fff;
+  border: 1px solid rgba(177, 113, 255, 0.7);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(133, 61, 255, 0.95),
+      rgba(226, 62, 167, 0.95)
+    );
+  box-shadow:
+    0 10px 30px rgba(133, 61, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.about-roger-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 38px rgba(226, 62, 167, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.roger-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.roger-modal.is-open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.roger-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 2, 12, 0.82);
+  backdrop-filter: blur(10px);
+}
+
+.roger-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(1050px, 96vw);
+  max-height: 90vh;
+  overflow: auto;
+  border: 1px solid rgba(189, 126, 255, 0.4);
+  border-radius: 28px;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(147, 76, 255, 0.22),
+      transparent 38%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(25, 15, 48, 0.98),
+      rgba(10, 7, 25, 0.99)
+    );
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.75),
+    0 0 45px rgba(139, 74, 255, 0.18);
+  transform: translateY(25px) scale(0.97);
+  transition: transform 0.25s ease;
+}
+
+.roger-modal.is-open .roger-modal-panel {
+  transform: translateY(0) scale(1);
+}
+
+.roger-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  z-index: 5;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(5, 3, 15, 0.72);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.roger-modal-close:hover {
+  transform: rotate(90deg);
+  background: rgba(224, 55, 154, 0.9);
+}
+
+.roger-about-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(360px, 1.35fr);
+  min-height: 570px;
+}
+
+.roger-photo-area {
+  position: relative;
+  min-height: 570px;
+  overflow: hidden;
+  border-radius: 27px 0 0 27px;
+  background: #080511;
+}
+
+.roger-profile-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 570px;
+  object-fit: cover;
+}
+
+.roger-photo-area::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to top,
+      rgba(5, 3, 15, 0.96),
+      transparent 48%
+    );
+  pointer-events: none;
+}
+
+.roger-photo-caption {
+  position: absolute;
+  z-index: 2;
+  right: 28px;
+  bottom: 28px;
+  left: 28px;
+}
+
+.roger-photo-caption span {
+  display: block;
+  margin-bottom: 7px;
+  color: #d5b8ff;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.roger-photo-caption strong {
+  display: block;
+  color: #fff;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.1;
+}
+
+.roger-introduction {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 54px 46px;
+}
+
+.roger-introduction h2 {
+  margin: 5px 0 20px;
+  color: #fff;
+  font-size: clamp(32px, 5vw, 52px);
+}
+
+.roger-introduction > p:not(.eyebrow) {
+  margin: 0 0 15px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.roger-info-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 22px 0 28px;
+}
+
+.roger-info-list div {
+  padding: 14px 16px;
+  border: 1px solid rgba(190, 131, 255, 0.2);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.roger-info-list span {
+  display: block;
+  margin-bottom: 5px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+}
+
+.roger-info-list strong {
+  color: #fff;
+  font-size: 15px;
+}
+
+.roger-relationship-btn {
+  width: 100%;
+  padding: 16px 22px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 900;
+  cursor: pointer;
+  border: 1px solid rgba(255, 112, 195, 0.58);
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124, 63, 255, 0.94),
+      rgba(227, 52, 155, 0.94)
+    );
+  box-shadow:
+    0 13px 34px rgba(166, 60, 215, 0.27);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.roger-relationship-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 17px 42px rgba(227, 52, 155, 0.35);
+}
+
+/* 人際關係圖 */
+
+.relationship-panel {
+  width: min(1280px, 97vw);
+  padding: 34px;
+}
+
+.relationship-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-right: 52px;
+  margin-bottom: 22px;
+}
+
+.relationship-header h2 {
+  margin: 4px 0 0;
+  color: #fff;
+  font-size: clamp(26px, 4vw, 42px);
+}
+
+.relationship-image-wrap {
+  overflow: auto;
+  max-height: calc(90vh - 150px);
+  border: 1px solid rgba(199, 146, 255, 0.25);
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.relationship-image {
+  display: block;
+  width: 100%;
+  min-width: 760px;
+  height: auto;
+  object-fit: contain;
+}
+
+body.roger-modal-open {
+  overflow: hidden;
+}
+
+@media (max-width: 800px) {
+  .roger-modal {
+    padding: 12px;
+  }
+
+  .roger-about-layout {
+    display: block;
+  }
+
+  .roger-photo-area {
+    min-height: 340px;
+    border-radius: 27px 27px 0 0;
+  }
+
+  .roger-profile-image {
+    height: 340px;
+    min-height: 340px;
+  }
+
+  .roger-introduction {
+    padding: 34px 22px 28px;
+  }
+
+  .roger-info-list {
+    grid-template-columns: 1fr;
+  }
+
+  .relationship-panel {
+    padding: 25px 14px 14px;
+  }
+
+  .relationship-header {
+    display: block;
+    padding-right: 45px;
+  }
+
+  .relationship-header .btn {
+    margin-top: 16px;
+  }
+
+  .relationship-image {
+    min-width: 650px;
+  }
+}
