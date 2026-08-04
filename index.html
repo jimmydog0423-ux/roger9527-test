@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#100b1f" />
+
+  <title>羅傑全資產戰情室｜吉米狗製作</title>
+
+  <link rel="icon" href="data:," />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  />
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="styles.css"
+  />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="noise"></div>
+  <div id="particles" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div>
+      <div class="live-row">
+        <span class="live-dot"></span>
+        <span>LIVE PORTFOLIO ARENA</span>
+      </div>
+
+      <h1>羅傑全資產戰情室</h1>
+
+      <p class="subtitle">
+        每 60 秒更新、支援手動重整、互動音效與損益爆擊
+      </p>
+    </div>
+
+    <div class="hero-actions">
+      <button
+        id="refreshBtn"
+        class="btn primary"
+        type="button"
+      >
+        立即更新
+      </button>
+
+      <button
+        id="chaosBtn"
+        class="btn danger"
+        type="button"
+      >
+        損益大爆擊
+      </button>
+
+      <button
+        id="soundBtn"
+        class="btn ghost"
+        type="button"
+        aria-pressed="true"
+      >
+        音效：開
+      </button>
+
+      <button
+        id="autoRefreshBtn"
+        class="btn ghost"
+        type="button"
+        aria-pressed="true"
+      >
+        自動更新：開
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="summary-grid">
+      <article class="summary-card total">
+        <span>目前總損益</span>
+        <strong id="totalPnl">計算中…</strong>
+        <small id="totalPnlPct">—</small>
+      </article>
+
+      <article class="summary-card">
+        <span>總投入成本</span>
+        <strong id="totalCost">—</strong>
+        <small>台幣估算</small>
+      </article>
+
+      <article class="summary-card">
+        <span>最新美元匯率</span>
+        <strong id="usdTwd">—</strong>
+        <small id="fxSource">Yahoo Finance</small>
+      </article>
+
+      <article class="summary-card">
+        <span>更新時間</span>
+        <strong id="updatedAt">尚未更新</strong>
+        <small id="countdown">60 秒後自動更新</small>
+      </article>
+    </section>
+    <section class="total-chart-section">
+      <div class="total-chart-head">
+        <div>
+          <p class="eyebrow">TOTAL ASSET TREND</p>
+          <h2>全資產總市值走勢</h2>
+        </div>
+    
+        <div class="total-chart-value">
+          <span>目前總市值</span>
+          <strong id="currentPortfolioValue">—</strong>
+        </div>
+      </div>
+    
+      <div class="total-chart-wrap">
+        <canvas id="totalPortfolioChart"></canvas>
+      </div>
+    
+      <div class="total-chart-footer">
+        <span id="totalChartStartDate">—</span>
+        <span>資料以新台幣估算</span>
+        <span id="totalChartEndDate">—</span>
+      </div>
+    </section>
+    <section
+      class="ticker-wrap"
+      aria-label="即時跑馬燈"
+    >
+      <div id="ticker" class="ticker"></div>
+    </section>
+
+    <section class="rank-grid">
+      <article class="rank-card">
+        <span>目前最大虧損</span>
+        <strong id="worstHolding">—</strong>
+        <small id="worstPnl">—</small>
+      </article>
+
+      <article class="rank-card">
+        <span>目前最佳表現</span>
+        <strong id="bestHolding">—</strong>
+        <small id="bestPnl">—</small>
+      </article>
+
+      <article class="rank-card status-card">
+        <span>行情連線狀態</span>
+        <strong id="apiStatus">準備連線</strong>
+        <small id="apiDetail">
+          Cloudflare Worker + Yahoo Finance
+        </small>
+      </article>
+    </section>
+
+    <!-- 台股區 -->
+    <section class="market-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">TAIWAN MARKET</p>
+          <h2>台股持倉</h2>
+        </div>
+
+        <p>台灣市場持有股票與 ETF</p>
+      </div>
+
+      <section
+        id="twPortfolio"
+        class="portfolio-grid"
+        aria-live="polite"
+      ></section>
+    </section>
+
+    <!-- 美股區 -->
+    <section class="market-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">UNITED STATES MARKET</p>
+          <h2>美股持倉</h2>
+        </div>
+
+        <p>美國市場股票與 ETF</p>
+      </div>
+
+      <section
+        id="usPortfolio"
+        class="portfolio-grid"
+        aria-live="polite"
+      ></section>
+    </section>
+
+    <section class="links-section">
+      <div>
+        <p class="eyebrow">STREAMER LINKS</p>
+        <h2>前往實況主頻道</h2>
+      </div>
+
+      <div
+        id="socialLinks"
+        class="social-links"
+      ></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>
+      資料僅供娛樂展示，不構成投資建議。
+    </span>
+
+    <strong>製作人：吉米狗</strong>
+  </footer>
+  <div
+  id="mrvlEffect"
+  class="mrvl-effect"
+  aria-hidden="true"
+>
+  <div class="mrvl-effect-backdrop"></div>
+
+  <div class="mrvl-effect-content">
+    <div class="mrvl-effect-flash"></div>
+
+    <img
+      id="mrvlEffectImage"
+      src="assets/images/mrvl-effect.png"
+      alt="MRVL 特效圖片"
+    />
+
+    <div class="mrvl-effect-title">
+      MRVL 爆擊
+    </div>
+
+    <div class="mrvl-effect-subtitle">
+      邁威爾專屬事件觸發
+    </div>
+  </div>
+</div>
+  <!-- 燒香拜拜按鈕 -->
+  <div class="pray-fixed-area">
+  <button
+    id="prayFloatingBtn"
+    class="pray-fixed-button"
+    type="button"
+    aria-label="上香祈福"
+  >
+    <span class="pray-icon-box">
+      <img
+        src="assets/images/incense.png"
+        alt=""
+      />
+    </span>
+
+    <span class="pray-info">
+      <span class="pray-title">
+        點我上香
+      </span>
+
+      <span class="pray-visitor-row">
+        已有
+        <strong id="prayVisitorCount">0</strong>
+        人上香
+      </span>
+
+      <span
+        id="prayTotalCount"
+        class="pray-total-count"
+      >
+        累積香火 0 次
+      </span>
+    </span>
+  </button>
+</div>
+
+<div
+  id="prayAnimationLayer"
+  class="pray-animation-layer"
+  aria-hidden="true"
+></div>
+  
+  <!-- 拜拜動畫產生區 -->
+  <div
+    id="prayAnimationLayer"
+    class="pray-animation-layer"
+    aria-hidden="true"
+></div>
+  <div
+    id="toast"
+    class="toast"
+    role="status"
+  >
+    
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
