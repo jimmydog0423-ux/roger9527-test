@@ -53,6 +53,13 @@
 
     <div class="hero-actions">
       <button
+        id="aboutRogerBtn"
+        class="btn about-roger-btn"
+        type="button"
+      >
+        關於羅傑
+      </button>
+      <button
         id="refreshBtn"
         class="btn primary"
         type="button"
@@ -295,6 +302,154 @@
     class="pray-animation-layer"
     aria-hidden="true"
 ></div>
+
+  <!-- 關於羅傑視窗 -->
+<div
+  id="aboutRogerModal"
+  class="roger-modal"
+  aria-hidden="true"
+>
+  <div
+    class="roger-modal-backdrop"
+    data-close-roger-modal
+  ></div>
+
+  <section
+    class="roger-modal-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="aboutRogerTitle"
+  >
+    <button
+      id="closeAboutRogerBtn"
+      class="roger-modal-close"
+      type="button"
+      aria-label="關閉視窗"
+    >
+      ×
+    </button>
+
+    <div class="roger-about-layout">
+
+      <div class="roger-photo-area">
+        <img
+          src="assets/images/roger-profile.jpg"
+          alt="羅傑"
+          class="roger-profile-image"
+        />
+
+        <div class="roger-photo-caption">
+          <span>實況主</span>
+          <strong>羅傑 Roger</strong>
+        </div>
+      </div>
+
+      <div class="roger-introduction">
+        <p class="eyebrow">ABOUT ROGER</p>
+
+        <h2 id="aboutRogerTitle">
+          關於羅傑
+        </h2>
+
+        <p>
+          羅傑是一位以遊戲實況、聊天互動及獨特節目效果聞名的實況主。
+          憑藉鮮明的個人風格、幽默反應以及與觀眾之間的高度互動，
+          累積了許多長期支持他的觀眾。
+        </p>
+
+        <p>
+          實況內容涵蓋爐石戰記、角色扮演遊戲、熱門遊戲挑戰、
+          股市話題以及日常聊天。直播中經常出現許多經典事件、
+          特殊人物與複雜的人際關係。
+        </p>
+
+        <div class="roger-info-list">
+          <div>
+            <span>名稱</span>
+            <strong>羅傑</strong>
+          </div>
+
+          <div>
+            <span>英文名稱</span>
+            <strong>Roger</strong>
+          </div>
+
+          <div>
+            <span>主要內容</span>
+            <strong>遊戲實況與聊天</strong>
+          </div>
+
+          <div>
+            <span>特色</span>
+            <strong>氣氛、效果與互動</strong>
+          </div>
+        </div>
+
+        <button
+          id="openRelationshipBtn"
+          class="roger-relationship-btn"
+          type="button"
+        >
+          查看完整人際關係圖
+        </button>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- 羅傑人際關係圖視窗 -->
+<div
+  id="relationshipModal"
+  class="roger-modal relationship-modal"
+  aria-hidden="true"
+>
+  <div
+    class="roger-modal-backdrop"
+    data-close-relationship-modal
+  ></div>
+
+  <section
+    class="roger-modal-panel relationship-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="relationshipTitle"
+  >
+    <button
+      id="closeRelationshipBtn"
+      class="roger-modal-close"
+      type="button"
+      aria-label="關閉人際關係圖"
+    >
+      ×
+    </button>
+
+    <div class="relationship-header">
+      <div>
+        <p class="eyebrow">RELATIONSHIP MAP</p>
+        <h2 id="relationshipTitle">
+          羅傑完整人際關係圖
+        </h2>
+      </div>
+
+      <button
+        id="backToAboutBtn"
+        class="btn ghost"
+        type="button"
+      >
+        返回人物介紹
+      </button>
+    </div>
+
+    <div class="relationship-image-wrap">
+      <img
+        src="assets/images/roger-relationship.jpg"
+        alt="羅傑完整人際關係圖"
+        class="relationship-image"
+      />
+    </div>
+  </section>
+</div>
   <div
     id="toast"
     class="toast"
