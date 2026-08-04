@@ -2555,26 +2555,34 @@ if (document.readyState === "loading") {
 
   function setDetail(personId) {
     const person = getPerson(personId);
-
+  
     if (!person) {
       return;
     }
-
+  
     detailName.textContent = person.name;
+  
     detailGroup.textContent =
       GROUP_NAMES[person.group] || "其他";
-
+  
     detailRelation.textContent =
       person.relation;
-
+  
     detailDescription.textContent =
       person.description;
-
-    detailAvatar.textContent =
-      person.shortName.slice(0, 2);
-
+  
     detailAvatar.className =
       `relationship-detail-avatar group-${person.group}`;
+  
+    if (detailAvatarImage) {
+      detailAvatarImage.src = person.image;
+      detailAvatarImage.alt = person.name;
+  
+      detailAvatarImage.onerror = () => {
+        detailAvatarImage.src =
+          "assets/images/people/default.jpg";
+      };
+    }
   }
 
   function getVisibleIds(group) {
