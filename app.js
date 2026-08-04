@@ -2075,6 +2075,672 @@ if (document.readyState === "loading") {
 } else {
   setupRogerAboutModal();
 }
+  function setupRogerRelationshipGraph() {
+  const container =
+    document.getElementById("rogerRelationshipNetwork");
+
+  const resetButton =
+    document.getElementById("resetRelationshipGraphBtn");
+
+  const detailAvatar =
+    document.getElementById("relationshipDetailAvatar");
+
+  const detailGroup =
+    document.getElementById("relationshipDetailGroup");
+
+  const detailName =
+    document.getElementById("relationshipDetailName");
+
+  const detailRelation =
+    document.getElementById("relationshipDetailRelation");
+
+  const detailDescription =
+    document.getElementById(
+      "relationshipDetailDescription"
+    );
+
+  const filterButtons =
+    document.querySelectorAll(
+      "[data-relationship-group]"
+    );
+
+  if (!container) {
+    console.warn("找不到人際關係圖容器");
+    return;
+  }
+
+  if (typeof vis === "undefined") {
+    console.error("vis-network 尚未成功載入");
+    return;
+  }
+
+  const GROUP_NAMES = {
+    center: "中心人物",
+    xd: "XD娛樂",
+    hearthstone: "爐石實況圈",
+    streamer: "實況圈"
+  };
+
+  const people = [
+    {
+      id: "roger",
+      name: "羅傑",
+      shortName: "羅傑",
+      group: "center",
+      relation: "中心",
+      description:
+        "共同創辦人、核心藝人，也是整張人際關係圖的中心節點。",
+      x: 0,
+      y: 0
+    },
+
+    {
+      id: "nl",
+      name: "NL（熊班長）",
+      shortName: "NL",
+      group: "xd",
+      relation: "夫妻",
+      description:
+        "XD娛樂共同創辦人、公司老闆，也是羅傑長期合作與互動的重要夥伴。",
+      x: -220,
+      y: -310
+    },
+    {
+      id: "shaxy",
+      name: "薛喜",
+      shortName: "薛喜",
+      group: "xd",
+      relation: "難兄難弟",
+      description:
+        "XD娛樂旗下核心藝人，也是羅傑過去《爐石戰記》選手時期的戰友。",
+      x: -60,
+      y: -340
+    },
+    {
+      id: "eason",
+      name: "Eason（蕭老師／發仔）",
+      shortName: "Eason",
+      group: "xd",
+      relation: "麻將損友",
+      description:
+        "XD娛樂旗下核心藝人，主要進行爐石與格鬥遊戲實況。",
+      x: 110,
+      y: -330
+    },
+    {
+      id: "vivi",
+      name: "Vivi",
+      shortName: "Vivi",
+      group: "xd",
+      relation: "小三",
+      description:
+        "XD娛樂旗下核心藝人，與羅傑具有多年情誼的女性實況主好友。",
+      x: 260,
+      y: -250
+    },
+    {
+      id: "krapy",
+      name: "Krapy（虧皮）",
+      shortName: "Krapy",
+      group: "xd",
+      relation: "損友",
+      description:
+        "XD娛樂旗下核心藝人，是羅傑在射擊遊戲與戰棋內容中的長年搭檔。",
+      x: 340,
+      y: -100
+    },
+    {
+      id: "tommy",
+      name: "偷米",
+      shortName: "偷米",
+      group: "xd",
+      relation: "麻將損友",
+      description:
+        "XD娛樂旗下核心藝人，前爐石職業選手，也是羅傑過去的賽事戰友。",
+      x: 360,
+      y: 70
+    },
+    {
+      id: "hagon",
+      name: "哈耿",
+      shortName: "哈耿",
+      group: "xd",
+      relation: "寵物鯰魚",
+      description:
+        "XD娛樂旗下核心藝人，擅長短影音內容與《特戰英豪》實況。",
+      x: 300,
+      y: 230
+    },
+    {
+      id: "egghead",
+      name: "蛋頭",
+      shortName: "蛋頭",
+      group: "xd",
+      relation: "損友",
+      description:
+        "XD娛樂旗下核心藝人，知名嘻哈饒舌歌手兼實況主。",
+      x: 170,
+      y: 340
+    },
+    {
+      id: "yuexi",
+      name: "月希",
+      shortName: "月希",
+      group: "xd",
+      relation: "麻吉",
+      description:
+        "XD娛樂旗下核心藝人，也是資深 ACG 與電玩節目主持人。",
+      x: 0,
+      y: 370
+    },
+    {
+      id: "asen",
+      name: "阿森",
+      shortName: "阿森",
+      group: "xd",
+      relation: "麻吉",
+      description:
+        "XD娛樂旗下核心藝人，前 FPS 職業選手兼資深賽評。",
+      x: -170,
+      y: 340
+    },
+    {
+      id: "kent",
+      name: "肯特",
+      shortName: "肯特",
+      group: "xd",
+      relation: "損友",
+      description:
+        "XD娛樂旗下核心藝人，知名格鬥遊戲《快打旋風》好手。",
+      x: -300,
+      y: 230
+    },
+    {
+      id: "mmd",
+      name: "咪咪蛋",
+      shortName: "咪咪蛋",
+      group: "xd",
+      relation: "損友",
+      description:
+        "XD娛樂旗下核心藝人，前閃電狼《英雄聯盟》職業選手。",
+      x: -370,
+      y: 70
+    },
+    {
+      id: "guidong",
+      name: "鬼東",
+      shortName: "鬼東",
+      group: "xd",
+      relation: "最強後盾",
+      description:
+        "XD娛樂的幕後核心推手，主要負責公司營運與藝人經紀事務。",
+      x: -350,
+      y: -110
+    },
+
+    {
+      id: "weifu",
+      name: "威傅",
+      shortName: "威傅",
+      group: "hearthstone",
+      relation: "損友",
+      description:
+        "經常出現在羅傑實況精華，也是常一起語音通話的爐石老戰友。",
+      x: -520,
+      y: -270
+    },
+    {
+      id: "uzra",
+      name: "Uzra",
+      shortName: "Uzra",
+      group: "hearthstone",
+      relation: "損友",
+      description:
+        "戰棋與爐石圈大老，實況上與羅傑亦敵亦友，也是經常互相玩梗的對象。",
+      x: -550,
+      y: 200
+    },
+
+    {
+      id: "turtle",
+      name: "龜狗",
+      shortName: "龜狗",
+      group: "streamer",
+      relation: "損友",
+      description:
+        "早期 DC 語音群的固定班底，也是與羅傑私下交情良好的好友。",
+      x: 540,
+      y: -240
+    },
+    {
+      id: "overload",
+      name: "超負荷",
+      shortName: "超負荷",
+      group: "streamer",
+      relation: "正代餐",
+      description:
+        "早期紅色學校同僚，實況效果上經常相愛相殺，也是長期的玩梗對象。",
+      x: 550,
+      y: 210
+    }
+  ];
+
+  const groupColors = {
+    center: {
+      background: "#ef4f88",
+      border: "#ffb15d",
+      highlight: {
+        background: "#ff6d9d",
+        border: "#ffd18f"
+      }
+    },
+    xd: {
+      background: "#7549e8",
+      border: "#c98cff",
+      highlight: {
+        background: "#9d67ff",
+        border: "#edc9ff"
+      }
+    },
+    hearthstone: {
+      background: "#167dcc",
+      border: "#70d7ff",
+      highlight: {
+        background: "#309ce6",
+        border: "#c3efff"
+      }
+    },
+    streamer: {
+      background: "#26935f",
+      border: "#70df9e",
+      highlight: {
+        background: "#35b979",
+        border: "#c3f5d5"
+      }
+    }
+  };
+
+  const relationshipColors = {
+    "夫妻": "#ff73ba",
+    "難兄難弟": "#d68cff",
+    "麻將損友": "#ffbd57",
+    "小三": "#ff5c91",
+    "損友": "#9a8cff",
+    "寵物鯰魚": "#59d8d1",
+    "麻吉": "#5ddc8b",
+    "最強後盾": "#ffd85c",
+    "正代餐": "#ff715c"
+  };
+
+  const nodes = new vis.DataSet(
+    people.map((person) => {
+      const isRoger = person.id === "roger";
+
+      return {
+        id: person.id,
+        label: person.shortName,
+        group: person.group,
+        x: person.x,
+        y: person.y,
+        fixed: isRoger
+          ? {
+              x: true,
+              y: true
+            }
+          : false,
+        size: isRoger ? 48 : 30,
+        font: {
+          color: "#ffffff",
+          size: isRoger ? 21 : 16,
+          face: "Noto Sans TC",
+          bold: {
+            color: "#ffffff",
+            size: isRoger ? 21 : 16,
+            face: "Noto Sans TC",
+            mod: "bold"
+          },
+          strokeWidth: 5,
+          strokeColor: "rgba(5, 3, 15, 0.85)"
+        },
+        borderWidth: isRoger ? 5 : 3,
+        borderWidthSelected: 6,
+        shadow: {
+          enabled: true,
+          color: "rgba(0, 0, 0, 0.52)",
+          size: isRoger ? 24 : 15,
+          x: 0,
+          y: 7
+        }
+      };
+    })
+  );
+
+  const edges = new vis.DataSet(
+    people
+      .filter((person) => person.id !== "roger")
+      .map((person) => ({
+        id: `roger-${person.id}`,
+        from: "roger",
+        to: person.id,
+        label: person.relation,
+        relation: person.relation,
+        color: {
+          color:
+            relationshipColors[person.relation] ||
+            "#a88cff",
+          highlight:
+            relationshipColors[person.relation] ||
+            "#ffffff",
+          hover:
+            relationshipColors[person.relation] ||
+            "#ffffff",
+          opacity: 0.72
+        },
+        width: 2.5,
+        selectionWidth: 5,
+        hoverWidth: 4,
+        smooth: {
+          enabled: true,
+          type: "continuous",
+          roundness: 0.24
+        },
+        font: {
+          color: "#ffffff",
+          size: 11,
+          face: "Noto Sans TC",
+          strokeWidth: 4,
+          strokeColor: "rgba(4, 2, 12, 0.92)",
+          background: "rgba(20, 12, 40, 0.72)",
+          align: "middle"
+        }
+      }))
+  );
+
+  const networkOptions = {
+    autoResize: true,
+
+    nodes: {
+      shape: "dot",
+      chosen: true
+    },
+
+    groups: {
+      center: {
+        color: groupColors.center
+      },
+      xd: {
+        color: groupColors.xd
+      },
+      hearthstone: {
+        color: groupColors.hearthstone
+      },
+      streamer: {
+        color: groupColors.streamer
+      }
+    },
+
+    edges: {
+      arrows: {
+        to: {
+          enabled: false
+        }
+      }
+    },
+
+    interaction: {
+      hover: true,
+      hoverConnectedEdges: true,
+      navigationButtons: true,
+      keyboard: {
+        enabled: true,
+        bindToWindow: false
+      },
+      tooltipDelay: 150,
+      zoomView: true,
+      dragView: true,
+      dragNodes: true
+    },
+
+    physics: {
+      enabled: true,
+      solver: "forceAtlas2Based",
+
+      forceAtlas2Based: {
+        gravitationalConstant: -65,
+        centralGravity: 0.012,
+        springLength: 235,
+        springConstant: 0.045,
+        damping: 0.58,
+        avoidOverlap: 0.9
+      },
+
+      stabilization: {
+        enabled: true,
+        iterations: 700,
+        updateInterval: 40,
+        fit: true
+      }
+    },
+
+    layout: {
+      improvedLayout: false
+    }
+  };
+
+  const network = new vis.Network(
+    container,
+    {
+      nodes,
+      edges
+    },
+    networkOptions
+  );
+
+  let activeGroup = "all";
+
+  function getPerson(personId) {
+    return people.find(
+      (person) => person.id === personId
+    );
+  }
+
+  function setDetail(personId) {
+    const person = getPerson(personId);
+
+    if (!person) {
+      return;
+    }
+
+    detailName.textContent = person.name;
+    detailGroup.textContent =
+      GROUP_NAMES[person.group] || "其他";
+
+    detailRelation.textContent =
+      person.relation;
+
+    detailDescription.textContent =
+      person.description;
+
+    detailAvatar.textContent =
+      person.shortName.slice(0, 2);
+
+    detailAvatar.className =
+      `relationship-detail-avatar group-${person.group}`;
+  }
+
+  function getVisibleIds(group) {
+    if (group === "all") {
+      return people.map((person) => person.id);
+    }
+
+    return people
+      .filter(
+        (person) =>
+          person.id === "roger" ||
+          person.group === group
+      )
+      .map((person) => person.id);
+  }
+
+  function applyGroupFilter(group) {
+    activeGroup = group;
+
+    const visibleIds =
+      new Set(getVisibleIds(group));
+
+    nodes.update(
+      people.map((person) => ({
+        id: person.id,
+        hidden: !visibleIds.has(person.id)
+      }))
+    );
+
+    edges.update(
+      people
+        .filter((person) => person.id !== "roger")
+        .map((person) => ({
+          id: `roger-${person.id}`,
+          hidden: !visibleIds.has(person.id)
+        }))
+    );
+
+    filterButtons.forEach((button) => {
+      const isActive =
+        button.dataset.relationshipGroup === group;
+
+      button.classList.toggle(
+        "active",
+        isActive
+      );
+    });
+
+    network.unselectAll();
+    setDetail("roger");
+
+    window.setTimeout(() => {
+      network.fit({
+        nodes: Array.from(visibleIds),
+        animation: {
+          duration: 500,
+          easingFunction: "easeInOutQuad"
+        }
+      });
+    }, 100);
+  }
+
+  function highlightPerson(personId) {
+    if (personId === "roger") {
+      network.selectNodes(["roger"]);
+      setDetail("roger");
+      return;
+    }
+
+    const connectedEdgeId =
+      `roger-${personId}`;
+
+    network.setSelection(
+      {
+        nodes: [personId],
+        edges: [connectedEdgeId]
+      },
+      {
+        unselectAll: true,
+        highlightEdges: true
+      }
+    );
+
+    setDetail(personId);
+
+    network.focus(personId, {
+      scale: Math.max(network.getScale(), 0.88),
+      animation: {
+        duration: 420,
+        easingFunction: "easeInOutQuad"
+      }
+    });
+  }
+
+  network.on("click", (params) => {
+    if (params.nodes.length === 0) {
+      network.unselectAll();
+      setDetail("roger");
+      return;
+    }
+
+    highlightPerson(params.nodes[0]);
+  });
+
+  network.on("doubleClick", (params) => {
+    if (params.nodes.length > 0) {
+      network.focus(params.nodes[0], {
+        scale: 1.2,
+        animation: {
+          duration: 450,
+          easingFunction: "easeInOutQuad"
+        }
+      });
+    }
+  });
+
+  network.once("stabilizationIterationsDone", () => {
+    network.setOptions({
+      physics: {
+        enabled: false
+      }
+    });
+
+    network.fit({
+      animation: {
+        duration: 500,
+        easingFunction: "easeInOutQuad"
+      }
+    });
+  });
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      applyGroupFilter(
+        button.dataset.relationshipGroup
+      );
+    });
+  });
+
+  resetButton?.addEventListener("click", () => {
+    applyGroupFilter(activeGroup);
+  });
+
+  const openRelationshipButton =
+    document.getElementById(
+      "openRelationshipBtn"
+    );
+
+  openRelationshipButton?.addEventListener(
+    "click",
+    () => {
+      window.setTimeout(() => {
+        network.redraw();
+
+        network.fit({
+          animation: {
+            duration: 500,
+            easingFunction: "easeInOutQuad"
+          }
+        });
+      }, 300);
+    }
+  );
+
+  setDetail("roger");
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    setupRogerRelationshipGraph
+  );
+} else {
+  setupRogerRelationshipGraph();
+}
   renderSocials();
   render();
   
