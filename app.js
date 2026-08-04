@@ -2380,6 +2380,8 @@ if (document.readyState === "loading") {
         id: person.id,
         label: person.shortName,
         group: person.group,
+        shape: "circularImage",
+        brokenImage: "assets/images/people/default.jpg",
         x: person.x,
         y: person.y,
         fixed: isRoger
@@ -2460,8 +2462,15 @@ if (document.readyState === "loading") {
     autoResize: true,
 
     nodes: {
-      shape: "dot",
-      chosen: true
+      shape: "circularImage",
+      chosen: true,
+    
+      imagePadding: {
+        left: 3,
+        top: 3,
+        right: 3,
+        bottom: 3
+      }
     },
 
     groups: {
