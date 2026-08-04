@@ -31,6 +31,9 @@
   />
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script
+  src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
+  ></script>
 </head>
 
 <body>
@@ -435,13 +438,99 @@
       </button>
     </div>
 
-    <div class="relationship-image-wrap">
-      <img
-        src="assets/images/roger-relationship.jpg"
-        alt="羅傑完整人際關係圖"
-        class="relationship-image"
-      />
+    <div class="relationship-toolbar">
+  <div class="relationship-filters">
+    <button
+      class="relationship-filter active"
+      type="button"
+      data-relationship-group="all"
+    >
+      全部人物
+    </button>
+
+    <button
+      class="relationship-filter"
+      type="button"
+      data-relationship-group="xd"
+    >
+      XD娛樂
+    </button>
+
+    <button
+      class="relationship-filter"
+      type="button"
+      data-relationship-group="hearthstone"
+    >
+      爐石實況圈
+    </button>
+
+    <button
+      class="relationship-filter"
+      type="button"
+      data-relationship-group="streamer"
+    >
+      實況圈
+    </button>
+  </div>
+
+  <button
+    id="resetRelationshipGraphBtn"
+    class="btn ghost relationship-reset-btn"
+    type="button"
+  >
+    重設位置
+  </button>
+</div>
+
+<div class="relationship-graph-layout">
+
+  <div class="relationship-network-column">
+    <div
+      id="rogerRelationshipNetwork"
+      class="relationship-network"
+      aria-label="羅傑互動人際關係圖"
+    ></div>
+
+    <div class="relationship-network-help">
+      可拖曳人物、滾輪縮放，點擊人物查看完整介紹
     </div>
+  </div>
+
+  <aside
+    id="relationshipDetail"
+    class="relationship-detail"
+  >
+    <div
+      id="relationshipDetailAvatar"
+      class="relationship-detail-avatar group-center"
+    >
+      羅
+    </div>
+
+    <p
+      id="relationshipDetailGroup"
+      class="relationship-detail-group"
+    >
+      中心人物
+    </p>
+
+    <h3 id="relationshipDetailName">
+      羅傑
+    </h3>
+
+    <div class="relationship-detail-relation">
+      <span>與羅傑的關係</span>
+      <strong id="relationshipDetailRelation">
+        中心
+      </strong>
+    </div>
+
+    <p id="relationshipDetailDescription">
+      共同創辦人、核心藝人，也是整張人際關係圖的中心節點。
+    </p>
+  </aside>
+
+</div>
   </section>
 </div>
   <div
