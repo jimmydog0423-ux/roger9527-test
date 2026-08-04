@@ -1115,3 +1115,273 @@ body.roger-modal-open {
     min-width: 650px;
   }
 }
+/* =========================
+   羅傑互動人際關係圖
+========================= */
+
+.relationship-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.relationship-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.relationship-filter {
+  padding: 10px 17px;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  border: 1px solid rgba(192, 143, 255, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.relationship-filter:hover {
+  color: #fff;
+  border-color: rgba(205, 163, 255, 0.55);
+  transform: translateY(-1px);
+}
+
+.relationship-filter.active {
+  color: #fff;
+  border-color: rgba(255, 132, 205, 0.75);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(125, 68, 255, 0.95),
+      rgba(222, 55, 158, 0.95)
+    );
+  box-shadow: 0 8px 24px rgba(174, 65, 219, 0.25);
+}
+
+.relationship-reset-btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.relationship-graph-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 18px;
+  min-height: 590px;
+}
+
+.relationship-network-column {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(193, 140, 255, 0.25);
+  border-radius: 20px;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(126, 67, 255, 0.13),
+      transparent 44%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(11, 7, 29, 0.98),
+      rgba(4, 3, 13, 0.99)
+    );
+}
+
+.relationship-network {
+  width: 100%;
+  height: 590px;
+  outline: none;
+}
+
+.relationship-network canvas {
+  outline: none;
+}
+
+.relationship-network-help {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  z-index: 2;
+  padding: 9px 13px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  text-align: center;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(5, 3, 14, 0.74);
+  backdrop-filter: blur(8px);
+}
+
+.relationship-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 26px 23px;
+  overflow: auto;
+  border: 1px solid rgba(194, 144, 255, 0.25);
+  border-radius: 20px;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(219, 64, 165, 0.13),
+      transparent 42%
+    ),
+    rgba(255, 255, 255, 0.035);
+}
+
+.relationship-detail-avatar {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 18px;
+  color: #fff;
+  font-size: 29px;
+  font-weight: 900;
+  border: 3px solid rgba(255, 255, 255, 0.17);
+  border-radius: 50%;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.relationship-detail-avatar.group-center {
+  background:
+    linear-gradient(
+      135deg,
+      #ff9c34,
+      #ef3f82
+    );
+}
+
+.relationship-detail-avatar.group-xd {
+  background:
+    linear-gradient(
+      135deg,
+      #7749ff,
+      #c040f1
+    );
+}
+
+.relationship-detail-avatar.group-hearthstone {
+  background:
+    linear-gradient(
+      135deg,
+      #2479e8,
+      #26b3d9
+    );
+}
+
+.relationship-detail-avatar.group-streamer {
+  background:
+    linear-gradient(
+      135deg,
+      #26a375,
+      #55c451
+    );
+}
+
+.relationship-detail-group {
+  margin: 0 0 6px;
+  color: #cdb3ff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.relationship-detail h3 {
+  margin: 0 0 18px;
+  color: #fff;
+  font-size: 29px;
+  line-height: 1.25;
+}
+
+.relationship-detail-relation {
+  width: 100%;
+  padding: 14px 15px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255, 133, 205, 0.24);
+  border-radius: 14px;
+  background: rgba(225, 57, 158, 0.08);
+}
+
+.relationship-detail-relation span {
+  display: block;
+  margin-bottom: 5px;
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+}
+
+.relationship-detail-relation strong {
+  color: #ff9bd4;
+  font-size: 20px;
+}
+
+.relationship-detail > p:last-child {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 15px;
+  line-height: 1.85;
+}
+
+@media (max-width: 980px) {
+  .relationship-graph-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .relationship-network {
+    height: 520px;
+  }
+
+  .relationship-detail {
+    min-height: 250px;
+  }
+}
+
+@media (max-width: 650px) {
+  .relationship-toolbar {
+    display: block;
+  }
+
+  .relationship-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .relationship-filter {
+    width: 100%;
+    padding: 10px 8px;
+  }
+
+  .relationship-reset-btn {
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .relationship-graph-layout {
+    min-height: 0;
+  }
+
+  .relationship-network {
+    height: 450px;
+  }
+
+  .relationship-network-help {
+    font-size: 11px;
+  }
+}
