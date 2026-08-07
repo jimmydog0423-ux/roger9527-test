@@ -257,10 +257,33 @@
     </div>
   </div>
 </div>
-  <!-- 右下角固定功能堆疊區（由下往上：上香 → 孵蛋 → 每日運勢） -->
+  <!-- 右下角固定功能堆疊區（可收合，避免功能越加越多互相卡住） -->
   <div
     id="rightFixedStack"
     class="right-fixed-stack"
+  >
+  <!-- 展開/收合按鈕：永遠顯示，固定貼在堆疊最底部 -->
+  <button
+    id="rightStackToggle"
+    class="right-stack-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="rightStackPanel"
+    aria-label="展開更多互動功能"
+  >
+    <span
+      id="rightStackBadge"
+      class="right-stack-badge"
+      hidden
+    ></span>
+    <span class="right-stack-toggle-arrow"></span>
+    <span class="right-stack-toggle-label">互動</span>
+  </button>
+
+  <!-- 可收合面板：上香、孵蛋、運勢籤都收在這裡面 -->
+  <div
+    id="rightStackPanel"
+    class="right-stack-panel"
   >
   <!-- 燒香拜拜按鈕 -->
   <div class="pray-fixed-area">
@@ -341,12 +364,43 @@
   </button>
 </div>
 
-  <!-- 每日運勢按鈕（之後功能補上時放這裡，容器已預留） -->
+  <!-- 每日運勢籤按鈕 -->
   <div
     id="fortuneFixedArea"
     class="fortune-fixed-area"
-    hidden
-  ></div>
+  >
+  <button
+    id="fortuneFloatingBtn"
+    class="fortune-fixed-button"
+    type="button"
+    aria-label="抽今日運勢籤"
+  >
+    <span class="fortune-icon-box">
+      <span class="fortune-orb"></span>
+    </span>
+
+    <span class="fortune-info">
+      <span class="fortune-title">
+        每日運勢籤
+      </span>
+
+      <span
+        id="fortuneStatusRow"
+        class="fortune-status-row"
+      >
+        今天還沒抽籤
+      </span>
+
+      <span
+        id="fortuneHint"
+        class="fortune-hint"
+      >
+        點我抽籤
+      </span>
+    </span>
+  </button>
+</div>
+</div>
 </div>
 
   <!-- 拜拜動畫產生區 -->
@@ -355,6 +409,98 @@
     class="pray-animation-layer"
     aria-hidden="true"
 ></div>
+
+  <!-- 每日運勢揭曉視窗 -->
+  <div
+    id="fortuneModal"
+    class="roger-modal fortune-modal"
+    aria-hidden="true"
+  >
+  <div
+    class="roger-modal-backdrop"
+    data-close-fortune-modal
+  ></div>
+  <section
+    class="roger-modal-panel fortune-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="fortuneModalTitle"
+  >
+    <button
+      id="closeFortuneModalBtn"
+      class="roger-modal-close"
+      type="button"
+      aria-label="關閉視窗"
+    >
+      ×
+    </button>
+
+    <div class="fortune-draw-content">
+      <p class="eyebrow">TODAY'S FORTUNE</p>
+      <h2 id="fortuneModalTitle">今日運勢籤</h2>
+
+      <div
+        id="fortuneDrawStage"
+        class="fortune-draw-stage"
+      >
+        <button
+          id="fortuneDrawBtn"
+          class="btn primary fortune-draw-btn"
+          type="button"
+        >
+          抽籤
+        </button>
+        <p class="fortune-draw-note">
+          每天限抽一次，結果會固定到隔天
+        </p>
+      </div>
+
+      <div
+        id="fortuneResult"
+        class="fortune-result"
+        hidden
+      >
+        <div
+          id="fortuneResultCard"
+          class="fortune-result-card"
+        >
+          <div
+            id="fortuneCardFrame"
+            class="fortune-card-frame"
+          >
+            <img
+              id="fortuneCardImage"
+              src=""
+              alt=""
+            />
+          </div>
+          <p
+            id="fortuneCardRarity"
+            class="fortune-card-rarity"
+          ></p>
+          <p
+            id="fortuneCardName"
+            class="fortune-card-name"
+          ></p>
+        </div>
+
+        <div class="fortune-result-detail">
+          <p
+            id="fortuneLevel"
+            class="fortune-level"
+          ></p>
+          <p
+            id="fortuneTerm"
+            class="fortune-term"
+          ></p>
+          <p class="fortune-poem-placeholder">
+            完整籤詩敬請期待，之後會補上。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 
   <!-- 孵化揭曉視窗 -->
   <div
@@ -401,7 +547,7 @@
       </div>
 
       <p class="egg-hatch-message">
-        V仔獸 誕生了！祝羅傑父親節快樂
+        V仔獸 誕生了！祝天下的爸爸們父親節快樂
       </p>
     </div>
   </section>
