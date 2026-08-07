@@ -2160,3 +2160,135 @@ body.roger-modal-open {
     text-align: center;
   }
 }
+
+/* ===== 留言板 ===== */
+
+.message-board-section {
+  margin: 42px 0;
+}
+
+.message-ticker-wrap {
+  overflow: hidden;
+  margin: 0 0 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #0f0b1b;
+}
+
+.message-ticker {
+  display: flex;
+  gap: 34px;
+  width: max-content;
+  padding: 12px 0;
+  font-weight: 800;
+  animation: messageTicker 32s linear infinite;
+}
+
+.message-ticker.is-empty {
+  animation: none;
+  padding: 14px 20px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.message-ticker span {
+  white-space: nowrap;
+  color: #fff;
+}
+
+.message-ticker span b {
+  margin-right: 6px;
+  color: var(--cyan);
+}
+
+@keyframes messageTicker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.message-form {
+  display: grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 10px;
+}
+
+.message-nickname-input,
+.message-text-input {
+  padding: 13px 15px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #0d0916;
+  color: #fff;
+  font: inherit;
+}
+
+.message-nickname-input:focus,
+.message-text-input:focus {
+  outline: none;
+  border-color: rgba(46, 233, 255, 0.6);
+}
+
+.message-submit-btn {
+  white-space: nowrap;
+}
+
+.message-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.message-form-note {
+  margin: 10px 2px 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.message-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.message-item {
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.045);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.message-item .message-item-nickname {
+  color: var(--cyan);
+  font-weight: 900;
+  font-size: 0.9rem;
+}
+
+.message-item .message-item-text {
+  color: #fff;
+  font-weight: 700;
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.message-item .message-item-time {
+  color: var(--muted);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.message-list-empty {
+  color: var(--muted);
+  font-weight: 700;
+  padding: 8px 2px;
+}
+
+@media (max-width: 700px) {
+  .message-form {
+    grid-template-columns: 1fr;
+  }
+}
