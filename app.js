@@ -2725,6 +2725,312 @@ function setupRightStack() {
   });
 }
 
+/* ===== 留言板 ===== */
+
+const MESSAGE_COOLDOWN = 60 * 1000;
+const MESSAGE_STORAGE_KEY = "roger_message_last_time";
+const MESSAGE_MAX_LENGTH = 60;
+const MESSAGE_NICKNAME_MAX_LENGTH = 12;
+const MESSAGE_URL_PATTERN =
+  /(https?:\/\/|www\.)/i;
+
+function getVisitorId() {
+  const storageKey = "rogerVisitorId";
+
+  let visitorId = localStorage.getItem(storageKey);
+
+  if (!visitorId) {
+    if (
+      typeof crypto !== "undefined" &&
+      typeof crypto.randomUUID === "function"
+    ) {
+      visitorId = crypto.randomUUID().replaceAll("-", "_");
+    } else {
+      visitorId =
+        `visitor_${Date.now()}_` +
+        Math.random().toString(36).slice(2);
+    }
+
+    localStorage.setItem(storageKey, visitorId);
+  }
+
+  return visitorId;
+}
+
+function getMessageCooldownRemaining() {
+  const lastTime = Number(
+    localStorage.getItem(MESSAGE_STORAGE_KEY) || 0
+  );
+
+  const remaining =
+    MESSAGE_COOLDOWN - (Date.now() - lastTime);
+
+  return remaining > 0 ? remaining : 0;
+}
+
+function setMessageCooldownStart() {
+  localStorage.setItem(
+    MESSAGE_STORAGE_KEY,
+    String(Date.now())
+  );
+}
+
+function escapeMessageText(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function formatMessageTime(isoString) {
+  const date = new Date(isoString);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return new Intl.DateTimeFormat("zh-TW", {
+    timeZone: "Asia/Taipei",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(date);
+}
+
+function renderMessageTicker(messages) {
+  const ticker = document.getElementById("messageTicker");
+
+  if (!ticker) {
+    return;
+  }
+
+  if (!messages || messages.length === 0) {
+    ticker.classList.add("is-empty");
+    ticker.innerHTML =
+      "<span>目前還沒有人留言，來當第一個吧</span>";
+    return;
+  }
+
+  ticker.classList.remove("is-empty");
+
+  const itemsHtml = messages
+    .map(item => {
+      const nickname = escapeMessageText(
+        item.nickname || "匿名訪客"
+      );
+
+      const text = escapeMessageText(item.message || "");
+
+      return `<span><b>${nickname}</b>${text}</span>`;
+    })
+    .join("");
+
+  // 跑馬燈重複貼一次內容，讓 translateX(-50%) 動畫可以無縫接軌
+  ticker.innerHTML = itemsHtml + itemsHtml;
+}
+
+function renderMessageList(messages) {
+  const list = document.getElementById("messageList");
+
+  if (!list) {
+    return;
+  }
+
+  if (!messages || messages.length === 0) {
+    list.innerHTML =
+      '<p class="message-list-empty">還沒有留言，留一句話給羅傑吧</p>';
+    return;
+  }
+
+  list.innerHTML = messages
+    .map(item => {
+      const nickname = escapeMessageText(
+        item.nickname || "匿名訪客"
+      );
+
+      const text = escapeMessageText(item.message || "");
+      const time = formatMessageTime(item.createdAt);
+
+      return `
+        <div class="message-item">
+          <span class="message-item-nickname">${nickname}</span>
+          <span class="message-item-text">${text}</span>
+          <span class="message-item-time">${time}</span>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+async function loadMessages() {
+  try {
+    const response = await fetchWithFallback(
+      "/messages",
+      {
+        cache: "no-store",
+        headers: { Accept: "application/json" }
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result?.success) {
+      throw new Error(result?.message || "無法取得留言");
+    }
+
+    renderMessageTicker(result.messages);
+    renderMessageList(result.messages);
+  } catch (error) {
+    console.error("取得留言失敗：", error);
+    renderMessageTicker([]);
+    renderMessageList([]);
+  }
+}
+
+async function submitMessage(nickname, message) {
+  const response = await fetchWithFallback("/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      visitorId: getVisitorId(),
+      nickname,
+      message
+    })
+  });
+
+  const result = await response.json();
+
+  if (!response.ok || !result?.success) {
+    throw new Error(result?.message || "留言送出失敗");
+  }
+
+  return result;
+}
+
+function updateMessageFormNote() {
+  const noteEl = document.getElementById("messageFormNote");
+  const submitBtn = document.getElementById(
+    "messageSubmitBtn"
+  );
+
+  const remaining = getMessageCooldownRemaining();
+
+  if (remaining > 0) {
+    const seconds = Math.ceil(remaining / 1000);
+
+    if (noteEl) {
+      noteEl.textContent = `還要等 ${seconds} 秒才能再留言`;
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+    }
+
+    window.setTimeout(updateMessageFormNote, 1000);
+  } else {
+    if (noteEl) {
+      noteEl.textContent = "每人每 60 秒可留言一次";
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+    }
+  }
+}
+
+function setupMessageBoard() {
+  const form = document.getElementById("messageForm");
+  const nicknameInput = document.getElementById(
+    "messageNicknameInput"
+  );
+  const textInput = document.getElementById(
+    "messageTextInput"
+  );
+
+  if (!form || !textInput) {
+    console.warn("找不到留言板所需的 HTML 元素");
+    return;
+  }
+
+  loadMessages();
+  updateMessageFormNote();
+
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (getMessageCooldownRemaining() > 0) {
+      return;
+    }
+
+    const rawMessage = textInput.value.trim();
+    const rawNickname = (
+      nicknameInput?.value || ""
+    ).trim();
+
+    if (!rawMessage) {
+      toast("留言不能是空的喔");
+      return;
+    }
+
+    if (rawMessage.length > MESSAGE_MAX_LENGTH) {
+      toast(`留言請控制在 ${MESSAGE_MAX_LENGTH} 字以內`);
+      return;
+    }
+
+    if (
+      rawNickname.length > MESSAGE_NICKNAME_MAX_LENGTH
+    ) {
+      toast(
+        `暱稱請控制在 ${MESSAGE_NICKNAME_MAX_LENGTH} 字以內`
+      );
+      return;
+    }
+
+    if (MESSAGE_URL_PATTERN.test(rawMessage)) {
+      toast("留言不能包含網址連結");
+      return;
+    }
+
+    const submitBtn = document.getElementById(
+      "messageSubmitBtn"
+    );
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+    }
+
+    try {
+      const result = await submitMessage(
+        rawNickname,
+        rawMessage
+      );
+
+      setMessageCooldownStart();
+      textInput.value = "";
+
+      if (result.messages) {
+        renderMessageTicker(result.messages);
+        renderMessageList(result.messages);
+      } else {
+        loadMessages();
+      }
+
+      toast("留言送出成功！");
+      updateMessageFormNote();
+    } catch (error) {
+      console.error("留言送出失敗：", error);
+      toast("留言送出失敗，稍後再試一次");
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+      }
+    }
+  });
+}
+
 function setupRogerAboutModal() {
   const aboutButton =
     document.getElementById("aboutRogerBtn");
@@ -3606,6 +3912,7 @@ if (document.readyState === "loading") {
   setupEggHatch();
   setupFortune();
   setupRightStack();
+  setupMessageBoard();
 
   const autoRefreshBtn =
     $("#autoRefreshBtn");
