@@ -257,6 +257,11 @@
     </div>
   </div>
 </div>
+  <!-- 右下角固定功能堆疊區（由下往上：上香 → 孵蛋 → 每日運勢） -->
+  <div
+    id="rightFixedStack"
+    class="right-fixed-stack"
+  >
   <!-- 燒香拜拜按鈕 -->
   <div class="pray-fixed-area">
   <button
@@ -292,13 +297,6 @@
     </span>
   </button>
 </div>
-
-  <!-- 拜拜動畫產生區 -->
-  <div
-    id="prayAnimationLayer"
-    class="pray-animation-layer"
-    aria-hidden="true"
-></div>
 
   <!-- 父親節孵蛋彩蛋按鈕 -->
   <div
@@ -342,6 +340,21 @@
     </span>
   </button>
 </div>
+
+  <!-- 每日運勢按鈕（之後功能補上時放這裡，容器已預留） -->
+  <div
+    id="fortuneFixedArea"
+    class="fortune-fixed-area"
+    hidden
+  ></div>
+</div>
+
+  <!-- 拜拜動畫產生區 -->
+  <div
+    id="prayAnimationLayer"
+    class="pray-animation-layer"
+    aria-hidden="true"
+></div>
 
   <!-- 孵化揭曉視窗 -->
   <div
@@ -388,7 +401,7 @@
       </div>
 
       <p class="egg-hatch-message">
-        V仔獸 誕生了！祝羅傑父親節快樂
+        V仔獸 誕生了！祝天下的爸爸們父親節快樂
       </p>
     </div>
   </section>
