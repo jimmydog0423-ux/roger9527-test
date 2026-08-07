@@ -1969,8 +1969,8 @@ function setupPrayAnimation() {
 
 /* ===== 父親節孵蛋彩蛋 ===== */
 
-const EGG_REVEAL_AT =
-  new Date("2026-08-07T00:00:00+08:00").getTime();
+const EGG_REVEAL_MONTH = 8;
+const EGG_REVEAL_DAY = 8;
 
 const EGG_CLICK_TARGET = 12;
 
@@ -1978,7 +1978,23 @@ const EGG_CLICKS_STORAGE_KEY = "roger_egg_clicks";
 const EGG_HATCHED_STORAGE_KEY = "roger_egg_hatched";
 
 function isEggEventLive() {
-  return Date.now() >= EGG_REVEAL_AT;
+  const taipeiParts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Taipei",
+    month: "numeric",
+    day: "numeric"
+  }).formatToParts(new Date());
+
+  const month = Number(
+    taipeiParts.find(part => part.type === "month")?.value
+  );
+
+  const day = Number(
+    taipeiParts.find(part => part.type === "day")?.value
+  );
+
+  return (
+    month === EGG_REVEAL_MONTH && day === EGG_REVEAL_DAY
+  );
 }
 
 function getEggClicks() {
