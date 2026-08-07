@@ -1468,7 +1468,7 @@ body.roger-modal-open {
   animation: none;
 }
 
-/* ===== 右下角固定功能堆疊區 ===== */
+/* ===== 右下角固定功能堆疊區（可收合） ===== */
 
 .right-fixed-stack {
   position: fixed;
@@ -1482,7 +1482,110 @@ body.roger-modal-open {
   gap: 12px;
 }
 
-/* ===== 每日運勢（功能開發中，容器先預留） ===== */
+.right-stack-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 12px 18px;
+
+  color: #ffffff;
+  border: 1px solid rgba(139, 92, 246, 0.55);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(35, 17, 42, 0.97),
+      rgba(13, 17, 31, 0.97)
+    );
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 18px rgba(139, 92, 246, 0.25);
+
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+
+  position: relative;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.right-stack-toggle:hover {
+  transform: translateY(-2px);
+  border-color: rgba(46, 233, 255, 0.85);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.55),
+    0 0 26px rgba(46, 233, 255, 0.3);
+}
+
+.right-stack-toggle:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.right-stack-toggle-arrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 8px solid currentColor;
+  transition: transform 0.25s ease;
+}
+
+.right-stack-toggle[aria-expanded="true"] .right-stack-toggle-arrow {
+  transform: rotate(180deg);
+}
+
+.right-stack-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 2px solid rgba(13, 17, 31, 1);
+  animation: rightStackBadgePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes rightStackBadgePulse {
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+.right-stack-panel {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 12px;
+
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+
+  transition:
+    max-height 0.32s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+.right-fixed-stack.is-open .right-stack-panel {
+  max-height: 600px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* ===== 每日運勢 ===== */
 
 .fortune-fixed-area {
   position: static;
@@ -1761,8 +1864,299 @@ body.roger-modal-open {
     gap: 10px;
   }
 
+  .right-stack-panel {
+    gap: 10px;
+  }
+
+  .right-stack-toggle {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
   .egg-fixed-button {
     min-width: 0;
     max-width: calc(100vw - 24px);
+  }
+
+  .fortune-fixed-button {
+    min-width: 0;
+    max-width: calc(100vw - 24px);
+  }
+}
+
+/* ===== 每日運勢籤 ===== */
+
+.fortune-fixed-area {
+  position: static;
+}
+
+.fortune-fixed-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-width: 230px;
+  min-height: 86px;
+  padding: 10px 16px 10px 10px;
+
+  color: #ffffff;
+  border: 1px solid rgba(46, 233, 255, 0.5);
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(35, 17, 42, 0.97),
+      rgba(13, 17, 31, 0.97)
+    );
+
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.48),
+    0 0 18px rgba(46, 233, 255, 0.2);
+
+  cursor: pointer;
+  text-align: left;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.fortune-fixed-button:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 78, 163, 0.85);
+  box-shadow:
+    0 14px 42px rgba(0, 0, 0, 0.55),
+    0 0 28px rgba(255, 78, 163, 0.35);
+}
+
+.fortune-fixed-button:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.fortune-icon-box {
+  flex: 0 0 66px;
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  background:
+    radial-gradient(
+      circle,
+      rgba(46, 233, 255, 0.22),
+      rgba(7, 9, 18, 0.8)
+    );
+  overflow: hidden;
+}
+
+.fortune-orb {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #fff, #a6f4ff 35%, #2ee9ff 70%, #8b5cf6 100%);
+  box-shadow: 0 0 18px rgba(46, 233, 255, 0.55);
+  animation: fortuneOrbFloat 2.6s ease-in-out infinite;
+}
+
+@keyframes fortuneOrbFloat {
+  50% {
+    transform: translateY(-4px) scale(1.05);
+  }
+}
+
+.fortune-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+}
+
+.fortune-title {
+  color: #9be9ff;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.fortune-status-row {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.fortune-hint {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+}
+
+.fortune-fixed-button.is-drawn .fortune-hint {
+  color: var(--green);
+}
+
+/* 抽籤視窗 */
+
+.fortune-panel {
+  width: min(560px, 96vw);
+}
+
+.fortune-draw-content {
+  padding: 40px 34px 34px;
+  text-align: center;
+}
+
+.fortune-draw-content h2 {
+  margin: 4px 0 22px;
+  font-size: 2rem;
+  background: linear-gradient(100deg, #fff 15%, #75efff 55%, #ff80be);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.fortune-draw-stage {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  padding: 20px 0 6px;
+}
+
+.fortune-draw-btn {
+  min-width: 160px;
+  font-size: 1.1rem;
+}
+
+.fortune-draw-btn.is-drawing {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.fortune-draw-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* 結果呈現 */
+
+.fortune-result {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 24px;
+  align-items: center;
+  text-align: left;
+  margin-top: 8px;
+}
+
+.fortune-result-card {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.fortune-card-frame {
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.fortune-card-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fortune-card-frame.rarity-common {
+  border-color: rgba(170, 161, 189, 0.55);
+  box-shadow: 0 0 14px rgba(170, 161, 189, 0.2);
+}
+
+.fortune-card-frame.rarity-rare {
+  border-color: rgba(46, 233, 255, 0.75);
+  box-shadow: 0 0 22px rgba(46, 233, 255, 0.45);
+}
+
+.fortune-card-frame.rarity-legendary {
+  border-color: rgba(255, 213, 74, 0.9);
+  box-shadow: 0 0 30px rgba(255, 213, 74, 0.6);
+  animation: fortuneLegendaryGlow 1.6s ease-in-out infinite;
+}
+
+@keyframes fortuneLegendaryGlow {
+  50% {
+    box-shadow: 0 0 42px rgba(255, 213, 74, 0.9);
+  }
+}
+
+.fortune-card-rarity {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.fortune-card-rarity.rarity-common {
+  color: var(--muted);
+}
+
+.fortune-card-rarity.rarity-rare {
+  color: var(--cyan);
+}
+
+.fortune-card-rarity.rarity-legendary {
+  color: var(--yellow);
+}
+
+.fortune-card-name {
+  margin: 0;
+  font-weight: 900;
+  font-size: 1.05rem;
+}
+
+.fortune-result-detail {
+  display: grid;
+  gap: 10px;
+}
+
+.fortune-level {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 900;
+}
+
+.fortune-level.level-good {
+  color: var(--green);
+}
+
+.fortune-level.level-bad {
+  color: var(--red);
+}
+
+.fortune-term {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.fortune-poem-placeholder {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 560px) {
+  .fortune-result {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
   }
 }
