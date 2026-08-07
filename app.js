@@ -1168,8 +1168,15 @@ function normalizeHistory(history) {
 }
   async function fetchYahooWorker() {
     const symbols = [...new Set([...C.holdings.map(h => h.apiSymbol), "USDTWD=X"])];
-    const url = `${C.workerUrl}/?symbols=${encodeURIComponent(symbols.join(","))}&t=${Date.now()}`;
-    const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json" } });
+    const response = await fetchWithFallback(
+      `/?symbols=${encodeURIComponent(symbols.join(","))}&t=${Date.now()}`,
+      {
+        cache: "no-store",
+        headers: {
+          Accept: "application/json"
+        }
+      }
+    );
 
     if (!response.ok) throw new Error(`Worker 回傳 HTTP ${response.status}`);
     const result = await response.json();
@@ -1637,14 +1644,14 @@ async function loadPrayStats() {
         getPrayVisitorId()
       );
 
-    const response = await fetch(
-      `${PRAY_API_URL}/pray/stats?visitorId=${visitorId}`,
-      {
-        cache: "no-store",
-        headers: {
-          Accept: "application/json"
+    const response = await fetchWithFallback(
+        `/pray/stats?visitorId=${visitorId}`,
+        {
+            cache: "no-store",
+            headers: {
+                Accept: "application/json"
+            }
         }
-      }
     );
 
     const result =
@@ -1674,21 +1681,19 @@ async function loadPrayStats() {
   }
 }
 async function recordPray() {
-  const response = await fetch(
-    `${PRAY_API_URL}/pray`,
+  const response = await fetchWithFallback(
+    "/pray",
     {
-      method: "POST",
-      headers: {
-        "Content-Type":
-          "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        visitorId:
-          getPrayVisitorId()
-      })
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify({
+            visitorId: getPrayVisitorId()
+        })
     }
-  );
+);
 
   const result =
     await response.json();
@@ -1714,7 +1719,8 @@ const PRAY_IMAGES = [
 
 const PRAY_MESSAGE =
   "祝羅傑早日離開這充滿惡意的世界";
-
+const PRAY_COOLDOWN = 60 * 1000;
+const PRAY_STORAGE_KEY = "roger_pray_last_time";
 let prayAnimationIndex = 0;
 
 function getRandomPrayImage() {
@@ -1777,6 +1783,21 @@ function createPraySparkles(button) {
 }
 
 async function createPrayFloatAnimation() {
+  const lastTime = Number(
+      localStorage.getItem(PRAY_STORAGE_KEY) || 0
+  );
+  
+  const remain =
+      PRAY_COOLDOWN - (Date.now() - lastTime);
+  
+  if (remain > 0) {
+  
+      toast(
+          `請等待 ${Math.ceil(remain / 1000)} 秒才能再次上香`
+      );
+  
+      return;
+  }
   const button = document.querySelector(
     "#prayFloatingBtn"
   );
@@ -1899,6 +1920,10 @@ async function createPrayFloatAnimation() {
   createPraySparkles(button);
   try {
     await recordPray();
+    localStorage.setItem(
+        PRAY_STORAGE_KEY,
+        Date.now()
+    );
   } catch (error) {
     console.error(
       "上香統計失敗：",
@@ -1941,6 +1966,227 @@ function setupPrayAnimation() {
     createPrayFloatAnimation
   );
 }
+
+/* ===== 父親節孵蛋彩蛋 ===== */
+
+const EGG_REVEAL_AT =
+  new Date("2026-08-08T00:00:00+08:00").getTime();
+
+const EGG_CLICK_TARGET = 12;
+
+const EGG_CLICKS_STORAGE_KEY = "roger_egg_clicks";
+const EGG_HATCHED_STORAGE_KEY = "roger_egg_hatched";
+
+function isEggEventLive() {
+  return Date.now() >= EGG_REVEAL_AT;
+}
+
+function getEggClicks() {
+  return Number(
+    localStorage.getItem(EGG_CLICKS_STORAGE_KEY) || 0
+  );
+}
+
+function setEggClicks(value) {
+  localStorage.setItem(
+    EGG_CLICKS_STORAGE_KEY,
+    String(value)
+  );
+}
+
+function isEggHatched() {
+  return (
+    localStorage.getItem(EGG_HATCHED_STORAGE_KEY) === "1"
+  );
+}
+
+function setEggHatched() {
+  localStorage.setItem(EGG_HATCHED_STORAGE_KEY, "1");
+}
+
+function updateEggCrackStage(button, clicks) {
+  const ratio = clicks / EGG_CLICK_TARGET;
+
+  button.classList.remove("crack-1", "crack-2", "crack-3");
+
+  if (ratio >= 0.75) {
+    button.classList.add("crack-3");
+  } else if (ratio >= 0.5) {
+    button.classList.add("crack-2");
+  } else if (ratio >= 0.25) {
+    button.classList.add("crack-1");
+  }
+}
+
+function renderEggHatchedState(button) {
+  button.classList.add("is-hatched");
+
+  const countEl = document.getElementById("eggClickCount");
+  const hintEl = document.getElementById("eggHint");
+
+  if (countEl) {
+    countEl.textContent = String(EGG_CLICK_TARGET);
+  }
+
+  if (hintEl) {
+    hintEl.textContent = "V仔獸已誕生，點我再看一次";
+  }
+
+  updateEggCrackStage(button, EGG_CLICK_TARGET);
+}
+
+function syncRogerModalBodyScroll() {
+  const anyOpen = document.querySelector(
+    ".roger-modal.is-open"
+  );
+
+  document.body.classList.toggle(
+    "roger-modal-open",
+    !!anyOpen
+  );
+}
+
+function openEggHatchModal() {
+  const modal = document.getElementById("eggHatchModal");
+
+  if (!modal) {
+    return;
+  }
+
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  syncRogerModalBodyScroll();
+}
+
+function closeEggHatchModal() {
+  const modal = document.getElementById("eggHatchModal");
+
+  if (!modal) {
+    return;
+  }
+
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+  syncRogerModalBodyScroll();
+}
+
+function hatchEgg(button) {
+  setEggHatched();
+
+  button.classList.add("is-hatching");
+
+  playTone("success");
+  burst(
+    button.getBoundingClientRect().left + 30,
+    button.getBoundingClientRect().top + 30,
+    40
+  );
+
+  window.setTimeout(() => {
+    button.classList.remove("is-hatching");
+    renderEggHatchedState(button);
+    openEggHatchModal();
+  }, 620);
+}
+
+function handleEggClick(button, countEl) {
+  if (isEggHatched()) {
+    openEggHatchModal();
+    return;
+  }
+
+  const clicks = Math.min(
+    getEggClicks() + 1,
+    EGG_CLICK_TARGET
+  );
+
+  setEggClicks(clicks);
+
+  if (countEl) {
+    countEl.textContent = String(clicks);
+  }
+
+  updateEggCrackStage(button, clicks);
+
+  button.classList.remove("is-tapped");
+  void button.offsetWidth;
+  button.classList.add("is-tapped");
+
+  window.setTimeout(() => {
+    button.classList.remove("is-tapped");
+  }, 350);
+
+  playTone("soft");
+
+  if (clicks >= EGG_CLICK_TARGET) {
+    hatchEgg(button);
+  }
+}
+
+function setupEggHatch() {
+  const area = document.getElementById("eggFixedArea");
+  const button = document.getElementById("eggFloatingBtn");
+  const countEl = document.getElementById("eggClickCount");
+  const targetEl = document.getElementById("eggClickTarget");
+  const modal = document.getElementById("eggHatchModal");
+  const closeBtn = document.getElementById("closeEggHatchBtn");
+  const image = document.getElementById("eggHatchImage");
+  const imageFallback = document.getElementById(
+    "eggHatchImageFallback"
+  );
+
+  if (!area || !button || !modal) {
+    console.warn("找不到父親節孵蛋彩蛋所需的 HTML 元素");
+    return;
+  }
+
+  if (!isEggEventLive()) {
+    return;
+  }
+
+  area.removeAttribute("hidden");
+
+  if (targetEl) {
+    targetEl.textContent = String(EGG_CLICK_TARGET);
+  }
+
+  const savedClicks = Math.min(
+    getEggClicks(),
+    EGG_CLICK_TARGET
+  );
+
+  if (countEl) {
+    countEl.textContent = String(savedClicks);
+  }
+
+  updateEggCrackStage(button, savedClicks);
+
+  if (isEggHatched()) {
+    renderEggHatchedState(button);
+  }
+
+  button.addEventListener("click", () => {
+    handleEggClick(button, countEl);
+  });
+
+  if (image && imageFallback) {
+    image.addEventListener(
+      "error",
+      () => {
+        image.hidden = true;
+        imageFallback.hidden = false;
+      },
+      { once: true }
+    );
+  }
+
+  closeBtn?.addEventListener("click", closeEggHatchModal);
+
+  modal
+    .querySelector("[data-close-egg-modal]")
+    ?.addEventListener("click", closeEggHatchModal);
+}
+
 function setupRogerAboutModal() {
   const aboutButton =
     document.getElementById("aboutRogerBtn");
@@ -2084,7 +2330,8 @@ if (document.readyState === "loading") {
 
   const detailAvatar =
     document.getElementById("relationshipDetailAvatar");
-
+  const detailAvatarImage =
+    document.getElementById("relationshipDetailAvatarImage");
   const detailGroup =
     document.getElementById("relationshipDetailGroup");
 
@@ -2122,208 +2369,227 @@ if (document.readyState === "loading") {
   };
 
   const people = [
-    {
-      id: "roger",
-      name: "羅傑",
-      shortName: "羅傑",
-      group: "center",
-      relation: "中心",
-      description:
-        "共同創辦人、核心藝人，也是整張人際關係圖的中心節點。",
-      x: 0,
-      y: 0
-    },
-
-    {
-      id: "nl",
-      name: "NL（熊班長）",
-      shortName: "NL",
-      group: "xd",
-      relation: "夫妻",
-      description:
-        "XD娛樂共同創辦人、公司老闆，也是羅傑長期合作與互動的重要夥伴。",
-      x: -220,
-      y: -310
-    },
-    {
-      id: "shaxy",
-      name: "薛喜",
-      shortName: "薛喜",
-      group: "xd",
-      relation: "難兄難弟",
-      description:
-        "XD娛樂旗下核心藝人，也是羅傑過去《爐石戰記》選手時期的戰友。",
-      x: -60,
-      y: -340
-    },
-    {
-      id: "eason",
-      name: "Eason（蕭老師／發仔）",
-      shortName: "Eason",
-      group: "xd",
-      relation: "麻將損友",
-      description:
-        "XD娛樂旗下核心藝人，主要進行爐石與格鬥遊戲實況。",
-      x: 110,
-      y: -330
-    },
-    {
-      id: "vivi",
-      name: "Vivi",
-      shortName: "Vivi",
-      group: "xd",
-      relation: "小三",
-      description:
-        "XD娛樂旗下核心藝人，與羅傑具有多年情誼的女性實況主好友。",
-      x: 260,
-      y: -250
-    },
-    {
-      id: "krapy",
-      name: "Krapy（虧皮）",
-      shortName: "Krapy",
-      group: "xd",
-      relation: "損友",
-      description:
-        "XD娛樂旗下核心藝人，是羅傑在射擊遊戲與戰棋內容中的長年搭檔。",
-      x: 340,
-      y: -100
-    },
-    {
-      id: "tommy",
-      name: "偷米",
-      shortName: "偷米",
-      group: "xd",
-      relation: "麻將損友",
-      description:
-        "XD娛樂旗下核心藝人，前爐石職業選手，也是羅傑過去的賽事戰友。",
-      x: 360,
-      y: 70
-    },
-    {
-      id: "hagon",
-      name: "哈耿",
-      shortName: "哈耿",
-      group: "xd",
-      relation: "寵物鯰魚",
-      description:
-        "XD娛樂旗下核心藝人，擅長短影音內容與《特戰英豪》實況。",
-      x: 300,
-      y: 230
-    },
-    {
-      id: "egghead",
-      name: "蛋頭",
-      shortName: "蛋頭",
-      group: "xd",
-      relation: "損友",
-      description:
-        "XD娛樂旗下核心藝人，知名嘻哈饒舌歌手兼實況主。",
-      x: 170,
-      y: 340
-    },
-    {
-      id: "yuexi",
-      name: "月希",
-      shortName: "月希",
-      group: "xd",
-      relation: "麻吉",
-      description:
-        "XD娛樂旗下核心藝人，也是資深 ACG 與電玩節目主持人。",
-      x: 0,
-      y: 370
-    },
-    {
-      id: "asen",
-      name: "阿森",
-      shortName: "阿森",
-      group: "xd",
-      relation: "麻吉",
-      description:
-        "XD娛樂旗下核心藝人，前 FPS 職業選手兼資深賽評。",
-      x: -170,
-      y: 340
-    },
-    {
-      id: "kent",
-      name: "肯特",
-      shortName: "肯特",
-      group: "xd",
-      relation: "損友",
-      description:
-        "XD娛樂旗下核心藝人，知名格鬥遊戲《快打旋風》好手。",
-      x: -300,
-      y: 230
-    },
-    {
-      id: "mmd",
-      name: "咪咪蛋",
-      shortName: "咪咪蛋",
-      group: "xd",
-      relation: "損友",
-      description:
-        "XD娛樂旗下核心藝人，前閃電狼《英雄聯盟》職業選手。",
-      x: -370,
-      y: 70
-    },
-    {
-      id: "guidong",
-      name: "鬼東",
-      shortName: "鬼東",
-      group: "xd",
-      relation: "最強後盾",
-      description:
-        "XD娛樂的幕後核心推手，主要負責公司營運與藝人經紀事務。",
-      x: -350,
-      y: -110
-    },
-
-    {
-      id: "weifu",
-      name: "威傅",
-      shortName: "威傅",
-      group: "hearthstone",
-      relation: "損友",
-      description:
-        "經常出現在羅傑實況精華，也是常一起語音通話的爐石老戰友。",
-      x: -520,
-      y: -270
-    },
-    {
-      id: "uzra",
-      name: "Uzra",
-      shortName: "Uzra",
-      group: "hearthstone",
-      relation: "損友",
-      description:
-        "戰棋與爐石圈大老，實況上與羅傑亦敵亦友，也是經常互相玩梗的對象。",
-      x: -550,
-      y: 200
-    },
-
-    {
-      id: "turtle",
-      name: "龜狗",
-      shortName: "龜狗",
-      group: "streamer",
-      relation: "損友",
-      description:
-        "早期 DC 語音群的固定班底，也是與羅傑私下交情良好的好友。",
-      x: 540,
-      y: -240
-    },
-    {
-      id: "overload",
-      name: "超負荷",
-      shortName: "超負荷",
-      group: "streamer",
-      relation: "正代餐",
-      description:
-        "早期紅色學校同僚，實況效果上經常相愛相殺，也是長期的玩梗對象。",
-      x: 550,
-      y: 210
-    }
-  ];
+  {
+    id: "roger",
+    name: "羅傑",
+    shortName: "羅傑",
+    image: "assets/images/people/roger.jpg",
+    group: "center",
+    relation: "中心",
+    description: "共同創辦人、核心藝人，也是整張人際關係圖的中心節點。",
+    x: 0,
+    y: 0
+  },
+  {
+    id: "taishan",
+    name: "泰山",
+    shortName: "泰山",
+    image: "assets/images/people/泰山.jpg",
+    group: "streamer",
+    relation: "分身",
+    description: "經常被觀眾戲稱是羅傑的分身。",
+    x: 200,
+    y: -60
+  },
+  {
+    id: "krapysister",
+    name: "虧皮妹妹",
+    shortName: "虧皮妹",
+    image: "assets/images/people/虧皮妹.png",
+    group: "streamer",
+    relation: "專屬保險業務",
+    description: "為羅傑的專屬保險業員。",
+    x: 220,
+    y: 150
+  },
+  {
+    id: "nl",
+    name: "NL（熊班長）",
+    shortName: "NL",
+    image: "assets/images/people/nl.jpg",
+    group: "xd",
+    relation: "夫妻",
+    description: "XD娛樂共同創辦人、公司老闆，也是羅傑長期合作與互動的重要夥伴。",
+    x: -220,
+    y: -310
+  },
+  {
+    id: "shaxy",
+    name: "薛喜",
+    shortName: "薛喜",
+    image: "assets/images/people/薛喜.jpg",
+    group: "xd",
+    relation: "難兄難弟",
+    description: "XD娛樂旗下核心藝人，也是羅傑過去《爐石戰記》選手時期的戰友。",
+    x: -60,
+    y: -340
+  },
+  {
+    id: "eason",
+    name: "Eason（蕭老師／發仔）",
+    shortName: "Eason",
+    image: "assets/images/people/發仔.png",
+    group: "xd",
+    relation: "麻將損友",
+    description: "XD娛樂旗下核心藝人，主要進行爐石與格鬥遊戲實況。",
+    x: 110,
+    y: -330
+  },
+  {
+    id: "vivi",
+    name: "Vivi",
+    shortName: "Vivi",
+    image: "assets/images/people/vivi.png",
+    group: "xd",
+    relation: "小三",
+    description: "XD娛樂旗下核心藝人，與羅傑具有多年情誼的女性實況主好友。",
+    x: 260,
+    y: -250
+  },
+  {
+    id: "krapy",
+    name: "Krapy（虧皮）",
+    shortName: "Krapy",
+    image: "assets/images/people/哈K.jpg",
+    group: "xd",
+    relation: "損友",
+    description: "XD娛樂旗下核心藝人，是羅傑在射擊遊戲與戰棋內容中的長年搭檔。",
+    x: 340,
+    y: -100
+  },
+  {
+    id: "tommy",
+    name: "偷米",
+    shortName: "偷米",
+    image: "assets/images/people/tommy.png",
+    group: "xd",
+    relation: "麻將損友",
+    description: "XD娛樂旗下核心藝人，前爐石職業選手，也是羅傑過去的賽事戰友。",
+    x: 360,
+    y: 70
+  },
+  {
+    id: "hagon",
+    name: "哈耿",
+    shortName: "哈耿",
+    image: "assets/images/people/哈耿.jpg",
+    group: "xd",
+    relation: "寵物鯰魚",
+    description: "XD娛樂旗下核心藝人，擅長短影音內容與《特戰英豪》實況。",
+    x: 300,
+    y: 230
+  },
+  {
+    id: "egghead",
+    name: "蛋頭",
+    shortName: "蛋頭",
+    image: "assets/images/people/蛋頭.png",
+    group: "xd",
+    relation: "損友",
+    description: "XD娛樂旗下核心藝人，知名嘻哈饒舌歌手兼實況主。",
+    x: 170,
+    y: 340
+  },
+  {
+    id: "yuexi",
+    name: "月希",
+    shortName: "月希",
+    image: "assets/images/people/月希.jpg",
+    group: "xd",
+    relation: "麻吉",
+    description: "XD娛樂旗下核心藝人，也是資深 ACG 與電玩節目主持人。",
+    x: 0,
+    y: 370
+  },
+  {
+    id: "asen",
+    name: "阿森",
+    shortName: "阿森",
+    image: "assets/images/people/阿森.jpg",
+    group: "xd",
+    relation: "麻吉",
+    description: "XD娛樂旗下核心藝人，前 FPS 職業選手兼資深賽評。",
+    x: -170,
+    y: 340
+  },
+  {
+    id: "kent",
+    name: "肯特",
+    shortName: "肯特",
+    image: "assets/images/people/肯特.jpg",
+    group: "xd",
+    relation: "損友",
+    description: "XD娛樂旗下核心藝人，知名格鬥遊戲《快打旋風》好手。",
+    x: -300,
+    y: 230
+  },
+  {
+    id: "mmd",
+    name: "咪咪蛋",
+    shortName: "咪咪蛋",
+    image: "assets/images/people/mmd.jpg",
+    group: "xd",
+    relation: "損友",
+    description: "XD娛樂旗下核心藝人，前閃電狼《英雄聯盟》職業選手。",
+    x: -370,
+    y: 70
+  },
+  {
+    id: "guidong",
+    name: "鬼東",
+    shortName: "鬼東",
+    image: "assets/images/people/鬼東.jpg",
+    group: "xd",
+    relation: "最強後盾",
+    description: "XD娛樂的幕後核心推手，主要負責公司營運與藝人經紀事務。",
+    x: -350,
+    y: -110
+  },
+  {
+    id: "weifu",
+    name: "威傅",
+    shortName: "威傅",
+    image: "assets/images/people/威傅.jpg",
+    group: "hearthstone",
+    relation: "損友",
+    description: "經常出現在羅傑實況精華，也是常一起語音通話的爐石老戰友。",
+    x: -520,
+    y: -270
+  },
+  {
+    id: "uzra",
+    name: "Uzra",
+    shortName: "Uzra",
+    image: "assets/images/people/uzra.png",
+    group: "hearthstone",
+    relation: "損友",
+    description: "戰棋與爐石圈大老，實況上與羅傑亦敵亦友，也是經常互相玩梗的對象。",
+    x: -550,
+    y: 200
+  },
+  {
+    id: "turtle",
+    name: "龜狗",
+    shortName: "龜狗",
+    image: "assets/images/people/龜狗.png",
+    group: "streamer",
+    relation: "損友",
+    description: "早期 DC 語音群的固定班底，也是與羅傑私下交情良好的好友。",
+    x: 540,
+    y: -240
+  },
+  {
+    id: "overload",
+    name: "超負荷",
+    shortName: "超負荷",
+    image: "assets/images/people/超負荷.jpg",
+    group: "streamer",
+    relation: "正代餐",
+    description: "早期紅色學校同僚，實況效果上經常相愛相殺，也是長期的玩梗對象。",
+    x: 550,
+    y: 210
+  }
+];
 
   const groupColors = {
     center: {
@@ -2371,51 +2637,65 @@ if (document.readyState === "loading") {
     "最強後盾": "#ffd85c",
     "正代餐": "#ff715c"
   };
+  const DEFAULT_PERSON_IMAGE =
+  "assets/images/people/default.jpg";
 
-  const nodes = new vis.DataSet(
-    people.map((person) => {
-      const isRoger = person.id === "roger";
+const nodes = new vis.DataSet(
+  people.map((person) => {
+    const isRoger = person.id === "roger";
 
-      return {
-        id: person.id,
-        label: person.shortName,
-        group: person.group,
-        shape: "circularImage",
-        brokenImage: "assets/images/people/default.jpg",
-        x: person.x,
-        y: person.y,
-        fixed: isRoger
-          ? {
-              x: true,
-              y: true
-            }
-          : false,
-        size: isRoger ? 48 : 30,
-        font: {
-          color: "#ffffff",
-          size: isRoger ? 21 : 16,
-          face: "Noto Sans TC",
-          bold: {
-            color: "#ffffff",
-            size: isRoger ? 21 : 16,
-            face: "Noto Sans TC",
-            mod: "bold"
-          },
-          strokeWidth: 5,
-          strokeColor: "rgba(5, 3, 15, 0.85)"
-        },
-        borderWidth: isRoger ? 5 : 3,
-        borderWidthSelected: 6,
-        shadow: {
-          enabled: true,
-          color: "rgba(0, 0, 0, 0.52)",
-          size: isRoger ? 24 : 15,
-          x: 0,
-          y: 7
-        }
-      };
-    })
-  );
+    const personImage =
+      typeof person.image === "string" &&
+      person.image.trim() !== ""
+        ? person.image
+        : DEFAULT_PERSON_IMAGE;
+    const hasImage =
+      typeof person.image === "string" &&
+      person.image.trim() !== "";
+    return {
+      id: person.id,
+      label: person.shortName,
+      group: person.group,
+
+      shape: hasImage ? "circularImage" : "dot",
+
+      image: hasImage ? person.image : undefined,
+      
+
+      x: person.x,
+      y: person.y,
+
+      fixed: isRoger
+        ? {
+            x: true,
+            y: true
+          }
+        : false,
+
+      size: isRoger ? 55 : 38,
+
+      font: {
+        color: "#ffffff",
+        size: isRoger ? 21 : 16,
+        face: "Noto Sans TC",
+        vadjust: 8,
+        strokeWidth: 5,
+        strokeColor: "rgba(5, 3, 15, 0.9)"
+      },
+
+      borderWidth: isRoger ? 6 : 4,
+      borderWidthSelected: 7,
+
+      shadow: {
+        enabled: true,
+        color: "rgba(0, 0, 0, 0.6)",
+        size: isRoger ? 26 : 17,
+        x: 0,
+        y: 8
+      }
+    };
+  })
+);
 
   const edges = new vis.DataSet(
     people
@@ -2462,15 +2742,8 @@ if (document.readyState === "loading") {
     autoResize: true,
 
     nodes: {
-      shape: "circularImage",
       chosen: true,
-    
-      imagePadding: {
-        left: 3,
-        top: 3,
-        right: 3,
-        bottom: 3
-      }
+      imagePadding: 3
     },
 
     groups: {
@@ -2758,12 +3031,42 @@ if (document.readyState === "loading") {
 } else {
   setupRogerRelationshipGraph();
 }
+  async function fetchWithFallback(path, options = {}) {
+    const urls = [C.workerUrl, C.workerUrl2].filter(Boolean);
+  
+    let lastError;
+  
+    for (const baseUrl of urls) {
+      try {
+        const response = await fetch(`${baseUrl}${path}`, options);
+  
+        // 免費方案超過每日額度通常會回 429
+        if (response.status === 429) {
+          throw new Error("Worker quota exceeded");
+        }
+  
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+  
+        return response;
+      } catch (error) {
+        console.warn(`${baseUrl} 失敗，切換下一個 Worker`, error);
+        lastError = error;
+      }
+    }
+  
+    throw lastError || new Error("所有 Worker 都無法使用");
+  }
+  
   renderSocials();
   render();
   
   setupPrayAnimation();
   loadPrayStats();
-  
+
+  setupEggHatch();
+
   const autoRefreshBtn =
     $("#autoRefreshBtn");
   if (autoRefreshBtn) {
@@ -2772,3 +3075,23 @@ if (document.readyState === "loading") {
   }
   setTimeout(refresh, 400);
 })();
+
+window.addEventListener("load", () => {
+
+    const notice = document.getElementById("authorNotice");
+    const close = document.getElementById("closeNotice");
+
+    // 一天只顯示一次
+    const today = new Date().toDateString();
+
+    if(localStorage.getItem("noticeDate") === today){
+        notice.style.display = "none";
+        return;
+    }
+
+    close.addEventListener("click", () => {
+        notice.style.display = "none";
+        localStorage.setItem("noticeDate", today);
+    });
+
+});
