@@ -332,10 +332,7 @@
 ========================= */
 
 .pray-fixed-area {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 1200;
+  position: static;
 }
 
 .pray-fixed-button {
@@ -497,11 +494,6 @@
 }
 
 @media (max-width: 700px) {
-  .pray-fixed-area {
-    right: 10px;
-    bottom: 10px;
-  }
-
   .pray-fixed-button {
     min-width: 190px;
     min-height: 72px;
@@ -1476,13 +1468,30 @@ body.roger-modal-open {
   animation: none;
 }
 
+/* ===== 右下角固定功能堆疊區 ===== */
+
+.right-fixed-stack {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1200;
+
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+/* ===== 每日運勢（功能開發中，容器先預留） ===== */
+
+.fortune-fixed-area {
+  position: static;
+}
+
 /* ===== 父親節孵蛋彩蛋 ===== */
 
 .egg-fixed-area {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-  z-index: 1200;
+  position: static;
 }
 
 .egg-fixed-button {
@@ -1746,9 +1755,10 @@ body.roger-modal-open {
 }
 
 @media (max-width: 700px) {
-  .egg-fixed-area {
-    left: 12px;
-    bottom: 12px;
+  .right-fixed-stack {
+    right: 10px;
+    bottom: 10px;
+    gap: 10px;
   }
 
   .egg-fixed-button {
