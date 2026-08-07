@@ -2269,15 +2269,20 @@ const FORTUNE_LEVELS = [
 const FORTUNE_GOOD_LEVELS = ["大吉", "中吉", "小吉"];
 
 const FORTUNE_RARITY_POOL = {
-  legendary: ["roger"],
-  rare: ["nl", "uzra", "vivi", "guidong"],
-  common: FORTUNE_CHARACTERS
-    .map(character => character.id)
-    .filter(
-      id =>
-        id !== "roger" &&
-        !["nl", "uzra", "vivi", "guidong"].includes(id)
-    )
+  legendary: ["roger", "shaxy", "nl", "vivi"],
+  rare: ["krapy", "overload", "asen", "kent", "weifu", "egghead"],
+  common: [
+    "mmd",
+    "krapysister",
+    "guidong",
+    "taishan",
+    "tommy",
+    "hagon",
+    "uzra",
+    "eason",
+    "turtle",
+    "yuexi"
+  ]
 };
 
 /*
