@@ -1,2294 +1,3944 @@
-:root{--bg:#090711;--panel:#151126;--panel2:#211738;--text:#f7f3ff;--muted:#aaa1bd;--pink:#ff4ea3;--purple:#8b5cf6;--cyan:#2ee9ff;--red:#ff385c;--green:#38f29a;--yellow:#ffd54a;--line:rgba(255,255,255,.1);--shadow:0 20px 70px rgba(0,0,0,.45)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 10% 0%,#2c164b 0,transparent 34%),radial-gradient(circle at 90% 15%,#102b49 0,transparent 30%),var(--bg);color:var(--text);font-family:"Noto Sans TC",sans-serif;overflow-x:hidden}.noise{position:fixed;inset:0;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");z-index:20}.hero,main,footer{width:min(1440px,calc(100% - 36px));margin:auto}.hero{padding:46px 0 24px;display:flex;align-items:end;justify-content:space-between;gap:24px}.eyebrow{margin:0 0 7px;color:var(--cyan);font-weight:900;letter-spacing:.2em;font-size:.76rem}.hero h1{font-size:clamp(2.25rem,5vw,5.4rem);line-height:.95;margin:0;background:linear-gradient(100deg,#fff 15%,#ff80be 55%,#75efff);-webkit-background-clip:text;color:transparent;letter-spacing:-.04em}.subtitle{color:var(--muted);font-weight:700}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}.btn{border:1px solid var(--line);background:var(--panel);color:#fff;border-radius:14px;padding:12px 17px;font:inherit;font-weight:800;cursor:pointer;transition:.2s transform,.2s box-shadow,.2s background}.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.3)}.btn.primary{background:linear-gradient(135deg,var(--purple),var(--pink));border:0}.btn.danger{background:linear-gradient(135deg,#9b132e,var(--red));border:0}.btn.ghost{background:rgba(255,255,255,.04)}main{padding-bottom:34px}.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.summary-card{background:linear-gradient(145deg,rgba(255,255,255,.09),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow);min-height:144px;position:relative;overflow:hidden}.summary-card:after{content:"";position:absolute;width:110px;height:110px;border-radius:50%;background:var(--purple);filter:blur(55px);opacity:.2;right:-30px;bottom:-50px}.summary-card span,.summary-card small{display:block;color:var(--muted);font-weight:700}.summary-card strong{display:block;font-size:clamp(1.45rem,2.3vw,2.5rem);margin:15px 0 7px}.summary-card.loss strong{color:var(--red);text-shadow:0 0 24px rgba(255,56,92,.35)}.summary-card.profit strong{color:var(--green)}.ticker-wrap{overflow:hidden;margin:18px 0 42px;border:1px solid var(--line);border-radius:16px;background:#0f0b1b}.ticker{display:flex;gap:34px;width:max-content;padding:12px 0;animation:ticker 30s linear infinite;font-weight:900}.ticker span{white-space:nowrap}.ticker .down{color:var(--red)}.ticker .up{color:var(--green)}@keyframes ticker{to{transform:translateX(-50%)}}.section-head{display:flex;justify-content:space-between;align-items:end;margin:0 0 15px}.section-head h2,.links-section h2,.event-stage h2{font-size:2rem;margin:0}.section-head>p{color:var(--muted)}.portfolio-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}.stock-card{position:relative;min-height:290px;padding:20px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.025));box-shadow:var(--shadow);cursor:pointer;overflow:hidden;transition:.25s transform,.25s border-color}.stock-card:hover{transform:translateY(-6px) rotate(-.4deg);border-color:rgba(46,233,255,.5)}.stock-card.hit{animation:hit .55s ease}.stock-card:before{content:"";position:absolute;inset:auto -20% -50% 20%;height:60%;background:var(--glow,var(--red));filter:blur(70px);opacity:.17}.card-top{display:flex;justify-content:space-between;gap:8px;align-items:start}.stock-card h3{font-size:1.25rem;margin:0}.ticker-code{color:var(--cyan);font-size:.8rem;font-weight:900}.status-badge{font-size:.7rem;font-weight:900;padding:5px 8px;border-radius:99px;background:rgba(255,255,255,.08)}.price{font-size:2rem;font-weight:900;margin:22px 0 2px}.currency{font-size:.75rem;color:var(--muted)}.card-stats{display:grid;gap:8px;margin-top:20px}.stat{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:.85rem}.stat b{color:#fff}.pnl{margin-top:17px;padding-top:15px;border-top:1px solid var(--line);font-size:1.15rem;font-weight:900}.pnl.loss{color:var(--red)}.pnl.profit{color:var(--green)}.manual-note{margin-top:9px;color:var(--yellow);font-size:.7rem;line-height:1.5}.event-stage{margin:42px 0 20px;display:grid;grid-template-columns:170px 1fr auto;align-items:center;gap:28px;background:linear-gradient(135deg,rgba(139,92,246,.22),rgba(46,233,255,.08));border:1px solid var(--line);border-radius:28px;padding:24px 34px}.event-stage p:not(.eyebrow){color:var(--muted)}.sprite{height:130px;position:relative;cursor:pointer;display:grid;place-items:center;transition:.2s transform}.sprite:hover{transform:scale(1.08)}.sprite-face{width:120px;height:100px;border-radius:48% 48% 42% 42%;background:linear-gradient(145deg,#ffd154,#ff7ba8);display:grid;place-items:center;color:#29102c;font-weight:900;font-size:1.5rem;border:5px solid rgba(255,255,255,.7);box-shadow:0 0 45px rgba(255,126,184,.4);animation:float 2.2s ease-in-out infinite}.sprite-shadow{position:absolute;width:95px;height:20px;border-radius:50%;background:rgba(0,0,0,.35);bottom:0;filter:blur(5px);animation:shadow 2.2s ease-in-out infinite}.sprite.angry .sprite-face{animation:shake .18s linear 6;background:linear-gradient(145deg,#ff953f,#ff385c)}.social-links{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.links-section{margin-top:44px}.social-link{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-radius:20px;color:#fff;text-decoration:none;font-size:1.15rem;font-weight:900;border:1px solid var(--line);background:rgba(255,255,255,.055);transition:.2s transform,.2s background}.social-link:hover{transform:translateY(-4px);background:rgba(255,255,255,.1)}.social-icon{width:45px;height:45px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--purple),var(--pink));font-size:.8rem}footer{padding:26px 0 42px;display:flex;justify-content:space-between;color:var(--muted);border-top:1px solid var(--line)}footer strong{color:#fff}.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,120px);background:#fff;color:#150f20;padding:13px 18px;border-radius:14px;font-weight:900;z-index:50;transition:.25s;box-shadow:var(--shadow)}.toast.show{transform:translate(-50%,0)}dialog{width:min(540px,calc(100% - 28px));border:1px solid var(--line);border-radius:24px;background:#171124;color:#fff;box-shadow:var(--shadow)}dialog::backdrop{background:rgba(4,2,10,.75);backdrop-filter:blur(8px)}.settings-form{padding:8px}.dialog-head{display:flex;justify-content:space-between;align-items:start}.dialog-head h2{margin:0}.icon-btn{background:none;border:0;color:#fff;font-size:2rem;cursor:pointer}.settings-form label{display:grid;gap:8px;margin:20px 0;font-weight:800}.settings-form input[type=password]{padding:13px;border-radius:12px;border:1px solid var(--line);background:#0d0916;color:#fff;font:inherit}.hint{color:var(--muted);font-size:.82rem;line-height:1.7}.switch-row{display:flex!important;align-items:center;gap:10px}.dialog-actions{display:flex;justify-content:flex-end;gap:10px}.particle{position:fixed;pointer-events:none;z-index:30;font-weight:900;animation:burst 1.1s ease-out forwards}.screen-flash{animation:screenFlash .4s ease}@keyframes hit{35%{transform:scale(1.05) rotate(1deg)}65%{transform:scale(.97) rotate(-1deg)}}@keyframes float{50%{transform:translateY(-9px)}}@keyframes shadow{50%{transform:scale(.82);opacity:.5}}@keyframes shake{25%{transform:translateX(-5px) rotate(-3deg)}75%{transform:translateX(5px) rotate(3deg)}}@keyframes burst{to{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}@keyframes screenFlash{50%{filter:brightness(1.8) saturate(1.5)}}
-@media(max-width:1150px){.portfolio-grid{grid-template-columns:repeat(3,1fr)}.summary-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){.hero{align-items:start;flex-direction:column}.hero-actions{justify-content:start}.portfolio-grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr 1fr}.event-stage{grid-template-columns:1fr;text-align:center}.social-links{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}footer{gap:15px;flex-direction:column}.stock-card{min-height:250px}}@media(max-width:480px){.summary-grid{grid-template-columns:1fr}.hero,main,footer{width:min(100% - 22px,1440px)}}
+(() => {
+  "use strict";
 
-/* Yahoo Worker 完整版補充樣式 */
-.live-row{display:flex;align-items:center;gap:9px;color:var(--cyan);font-weight:900;letter-spacing:.16em;font-size:.78rem;margin-bottom:10px}.live-dot{width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 16px var(--red);animation:livePulse 1.15s infinite}.rank-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 0 42px}.rank-card{background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:20px;padding:18px 20px;box-shadow:var(--shadow)}.rank-card span,.rank-card small{display:block;color:var(--muted);font-weight:700}.rank-card strong{display:block;font-size:1.45rem;margin:9px 0 5px}.rank-card:first-child strong,.rank-card:first-child small{color:var(--red)}.rank-card:nth-child(2) strong,.rank-card:nth-child(2) small{color:var(--green)}.status-ok{color:var(--green)!important}.status-error{color:var(--red)!important}.stock-card.is-loss{border-color:rgba(255,56,92,.15)}.stock-card.is-profit{border-color:rgba(56,242,154,.2)}.btn:disabled{opacity:.55;cursor:wait;transform:none!important}.social-link{gap:16px}.social-icon{flex:0 0 45px}@keyframes livePulse{50%{opacity:.35;transform:scale(.72)}}@media(max-width:900px){.rank-grid{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
-.market-section {
-  margin-top: 48px;
-}
+  const C = window.APP_CONFIG;
+  if (!C) throw new Error("找不到 APP_CONFIG，請確認 config.js 已正確載入。");
+  const PRAY_API_URL = C.workerUrl;
+  const state = {
+    prices: Object.fromEntries(
+      C.holdings.map(h => [
+        h.id,
+        h.fallbackPrice
+      ])
+    ),
+  
+    histories: Object.fromEntries(
+      C.holdings.map(h => [
+        h.id,
+        []
+      ])
+    ),
+  
+    charts: {},
+  
+    totalChart: null,
+  
+    fxHistory: [],
+  
+    usdTwd: C.fallbackUsdTwd,
+    sound: true,
+    countdown: C.refreshSeconds,
+  
+    autoRefresh:
+      localStorage.getItem("autoRefresh") !== "false",
+  
+    refreshing: false,
+    lastSuccessAt: null
+  };
 
-.market-section + .market-section {
-  margin-top: 70px;
-}
+  const $ = selector => document.querySelector(selector);
+  const money = (value, currency = "TWD") => new Intl.NumberFormat("zh-TW", {
+    style: "currency",
+    currency,
+    maximumFractionDigits: currency === "TWD" ? 0 : 2
+  }).format(Number(value) || 0);
+  const num = value => new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 }).format(Number(value) || 0);
+  const signed = value => `${value >= 0 ? "+" : "-"}${money(Math.abs(value), "TWD")}`;
 
-.fixed-sound-note {
-  margin-top: 12px;
-  padding: 8px 10px;
-  border: 1px solid rgba(255, 213, 74, 0.25);
-  border-radius: 10px;
-  background: rgba(255, 213, 74, 0.08);
-  color: var(--yellow);
-  font-size: 0.75rem;
-  font-weight: 700;
-}
+  function holdingData(h) {
+    const price = Number(state.prices[h.id] ?? h.fallbackPrice);
+    const pnlOriginal = (price - h.cost) * h.qty;
+    const fx = h.currency === "USD" ? state.usdTwd : 1;
+    return {
+      ...h,
+      price,
+      pnlOriginal,
+      pnlTwd: pnlOriginal * fx,
+      costTwd: h.cost * h.qty * fx,
+      valueTwd: price * h.qty * fx
+    };
+  }
 
-.chart-wrap {
-  position: relative;
-  height: 95px;
-  margin-top: 16px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
+  function render() {
+  const data = C.holdings.map(holdingData);
 
-.chart-wrap canvas {
-  width: 100% !important;
-  height: 100% !important;
-}
+  const totalPnl = data.reduce(
+    (sum, holding) => sum + holding.pnlTwd,
+    0
+  );
 
-.stock-card {
-  min-height: 400px;
-}
-.mrvl-effect {
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  display: grid;
-  place-items: center;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.2s ease,
-    visibility 0.2s ease;
-}
+  const totalCost = data.reduce(
+    (sum, holding) => sum + holding.costTwd,
+    0
+  );
 
-.mrvl-effect.show {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-}
+  const totalPercent = totalCost
+    ? totalPnl / totalCost * 100
+    : 0;
 
-.mrvl-effect-backdrop {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(
-      circle,
-      rgba(255, 56, 92, 0.24),
-      rgba(5, 2, 12, 0.94) 65%
+  const totalPnlElement =
+    document.querySelector("#totalPnl");
+
+  const totalPnlPercentElement =
+    document.querySelector("#totalPnlPct");
+
+  const totalCostElement =
+    document.querySelector("#totalCost");
+
+  const usdTwdElement =
+    document.querySelector("#usdTwd");
+
+  if (totalPnlElement) {
+    totalPnlElement.textContent =
+      signed(totalPnl);
+  }
+
+  if (totalPnlPercentElement) {
+    totalPnlPercentElement.textContent =
+      `${totalPercent >= 0 ? "+" : ""}` +
+      `${totalPercent.toFixed(2)}%`;
+  }
+
+  if (totalCostElement) {
+    totalCostElement.textContent =
+      money(totalCost, "TWD");
+  }
+
+  if (usdTwdElement) {
+    usdTwdElement.textContent =
+      Number(state.usdTwd).toFixed(3);
+  }
+
+  const totalCard =
+    document.querySelector(".summary-card.total");
+
+  if (totalCard) {
+    totalCard.classList.toggle(
+      "loss",
+      totalPnl < 0
     );
-  backdrop-filter: blur(8px);
-}
 
-.mrvl-effect-content {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  justify-items: center;
-  width: min(820px, calc(100% - 30px));
-  transform: scale(0.25) rotate(-12deg);
-  opacity: 0;
-}
-
-.mrvl-effect.show .mrvl-effect-content {
-  animation:
-    mrvlAppear 0.7s cubic-bezier(
-      0.17,
-      0.89,
-      0.32,
-      1.35
-    ) forwards,
-    mrvlShake 0.12s linear 6 0.7s;
-}
-
-.mrvl-effect-content img {
-  display: block;
-  max-width: min(650px, 90vw);
-  max-height: 65vh;
-  object-fit: contain;
-  border: 5px solid rgba(255, 255, 255, 0.85);
-  border-radius: 24px;
-  box-shadow:
-    0 0 30px rgba(255, 56, 92, 0.7),
-    0 0 80px rgba(139, 92, 246, 0.55),
-    0 30px 100px rgba(0, 0, 0, 0.8);
-}
-
-.mrvl-effect-title {
-  margin-top: 18px;
-  color: #fff;
-  font-size: clamp(2rem, 7vw, 5.5rem);
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-shadow:
-    0 0 12px #ff385c,
-    0 0 25px #ff385c,
-    0 0 55px #8b5cf6;
-  animation: mrvlTitlePulse 0.55s ease-in-out infinite alternate;
-}
-
-.mrvl-effect-subtitle {
-  margin-top: 5px;
-  color: #ffd54a;
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  font-weight: 900;
-  letter-spacing: 0.12em;
-}
-
-.mrvl-effect-flash {
-  position: fixed;
-  inset: 0;
-  background: #fff;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.mrvl-effect.show .mrvl-effect-flash {
-  animation: mrvlFlash 0.65s ease-out;
-}
-
-.mrvl-effect-particle {
-  position: fixed;
-  z-index: 1001;
-  pointer-events: none;
-  font-size: clamp(1.2rem, 3vw, 2.5rem);
-  font-weight: 900;
-  animation: mrvlParticle 1.5s ease-out forwards;
-}
-
-@keyframes mrvlAppear {
-  0% {
-    opacity: 0;
-    transform: scale(0.25) rotate(-12deg);
-  }
-
-  55% {
-    opacity: 1;
-    transform: scale(1.15) rotate(3deg);
-  }
-
-  75% {
-    transform: scale(0.94) rotate(-1deg);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1) rotate(0);
-  }
-}
-
-@keyframes mrvlShake {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-
-  25% {
-    transform: translate(-7px, 4px);
-  }
-
-  50% {
-    transform: translate(7px, -4px);
-  }
-
-  75% {
-    transform: translate(-4px, -2px);
-  }
-}
-
-@keyframes mrvlFlash {
-  0% {
-    opacity: 0.95;
-  }
-
-  25% {
-    opacity: 0;
-  }
-
-  40% {
-    opacity: 0.55;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes mrvlTitlePulse {
-  from {
-    transform: scale(1);
-  }
-
-  to {
-    transform: scale(1.07);
-  }
-}
-
-@keyframes mrvlParticle {
-  0% {
-    opacity: 1;
-    transform:
-      translate(0, 0)
-      scale(0.5)
-      rotate(0);
-  }
-
-  100% {
-    opacity: 0;
-    transform:
-      translate(
-        var(--particle-x),
-        var(--particle-y)
-      )
-      scale(1.4)
-      rotate(var(--particle-rotate));
-  }
-}
-.total-chart-section {
-  margin: 20px 0 28px;
-  padding: 25px 28px;
-  border: 1px solid var(--line);
-  border-radius: 26px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.09),
-      rgba(255, 255, 255, 0.025)
+    totalCard.classList.toggle(
+      "profit",
+      totalPnl >= 0
     );
-  box-shadow: var(--shadow);
+  }
+
+  const taiwanHoldings = data.filter(
+    holding =>
+      holding.currency === "TWD" ||
+      holding.market === "TW"
+  );
+
+  const usHoldings = data.filter(
+    holding =>
+      holding.currency === "USD" ||
+      holding.market === "US"
+  );
+
+  const twPortfolio =
+    document.querySelector("#twPortfolio");
+
+  const usPortfolio =
+    document.querySelector("#usPortfolio");
+
+  if (twPortfolio) {
+    twPortfolio.innerHTML =
+      taiwanHoldings
+        .map(createStockCard)
+        .join("");
+  }
+
+  if (usPortfolio) {
+    usPortfolio.innerHTML =
+      usHoldings
+        .map(createStockCard)
+        .join("");
+  }
+
+  const tickerHtml = data
+    .map(holding => {
+      const className =
+        holding.pnlTwd < 0
+          ? "down"
+          : "up";
+
+      return `
+        <span class="${className}">
+          ${holding.ticker}
+          ${money(
+            holding.price,
+            holding.currency
+          )}
+          ·
+          ${signed(holding.pnlTwd)}
+        </span>
+      `;
+    })
+    .join("");
+
+  const ticker =
+    document.querySelector("#ticker");
+
+  if (ticker) {
+    ticker.innerHTML =
+      tickerHtml + tickerHtml;
+  }
+
+  renderRanking(data);
+
+  document
+    .querySelectorAll(".stock-card")
+    .forEach(card => {
+      card.addEventListener(
+        "click",
+        () => cardEvent(card)
+      );
+    });
+
+  if (typeof renderCharts === "function") {
+    renderCharts(data);
+    renderTotalPortfolioChart(data);
+  }
+}
+function createStockCard(holding) {
+  const isLoss = holding.pnlTwd < 0;
+
+  const priceDifference =
+    holding.price - holding.cost;
+
+  const statusText =
+    holding.market === "MANUAL"
+      ? "手動估值"
+      : "Yahoo API";
+
+  const fixedSoundText =
+    holding.id === "mrvl"
+      ? `<div class="fixed-sound-note">
+           點擊固定播放 MRVL 專屬音效
+         </div>`
+      : "";
+
+  return `
+    <article
+      class="stock-card"
+      data-id="${holding.id}"
+      style="--glow:${
+        isLoss
+          ? "var(--red)"
+          : "var(--green)"
+      }"
+    >
+      <div class="card-top">
+        <div>
+          <div class="ticker-code">
+            ${holding.ticker}
+          </div>
+
+          <h3>${holding.name}</h3>
+        </div>
+
+        <span class="status-badge">
+          ${statusText}
+        </span>
+      </div>
+
+      <div class="price">
+        ${money(
+          holding.price,
+          holding.currency
+        )}
+      </div>
+
+      <div class="currency">
+        最新現價 · ${holding.currency}
+      </div>
+
+      <div class="card-stats">
+        <div class="stat">
+          <span>入場成本</span>
+
+          <b>
+            ${money(
+              holding.cost,
+              holding.currency
+            )}
+          </b>
+        </div>
+
+        <div class="stat">
+          <span>持有數量</span>
+
+          <b>
+            ${num(holding.qty)} 股
+          </b>
+        </div>
+
+        <div class="stat">
+          <span>每股價差</span>
+
+          <b>
+            ${priceDifference >= 0 ? "+" : ""}
+            ${num(priceDifference)}
+          </b>
+        </div>
+      </div>
+
+      <div
+        class="pnl ${
+          isLoss
+            ? "loss"
+            : "profit"
+        }"
+      >
+        ${
+          isLoss
+            ? "賠"
+            : "賺"
+        }
+
+        ${money(
+          Math.abs(holding.pnlOriginal),
+          holding.currency
+        )}
+
+        <br />
+
+        <small>
+          約 ${signed(holding.pnlTwd)}
+        </small>
+      </div>
+
+      ${fixedSoundText}
+
+      <div class="chart-wrap">
+        <canvas
+          id="chart-${holding.id}"
+        ></canvas>
+      </div>
+
+      ${
+        holding.note
+          ? `
+            <div class="manual-note">
+              ${holding.note}
+            </div>
+          `
+          : ""
+      }
+    </article>
+  `;
+}
+  function renderRanking(data) {
+  if (!Array.isArray(data) || data.length === 0) {
+    return;
+  }
+
+  const sorted = [...data].sort(
+    (a, b) => a.pnlTwd - b.pnlTwd
+  );
+
+  const worst = sorted[0];
+  const best = sorted[sorted.length - 1];
+
+  const worstHolding =
+    document.querySelector("#worstHolding");
+
+  const worstPnl =
+    document.querySelector("#worstPnl");
+
+  const bestHolding =
+    document.querySelector("#bestHolding");
+
+  const bestPnl =
+    document.querySelector("#bestPnl");
+
+  if (worstHolding) {
+    worstHolding.textContent =
+      `${worst.name} (${worst.ticker})`;
+  }
+
+  if (worstPnl) {
+    worstPnl.textContent =
+      signed(worst.pnlTwd);
+  }
+
+  if (bestHolding) {
+    bestHolding.textContent =
+      `${best.name} (${best.ticker})`;
+  }
+
+  if (bestPnl) {
+    bestPnl.textContent =
+      signed(best.pnlTwd);
+  }
 }
 
-.total-chart-head {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 20px;
+  function renderCharts(holdings) {
+    if (typeof Chart === "undefined") {
+      console.warn("Chart.js 尚未載入");
+      return;
+    }
+
+    for (const holding of holdings) {
+      const canvas = document.getElementById(`chart-${holding.id}`);
+      if (!canvas) continue;
+
+      const history = normalizeHistory(
+        state.histories[holding.id]
+      );
+      if (state.charts[holding.id]) {
+        state.charts[holding.id].destroy();
+        delete state.charts[holding.id];
+      }
+
+      if (history.length < 2) {
+        continue;
+      }
+
+      const labels = history.map(item =>
+        new Date(item.time * 1000).toLocaleTimeString("zh-TW", {
+          hour: "2-digit", minute: "2-digit", hour12: false
+        })
+      );
+      const prices = history.map(item => item.price);
+      const isUp = prices[prices.length - 1] >= prices[0];
+
+      state.charts[holding.id] = new Chart(canvas, {
+        type: "line",
+        data: {
+          labels,
+          datasets: [{
+            data: prices,
+            borderColor: isUp ? "#38f29a" : "#ff385c",
+            backgroundColor: isUp ? "rgba(56,242,154,.12)" : "rgba(255,56,92,.12)",
+            fill: true,
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { intersect: false, mode: "index" },
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: context => money(context.parsed.y, holding.currency) } }
+          },
+          scales: {
+            x: { display: false, grid: { display: false } },
+            y: { display: false, grid: { display: false } }
+          }
+        }
+      });
+    }
+  }
+  function renderTotalPortfolioChart(holdings) {
+  if (typeof Chart === "undefined") {
+    console.warn("Chart.js 尚未載入");
+    return;
+  }
+
+  const canvas =
+    document.querySelector(
+      "#totalPortfolioChart"
+    );
+  const currentValueElement =
+    document.querySelector("#currentPortfolioValue");
+  if (!canvas) {
+    return;
+  }
+
+  const timeline =
+    buildPortfolioTimeline(holdings);
+
+  if (state.totalChart) {
+    state.totalChart.destroy();
+    state.totalChart = null;
+  }
+
+  if (timeline.length === 0) {
+    const context =
+      canvas.getContext("2d");
+
+    context.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    context.font =
+      "15px Noto Sans TC";
+
+    context.textAlign =
+      "center";
+
+    context.fillStyle =
+      "rgba(255,255,255,.5)";
+
+    context.fillText(
+      "目前沒有足夠的總資產走勢資料",
+      canvas.width / 2,
+      100
+    );
+
+    return;
+  }
+
+  const labels =
+    timeline.map(item =>
+      formatChartDate(item.time)
+    );
+
+  const values =
+    timeline.map(item =>
+      item.totalValueTwd
+    );
+
+  const firstValue =
+    values[0];
+
+  const lastValue =
+    values[values.length - 1];
+
+  const isUp =
+    lastValue >= firstValue;
+
+ const currentPortfolioValue =
+  holdings.reduce(
+    (total, holding) => {
+      const price =
+        isValidNumber(holding.price)
+          ? Number(holding.price)
+          : 0;
+
+      const quantity =
+        Number(holding.qty) || 0;
+
+      const exchangeRate =
+        holding.currency === "USD"
+          ? (
+              isValidNumber(state.usdTwd)
+                ? Number(state.usdTwd)
+                : Number(C.fallbackUsdTwd)
+            )
+          : 1;
+
+      return total +
+        price *
+        quantity *
+        exchangeRate;
+    },
+    0
+  );
+
+if (currentValueElement) {
+  currentValueElement.textContent =
+    money(
+      currentPortfolioValue,
+      "TWD"
+    );
 }
 
-.total-chart-head h2 {
-  margin: 0;
-  font-size: 2rem;
-}
+  const startDateElement =
+    document.querySelector(
+      "#totalChartStartDate"
+    );
 
-.total-chart-value {
-  text-align: right;
-}
+  const endDateElement =
+    document.querySelector(
+      "#totalChartEndDate"
+    );
 
-.total-chart-value span {
-  display: block;
-  color: var(--muted);
-  font-size: 0.8rem;
-  font-weight: 700;
-}
+  if (startDateElement) {
+    startDateElement.textContent =
+      formatFullDate(
+        timeline[0].time
+      );
+  }
 
-.total-chart-value strong {
-  display: block;
-  margin-top: 5px;
-  font-size: clamp(
-    1.4rem,
-    3vw,
-    2.6rem
+  if (endDateElement) {
+    endDateElement.textContent =
+      formatFullDate(
+        timeline[timeline.length - 1].time
+      );
+  }
+
+  const context =
+    canvas.getContext("2d");
+
+  const gradient =
+    context.createLinearGradient(
+      0,
+      0,
+      0,
+      300
+    );
+
+  if (isUp) {
+    gradient.addColorStop(
+      0,
+      "rgba(56,242,154,.32)"
+    );
+
+    gradient.addColorStop(
+      1,
+      "rgba(56,242,154,0)"
+    );
+  } else {
+    gradient.addColorStop(
+      0,
+      "rgba(255,56,92,.32)"
+    );
+
+    gradient.addColorStop(
+      1,
+      "rgba(255,56,92,0)"
+    );
+  }
+
+  state.totalChart =
+    new Chart(canvas, {
+      type: "line",
+
+      data: {
+        labels,
+
+        datasets: [
+          {
+            label: "全資產總市值",
+            data: values,
+
+            borderColor:
+              isUp
+                ? "#38f29a"
+                : "#ff385c",
+
+            backgroundColor:
+              gradient,
+
+            fill: true,
+            borderWidth: 3,
+            pointRadius: 0,
+            pointHoverRadius: 6,
+            pointHitRadius: 12,
+            tension: 0.25
+          }
+        ]
+      },
+
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
+        animation: {
+          duration: 650
+        },
+
+        interaction: {
+          mode: "index",
+          intersect: false
+        },
+
+        plugins: {
+          legend: {
+            display: false
+          },
+
+          tooltip: {
+            displayColors: false,
+
+            callbacks: {
+              title(items) {
+                const index =
+                  items[0].dataIndex;
+
+                return formatFullDateTime(
+                  timeline[index].time
+                );
+              },
+
+              label(context) {
+                return (
+                  "總市值：" +
+                  money(
+                    context.parsed.y,
+                    "TWD"
+                  )
+                );
+              },
+
+              afterLabel(context) {
+                if (
+                  context.dataIndex === 0
+                ) {
+                  return "";
+                }
+
+                const current =
+                  values[
+                    context.dataIndex
+                  ];
+
+                const previous =
+                  values[
+                    context.dataIndex - 1
+                  ];
+
+                const difference =
+                  current - previous;
+
+                return (
+                  "較前一筆：" +
+                  signed(difference)
+                );
+              }
+            }
+          }
+        },
+
+        scales: {
+          x: {
+            grid: {
+              display: false
+            },
+
+            ticks: {
+              color:
+                "rgba(255,255,255,.55)",
+
+              maxTicksLimit: 8,
+
+              maxRotation: 0,
+              autoSkip: true
+            }
+          },
+
+          y: {
+            position: "right",
+
+            grid: {
+              color:
+                "rgba(255,255,255,.07)"
+            },
+
+            ticks: {
+              color:
+                "rgba(255,255,255,.55)",
+
+              callback(value) {
+                return formatCompactTwd(
+                  value
+                );
+              }
+            }
+          }
+        }
+      }
+    });
+}
+ function buildPortfolioTimeline(holdings) {
+  const allTimes = new Set();
+  const preparedHistories = {};
+
+  // 先整理所有股票歷史資料
+  for (const holding of holdings) {
+    const history = normalizeHistory(
+      state.histories[holding.id]
+    );
+
+    preparedHistories[holding.id] = history;
+
+    for (const item of history) {
+      if (
+        isValidNumber(item.time) &&
+        isValidNumber(item.price)
+      ) {
+        allTimes.add(Number(item.time));
+      }
+    }
+  }
+
+  const preparedFxHistory =
+    normalizeHistory(state.fxHistory);
+
+  for (const item of preparedFxHistory) {
+    if (
+      isValidNumber(item.time) &&
+      isValidNumber(item.price)
+    ) {
+      allTimes.add(Number(item.time));
+    }
+  }
+
+  const times = [...allTimes]
+    .filter(isValidNumber)
+    .sort((a, b) => a - b);
+
+  if (times.length < 2) {
+    return [];
+  }
+
+  const rawTimeline = [];
+
+  for (const time of times) {
+    let totalValueTwd = 0;
+    let valid = true;
+
+    for (const holding of holdings) {
+      const history =
+        preparedHistories[holding.id] || [];
+
+      const currentPrice =
+        isValidNumber(holding.price)
+          ? Number(holding.price)
+          : Number(holding.fallbackPrice);
+
+      /*
+       * 若時間早於該股票第一筆資料，
+       * 使用第一筆歷史價格，而不是目前價格。
+       */
+      const historicalPrice =
+        findPriceAtTime(
+          history,
+          time,
+          currentPrice
+        );
+
+      if (!isValidNumber(historicalPrice)) {
+        valid = false;
+        break;
+      }
+
+      let exchangeRate = 1;
+
+      if (holding.currency === "USD") {
+        const currentFx =
+          isValidNumber(state.usdTwd)
+            ? Number(state.usdTwd)
+            : Number(C.fallbackUsdTwd);
+
+        exchangeRate =
+          findPriceAtTime(
+            preparedFxHistory,
+            time,
+            currentFx
+          );
+
+        if (!isValidNumber(exchangeRate)) {
+          valid = false;
+          break;
+        }
+      }
+
+      const quantity = Number(holding.qty);
+
+      if (
+        !Number.isFinite(quantity) ||
+        quantity < 0
+      ) {
+        valid = false;
+        break;
+      }
+
+      const holdingValue =
+        historicalPrice *
+        quantity *
+        exchangeRate;
+
+      if (
+        !Number.isFinite(holdingValue) ||
+        holdingValue < 0
+      ) {
+        valid = false;
+        break;
+      }
+
+      totalValueTwd += holdingValue;
+    }
+
+    /*
+     * 不讓 NaN、Infinity、0 或錯誤資料
+     * 進入總市值圖表。
+     */
+    if (
+      valid &&
+      Number.isFinite(totalValueTwd) &&
+      totalValueTwd > 0
+    ) {
+      rawTimeline.push({
+        time,
+        totalValueTwd
+      });
+    }
+  }
+
+  return removePortfolioOutliers(rawTimeline);
+}
+function findPriceAtTime(
+  history,
+  timestamp,
+  fallbackPrice
+) {
+  const normalizedHistory =
+    normalizeHistory(history);
+
+  if (normalizedHistory.length === 0) {
+    return isValidNumber(fallbackPrice)
+      ? Number(fallbackPrice)
+      : null;
+  }
+
+  const firstItem =
+    normalizedHistory[0];
+
+  const lastItem =
+    normalizedHistory[
+      normalizedHistory.length - 1
+    ];
+
+  /*
+   * 時間早於第一筆歷史資料：
+   * 使用第一筆歷史價格。
+   *
+   * 不能使用現在價格，否則到第一筆資料時
+   * 會產生垂直跳動。
+   */
+  if (timestamp <= firstItem.time) {
+    return firstItem.price;
+  }
+
+  /*
+   * 時間晚於最後一筆：
+   * 延續最後一筆有效價格。
+   */
+  if (timestamp >= lastItem.time) {
+    return lastItem.price;
+  }
+
+  let left = 0;
+  let right =
+    normalizedHistory.length - 1;
+
+  let result = firstItem.price;
+
+  while (left <= right) {
+    const middle =
+      Math.floor((left + right) / 2);
+
+    const item =
+      normalizedHistory[middle];
+
+    if (item.time <= timestamp) {
+      result = item.price;
+      left = middle + 1;
+    } else {
+      right = middle - 1;
+    }
+  }
+
+  return isValidNumber(result)
+    ? Number(result)
+    : null;
+}
+function removePortfolioOutliers(timeline) {
+  if (
+    !Array.isArray(timeline) ||
+    timeline.length < 3
+  ) {
+    return timeline || [];
+  }
+
+  const result = [];
+
+  for (
+    let index = 0;
+    index < timeline.length;
+    index++
+  ) {
+    const current = timeline[index];
+
+    if (
+      !Number.isFinite(current.totalValueTwd) ||
+      current.totalValueTwd <= 0
+    ) {
+      continue;
+    }
+
+    const previous =
+      result[result.length - 1];
+
+    const next =
+      timeline[index + 1];
+
+    if (!previous || !next) {
+      result.push(current);
+      continue;
+    }
+
+    const previousValue =
+      previous.totalValueTwd;
+
+    const currentValue =
+      current.totalValueTwd;
+
+    const nextValue =
+      next.totalValueTwd;
+
+    const changeFromPrevious =
+      Math.abs(
+        currentValue - previousValue
+      ) / previousValue;
+
+    const changeToNext =
+      Math.abs(
+        currentValue - nextValue
+      ) / nextValue;
+
+    const previousToNext =
+      Math.abs(
+        previousValue - nextValue
+      ) / previousValue;
+
+    /*
+     * 前後兩筆差距很小，但中間一筆突然偏離 25%：
+     * 判定為 API 異常尖刺並移除。
+     */
+    const isSinglePointSpike =
+      changeFromPrevious > 0.25 &&
+      changeToNext > 0.25 &&
+      previousToNext < 0.08;
+
+    if (isSinglePointSpike) {
+      console.warn(
+        "已排除總市值異常資料：",
+        {
+          time: new Date(
+            current.time * 1000
+          ).toLocaleString(),
+          value: currentValue,
+          previous: previousValue,
+          next: nextValue
+        }
+      );
+
+      continue;
+    }
+
+    result.push(current);
+  }
+
+  return result;
+}
+function formatChartDate(timestamp) {
+  return new Date(
+    Number(timestamp) * 1000
+  ).toLocaleString(
+    "zh-TW",
+    {
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    }
   );
 }
 
-.total-chart-wrap {
-  position: relative;
-  height: 330px;
-  margin-top: 25px;
-}
-
-.total-chart-wrap canvas {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.total-chart-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  margin-top: 13px;
-  color: var(--muted);
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
-@media (max-width: 760px) {
-  .total-chart-section {
-    padding: 20px 16px;
-  }
-
-  .total-chart-head {
-    align-items: start;
-    flex-direction: column;
-  }
-
-  .total-chart-value {
-    text-align: left;
-  }
-
-  .total-chart-wrap {
-    height: 270px;
-  }
-
-  .total-chart-footer {
-    align-items: start;
-    flex-direction: column;
-  }
-}
-
-/* =========================
-   固定上香區塊
-========================= */
-
-.pray-fixed-area {
-  position: static;
-}
-
-.pray-fixed-button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  min-width: 230px;
-  min-height: 86px;
-  padding: 10px 16px 10px 10px;
-
-  color: #ffffff;
-  border: 1px solid rgba(255, 199, 92, 0.62);
-  border-radius: 18px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(35, 17, 42, 0.97),
-      rgba(13, 17, 31, 0.97)
-    );
-
-  box-shadow:
-    0 10px 35px rgba(0, 0, 0, 0.48),
-    0 0 18px rgba(255, 167, 64, 0.2);
-
-  cursor: pointer;
-  text-align: left;
-
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.pray-fixed-button:hover {
-  transform: translateY(-3px);
-
-  border-color: rgba(255, 211, 112, 0.95);
-
-  box-shadow:
-    0 14px 42px rgba(0, 0, 0, 0.55),
-    0 0 28px rgba(255, 167, 64, 0.42);
-}
-
-.pray-fixed-button:active {
-  transform: translateY(0) scale(0.97);
-}
-
-/* 圖示固定在完整方框中 */
-
-.pray-icon-box {
-  flex: 0 0 66px;
-
-  display: grid;
-  place-items: center;
-
-  width: 66px;
-  height: 66px;
-
-  border: 1px solid rgba(255, 200, 92, 0.42);
-  border-radius: 14px;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255, 151, 51, 0.2),
-      rgba(7, 9, 18, 0.8)
-    );
-
-  overflow: hidden;
-}
-
-.pray-icon-box img {
-  display: block;
-
-  width: 54px;
-  height: 54px;
-
-  object-fit: contain;
-  object-position: center;
-
-  margin: 0;
-  padding: 0;
-
-  transform: none;
-}
-
-/* 右側文字 */
-
-.pray-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3px;
-
-  min-width: 0;
-}
-
-.pray-title {
-  color: #ffd783;
-  font-size: 16px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-}
-
-.pray-visitor-row {
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.pray-visitor-row strong {
-  margin: 0 4px;
-
-  color: #ffcf5d;
-  font-size: 21px;
-  font-weight: 900;
-
-  text-shadow:
-    0 0 10px rgba(255, 185, 70, 0.55);
-}
-
-.pray-total-count {
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 12px;
-}
-
-/* 點擊時整張資訊卡震動 */
-
-.pray-fixed-button.is-praying {
-  animation: prayButtonShake 0.55s ease;
-}
-
-@keyframes prayButtonShake {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  20% {
-    transform: rotate(-2deg) scale(1.02);
-  }
-
-  40% {
-    transform: rotate(2deg) scale(1.02);
-  }
-
-  60% {
-    transform: rotate(-1deg);
-  }
-
-  80% {
-    transform: rotate(1deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-@media (max-width: 700px) {
-  .pray-fixed-button {
-    min-width: 190px;
-    min-height: 72px;
-    padding: 8px 12px 8px 8px;
-  }
-
-  .pray-icon-box {
-    flex-basis: 54px;
-    width: 54px;
-    height: 54px;
-  }
-
-  .pray-icon-box img {
-    width: 44px;
-    height: 44px;
-  }
-
-  .pray-title {
-    font-size: 14px;
-  }
-
-  .pray-visitor-row {
-    font-size: 12px;
-  }
-
-  .pray-visitor-row strong {
-    font-size: 18px;
-  }
-}
-/* 點擊時按鈕震動 */
-
-.pray-floating-btn.is-praying {
-  animation: prayButtonShake 0.55s ease;
-}
-
-@keyframes prayButtonShake {
-  0% {
-    transform: rotate(0deg) scale(1);
-  }
-
-  20% {
-    transform: rotate(-9deg) scale(1.08);
-  }
-
-  40% {
-    transform: rotate(9deg) scale(1.08);
-  }
-
-  60% {
-    transform: rotate(-6deg) scale(1.05);
-  }
-
-  80% {
-    transform: rotate(6deg) scale(1.03);
-  }
-
-  100% {
-    transform: rotate(0deg) scale(1);
-  }
-}
-
-/* =========================
-   動畫圖層
-========================= */
-
-.pray-animation-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 1190;
-
-  overflow: hidden;
-  pointer-events: none;
-}
-
-/* 每一次點擊產生的動畫組 */
-
-.pray-float-item {
-  --pray-start-x: calc(100vw - 88px);
-  --pray-start-y: calc(100vh - 88px);
-  --pray-end-x: 50vw;
-  --pray-end-y: 24vh;
-  --pray-rotate: 0deg;
-
-  position: fixed;
-  left: 0;
-  top: 0;
-
-  width: min(270px, 48vw);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-
-  opacity: 0;
-
-  transform:
-    translate(
-      var(--pray-start-x),
-      var(--pray-start-y)
-    )
-    translate(-50%, -50%)
-    scale(0.15)
-    rotate(0deg);
-
-  animation:
-    prayFloatUp 4.6s
-    cubic-bezier(0.16, 0.75, 0.25, 1)
-    forwards;
-}
-
-/* 隨機人物圖片 */
-
-.pray-float-image {
-  display: block;
-
-  width: clamp(120px, 18vw, 220px);
-  height: clamp(120px, 18vw, 220px);
-
-  object-fit: cover;
-
-  border: 4px solid rgba(255, 220, 135, 0.95);
-  border-radius: 28px;
-
-  background: rgba(0, 0, 0, 0.85);
-
-  box-shadow:
-    0 0 20px rgba(255, 210, 100, 0.8),
-    0 0 50px rgba(255, 82, 155, 0.45),
-    0 20px 45px rgba(0, 0, 0, 0.6);
-}
-
-/* 祝福文字 */
-
-.pray-float-text {
-  width: max-content;
-  max-width: min(680px, 88vw);
-
-  padding: 12px 22px;
-
-  color: #fff1b0;
-  font-size: clamp(20px, 3vw, 42px);
-  font-weight: 900;
-  line-height: 1.4;
-  text-align: center;
-
-  border: 1px solid rgba(255, 210, 100, 0.55);
-  border-radius: 18px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(110, 15, 45, 0.91),
-      rgba(30, 7, 28, 0.94)
-    );
-
-  text-shadow:
-    0 0 8px rgba(255, 215, 90, 0.95),
-    0 0 20px rgba(255, 56, 142, 0.85);
-
-  box-shadow:
-    0 0 22px rgba(255, 55, 135, 0.45);
-}
-
-/* 圖片與文字往上飄 */
-
-@keyframes prayFloatUp {
-  0% {
-    opacity: 0;
-
-    transform:
-      translate(
-        var(--pray-start-x),
-        var(--pray-start-y)
-      )
-      translate(-50%, -50%)
-      scale(0.15)
-      rotate(0deg);
-  }
-
-  12% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 1;
-
-    transform:
-      translate(
-        var(--pray-end-x),
-        var(--pray-end-y)
-      )
-      translate(-50%, -50%)
-      scale(1)
-      rotate(var(--pray-rotate));
-  }
-
-  76% {
-    opacity: 1;
-
-    transform:
-      translate(
-        var(--pray-end-x),
-        calc(var(--pray-end-y) - 34px)
-      )
-      translate(-50%, -50%)
-      scale(1.03)
-      rotate(var(--pray-rotate));
-  }
-
-  100% {
-    opacity: 0;
-
-    transform:
-      translate(
-        var(--pray-end-x),
-        -260px
-      )
-      translate(-50%, -50%)
-      scale(0.82)
-      rotate(var(--pray-rotate));
-  }
-}
-
-/* 飄散亮點 */
-
-.pray-spark {
-  --spark-x: 0px;
-  --spark-y: -220px;
-
-  position: fixed;
-  z-index: 1191;
-
-  width: 9px;
-  height: 9px;
-
-  border-radius: 50%;
-
-  background: #ffd56a;
-
-  box-shadow:
-    0 0 8px #ffd56a,
-    0 0 16px #ff7c38;
-
-  pointer-events: none;
-
-  animation: praySparkFly 1.8s ease-out forwards;
-}
-
-@keyframes praySparkFly {
-  0% {
-    opacity: 1;
-    transform:
-      translate(0, 0)
-      scale(0.4);
-  }
-
-  100% {
-    opacity: 0;
-    transform:
-      translate(
-        var(--spark-x),
-        var(--spark-y)
-      )
-      scale(1.5);
-  }
-}
-
-@media (max-width: 700px) {
-  .pray-floating-btn {
-    right: 14px;
-    bottom: 14px;
-    width: 72px;
-    height: 72px;
-  }
-
-  .pray-float-item {
-    width: 86vw;
-  }
-
-  .pray-float-text {
-    width: 86vw;
-    font-size: 22px;
-  }
-}
-/* =========================
-   關於羅傑
-========================= */
-
-.about-roger-btn {
-  color: #fff;
-  border: 1px solid rgba(177, 113, 255, 0.7);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(133, 61, 255, 0.95),
-      rgba(226, 62, 167, 0.95)
-    );
-  box-shadow:
-    0 10px 30px rgba(133, 61, 255, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
-}
-
-.about-roger-btn:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 14px 38px rgba(226, 62, 167, 0.38),
-    inset 0 1px 0 rgba(255, 255, 255, 0.28);
-}
-
-.roger-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 5000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.25s ease,
-    visibility 0.25s ease;
-}
-
-.roger-modal.is-open {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.roger-modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(4, 2, 12, 0.82);
-  backdrop-filter: blur(10px);
-}
-
-.roger-modal-panel {
-  position: relative;
-  z-index: 1;
-  width: min(1050px, 96vw);
-  max-height: 90vh;
-  overflow: auto;
-  border: 1px solid rgba(189, 126, 255, 0.4);
-  border-radius: 28px;
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(147, 76, 255, 0.22),
-      transparent 38%
-    ),
-    linear-gradient(
-      145deg,
-      rgba(25, 15, 48, 0.98),
-      rgba(10, 7, 25, 0.99)
-    );
-  box-shadow:
-    0 30px 90px rgba(0, 0, 0, 0.75),
-    0 0 45px rgba(139, 74, 255, 0.18);
-  transform: translateY(25px) scale(0.97);
-  transition: transform 0.25s ease;
-}
-
-.roger-modal.is-open .roger-modal-panel {
-  transform: translateY(0) scale(1);
-}
-
-.roger-modal-close {
-  position: absolute;
-  top: 16px;
-  right: 18px;
-  z-index: 5;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  color: #fff;
-  font-size: 30px;
-  line-height: 1;
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  background: rgba(5, 3, 15, 0.72);
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease;
-}
-
-.roger-modal-close:hover {
-  transform: rotate(90deg);
-  background: rgba(224, 55, 154, 0.9);
-}
-
-.roger-about-layout {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.85fr) minmax(360px, 1.35fr);
-  min-height: 570px;
-}
-
-.roger-photo-area {
-  position: relative;
-  min-height: 570px;
-  overflow: hidden;
-  border-radius: 27px 0 0 27px;
-  background: #080511;
-}
-
-.roger-profile-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 570px;
-  object-fit: cover;
-}
-
-.roger-photo-area::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      to top,
-      rgba(5, 3, 15, 0.96),
-      transparent 48%
-    );
-  pointer-events: none;
-}
-
-.roger-photo-caption {
-  position: absolute;
-  z-index: 2;
-  right: 28px;
-  bottom: 28px;
-  left: 28px;
-}
-
-.roger-photo-caption span {
-  display: block;
-  margin-bottom: 7px;
-  color: #d5b8ff;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-
-.roger-photo-caption strong {
-  display: block;
-  color: #fff;
-  font-size: clamp(28px, 4vw, 46px);
-  line-height: 1.1;
-}
-
-.roger-introduction {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 60px 54px 46px;
-}
-
-.roger-introduction h2 {
-  margin: 5px 0 20px;
-  color: #fff;
-  font-size: clamp(32px, 5vw, 52px);
-}
-
-.roger-introduction > p:not(.eyebrow) {
-  margin: 0 0 15px;
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 16px;
-  line-height: 1.9;
-}
-
-.roger-info-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin: 22px 0 28px;
-}
-
-.roger-info-list div {
-  padding: 14px 16px;
-  border: 1px solid rgba(190, 131, 255, 0.2);
-  border-radius: 15px;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.roger-info-list span {
-  display: block;
-  margin-bottom: 5px;
-  color: rgba(255, 255, 255, 0.52);
-  font-size: 12px;
-}
-
-.roger-info-list strong {
-  color: #fff;
-  font-size: 15px;
-}
-
-.roger-relationship-btn {
-  width: 100%;
-  padding: 16px 22px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 900;
-  cursor: pointer;
-  border: 1px solid rgba(255, 112, 195, 0.58);
-  border-radius: 16px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(124, 63, 255, 0.94),
-      rgba(227, 52, 155, 0.94)
-    );
-  box-shadow:
-    0 13px 34px rgba(166, 60, 215, 0.27);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.roger-relationship-btn:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 17px 42px rgba(227, 52, 155, 0.35);
-}
-
-/* 人際關係圖 */
-
-.relationship-panel {
-  width: min(1280px, 97vw);
-  padding: 34px;
-}
-
-.relationship-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding-right: 52px;
-  margin-bottom: 22px;
-}
-
-.relationship-header h2 {
-  margin: 4px 0 0;
-  color: #fff;
-  font-size: clamp(26px, 4vw, 42px);
-}
-
-.relationship-image-wrap {
-  overflow: auto;
-  max-height: calc(90vh - 150px);
-  border: 1px solid rgba(199, 146, 255, 0.25);
-  border-radius: 18px;
-  background: rgba(0, 0, 0, 0.28);
-}
-
-.relationship-image {
-  display: block;
-  width: 100%;
-  min-width: 760px;
-  height: auto;
-  object-fit: contain;
-}
-
-body.roger-modal-open {
-  overflow: hidden;
-}
-
-@media (max-width: 800px) {
-  .roger-modal {
-    padding: 12px;
-  }
-
-  .roger-about-layout {
-    display: block;
-  }
-
-  .roger-photo-area {
-    min-height: 340px;
-    border-radius: 27px 27px 0 0;
-  }
-
-  .roger-profile-image {
-    height: 340px;
-    min-height: 340px;
-  }
-
-  .roger-introduction {
-    padding: 34px 22px 28px;
-  }
-
-  .roger-info-list {
-    grid-template-columns: 1fr;
-  }
-
-  .relationship-panel {
-    padding: 25px 14px 14px;
-  }
-
-  .relationship-header {
-    display: block;
-    padding-right: 45px;
-  }
-
-  .relationship-header .btn {
-    margin-top: 16px;
-  }
-
-  .relationship-image {
-    min-width: 650px;
-  }
-}
-/* =========================
-   羅傑互動人際關係圖
-========================= */
-
-.relationship-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 18px;
-}
-
-.relationship-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.relationship-filter {
-  padding: 10px 17px;
-  color: rgba(255, 255, 255, 0.72);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 800;
-  cursor: pointer;
-  border: 1px solid rgba(192, 143, 255, 0.25);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.045);
-  transition:
-    color 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease,
-    transform 0.2s ease;
-}
-
-.relationship-filter:hover {
-  color: #fff;
-  border-color: rgba(205, 163, 255, 0.55);
-  transform: translateY(-1px);
-}
-
-.relationship-filter.active {
-  color: #fff;
-  border-color: rgba(255, 132, 205, 0.75);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(125, 68, 255, 0.95),
-      rgba(222, 55, 158, 0.95)
-    );
-  box-shadow: 0 8px 24px rgba(174, 65, 219, 0.25);
-}
-
-.relationship-reset-btn {
-  flex: 0 0 auto;
-  white-space: nowrap;
-}
-
-.relationship-graph-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 18px;
-  min-height: 590px;
-}
-
-.relationship-network-column {
-  position: relative;
-  min-width: 0;
-  overflow: hidden;
-  border: 1px solid rgba(193, 140, 255, 0.25);
-  border-radius: 20px;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(126, 67, 255, 0.13),
-      transparent 44%
-    ),
-    linear-gradient(
-      145deg,
-      rgba(11, 7, 29, 0.98),
-      rgba(4, 3, 13, 0.99)
-    );
-}
-
-.relationship-network {
-  width: 100%;
-  height: 590px;
-  outline: none;
-}
-
-.relationship-network canvas {
-  outline: none;
-}
-
-.relationship-network-help {
-  position: absolute;
-  right: 14px;
-  bottom: 14px;
-  left: 14px;
-  z-index: 2;
-  padding: 9px 13px;
-  color: rgba(255, 255, 255, 0.58);
-  font-size: 12px;
-  text-align: center;
-  pointer-events: none;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  background: rgba(5, 3, 14, 0.74);
-  backdrop-filter: blur(8px);
-}
-
-.relationship-detail {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 0;
-  padding: 26px 23px;
-  overflow: auto;
-  border: 1px solid rgba(194, 144, 255, 0.25);
-  border-radius: 20px;
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(219, 64, 165, 0.13),
-      transparent 42%
-    ),
-    rgba(255, 255, 255, 0.035);
-}
-
-.relationship-detail-avatar {
-  display: grid;
-  place-items: center;
-  width: 76px;
-  height: 76px;
-  margin-bottom: 18px;
-  color: #fff;
-  font-size: 29px;
-  font-weight: 900;
-  border: 3px solid rgba(255, 255, 255, 0.17);
-  border-radius: 50%;
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22);
-}
-
-.relationship-detail-avatar.group-center {
-  background:
-    linear-gradient(
-      135deg,
-      #ff9c34,
-      #ef3f82
-    );
-}
-
-.relationship-detail-avatar.group-xd {
-  background:
-    linear-gradient(
-      135deg,
-      #7749ff,
-      #c040f1
-    );
-}
-
-.relationship-detail-avatar.group-hearthstone {
-  background:
-    linear-gradient(
-      135deg,
-      #2479e8,
-      #26b3d9
-    );
-}
-
-.relationship-detail-avatar.group-streamer {
-  background:
-    linear-gradient(
-      135deg,
-      #26a375,
-      #55c451
-    );
-}
-
-.relationship-detail-group {
-  margin: 0 0 6px;
-  color: #cdb3ff;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-}
-
-.relationship-detail h3 {
-  margin: 0 0 18px;
-  color: #fff;
-  font-size: 29px;
-  line-height: 1.25;
-}
-
-.relationship-detail-relation {
-  width: 100%;
-  padding: 14px 15px;
-  margin-bottom: 18px;
-  border: 1px solid rgba(255, 133, 205, 0.24);
-  border-radius: 14px;
-  background: rgba(225, 57, 158, 0.08);
-}
-
-.relationship-detail-relation span {
-  display: block;
-  margin-bottom: 5px;
-  color: rgba(255, 255, 255, 0.52);
-  font-size: 12px;
-}
-
-.relationship-detail-relation strong {
-  color: #ff9bd4;
-  font-size: 20px;
-}
-
-.relationship-detail > p:last-child {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 15px;
-  line-height: 1.85;
-}
-
-@media (max-width: 980px) {
-  .relationship-graph-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .relationship-network {
-    height: 520px;
-  }
-
-  .relationship-detail {
-    min-height: 250px;
-  }
-}
-
-@media (max-width: 650px) {
-  .relationship-toolbar {
-    display: block;
-  }
-
-  .relationship-filters {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .relationship-filter {
-    width: 100%;
-    padding: 10px 8px;
-  }
-
-  .relationship-reset-btn {
-    width: 100%;
-    margin-top: 12px;
-  }
-
-  .relationship-graph-layout {
-    min-height: 0;
-  }
-
-  .relationship-network {
-    height: 450px;
-  }
-
-  .relationship-network-help {
-    font-size: 11px;
-  }
-}
-.relationship-detail-avatar {
-  overflow: hidden;
-  padding: 0;
-}
-
-.relationship-detail-avatar img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.notice-overlay{
-    position:fixed;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.65);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:99999;
-}
-
-.notice-box {
-    width: 420px;
-    max-width: 90%;
-    background: #ffffff;
-    color: #222;              /* 新增 */
-    border-radius: 16px;
-    padding: 28px;
-    text-align: center;
-    box-shadow: 0 20px 50px rgba(0,0,0,.35);
-}
-
-.notice-box h2{
-    color:#111;
-}
-
-.notice-box p{
-    color:#444;
-    line-height:1.8;
-}
-
-.notice-box hr{
-    border:none;
-    border-top:1px solid #ddd;
-    margin:20px 0;
-}
-
-.notice-box b{
-    color:#000;
-}
-.notice-box button{
-    margin-top:20px;
-    padding:10px 28px;
-    border:none;
-    border-radius:8px;
-    background:#6f5cff;
-    color:#fff;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-.notice-box button:hover{
-    background:#5a46ea;
-}
-@keyframes popup{
-    from{
-        transform:scale(.8);
-        opacity:0;
+function formatFullDate(timestamp) {
+  return new Date(
+    Number(timestamp) * 1000
+  ).toLocaleDateString(
+    "zh-TW",
+    {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
     }
-    to{
-        transform:scale(1);
-        opacity:1;
+  );
+}
+
+function formatFullDateTime(timestamp) {
+  return new Date(
+    Number(timestamp) * 1000
+  ).toLocaleString(
+    "zh-TW",
+    {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
     }
-}
-.pray-fixed-button.is-cooldown {
-  opacity: 0.65;
-  cursor: not-allowed;
-  filter: grayscale(0.25);
+  );
 }
 
-.pray-fixed-button:disabled {
-  pointer-events: none;
+function formatCompactTwd(value) {
+  const number =
+    Number(value) || 0;
+
+  if (
+    Math.abs(number) >=
+    100000000
+  ) {
+    return (
+      (
+        number /
+        100000000
+      ).toFixed(1) +
+      " 億"
+    );
+  }
+
+  if (
+    Math.abs(number) >=
+    10000
+  ) {
+    return (
+      (
+        number /
+        10000
+      ).toFixed(0) +
+      " 萬"
+    );
+  }
+
+  return Math.round(
+    number
+  ).toLocaleString(
+    "zh-TW"
+  );
+}
+  function isValidNumber(value, options = {}) {
+  const {
+    allowZero = false
+  } = options;
+
+  // 排除 Yahoo 常見空值
+  if (
+    value === null ||
+    value === undefined ||
+    value === "" ||
+    value === "null" ||
+    value === "undefined"
+  ) {
+    return false;
+  }
+
+  const parsed = Number(value);
+
+  if (!Number.isFinite(parsed)) {
+    return false;
+  }
+
+  return allowZero ? parsed >= 0 : parsed > 0;
 }
 
-.pray-fixed-button.is-cooldown .pray-icon-box img {
-  animation: none;
+function normalizeHistory(history) {
+  if (!Array.isArray(history)) {
+    return [];
+  }
+
+  const unique = new Map();
+
+  for (const item of history) {
+    if (
+      !isValidNumber(item?.time) ||
+      !isValidNumber(item?.price)
+    ) {
+      continue;
+    }
+
+    const time = Number(item.time);
+    const price = Number(item.price);
+
+    // 避免同一時間重複資料
+    unique.set(time, {
+      time,
+      price
+    });
+  }
+
+  return [...unique.values()]
+    .sort((a, b) => a.time - b.time);
 }
-
-/* ===== 右下角固定功能堆疊區（可收合） ===== */
-
-.right-fixed-stack {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 1200;
-
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: flex-end;
-  gap: 12px;
-}
-
-.right-stack-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  padding: 12px 18px;
-
-  color: #ffffff;
-  border: 1px solid rgba(139, 92, 246, 0.55);
-  border-radius: 999px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(35, 17, 42, 0.97),
-      rgba(13, 17, 31, 0.97)
+  async function fetchYahooWorker() {
+    const symbols = [...new Set([...C.holdings.map(h => h.apiSymbol), "USDTWD=X"])];
+    const response = await fetchWithFallback(
+      `/?symbols=${encodeURIComponent(symbols.join(","))}&t=${Date.now()}`,
+      {
+        cache: "no-store",
+        headers: {
+          Accept: "application/json"
+        }
+      }
     );
 
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.5),
-    0 0 18px rgba(139, 92, 246, 0.25);
+    if (!response.ok) throw new Error(`Worker 回傳 HTTP ${response.status}`);
+    const result = await response.json();
+    if (!result || !result.data) throw new Error(result?.message || "Worker 未回傳有效資料");
 
-  cursor: pointer;
-  font-weight: 900;
-  font-size: 14px;
-  letter-spacing: 0.04em;
+    const usdQuote = result.data["USDTWD=X"];
+    
+    if (
+      usdQuote?.success &&
+      isValidNumber(usdQuote.price)
+    ) {
+      state.usdTwd = Number(usdQuote.price);
+    }
+    if (Array.isArray(usdQuote?.history)) {
+      const normalizedFxHistory =
+        normalizeHistory(usdQuote.history);
+    
+      // 有有效資料才覆蓋，避免 API 暫時空值清掉舊資料
+      if (normalizedFxHistory.length > 0) {
+        state.fxHistory = normalizedFxHistory;
+      }
+    }
+    let successCount = 0;
+    const failed = [];
 
-  position: relative;
+    for (const h of C.holdings) {
+      const quote = result.data[h.apiSymbol];
+      if (
+          quote?.success &&
+          isValidNumber(quote.price)
+        ) {
+          state.prices[h.id] = Number(quote.price);
+        
+          if (Array.isArray(quote.history)) {
+            const normalizedHistory =
+              normalizeHistory(quote.history);
+        
+            /*
+             * 有有效走勢資料才覆蓋。
+             * Yahoo 暫時回傳空陣列或全部 null 時，
+             * 保留上一筆成功取得的走勢。
+             */
+            if (normalizedHistory.length > 0) {
+              state.histories[h.id] =
+                normalizedHistory;
+            }
+          }
+        
+          successCount++;
+        } else {
+          failed.push(h.apiSymbol);
+        }
+    }
 
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    $("#fxSource").textContent = usdQuote?.success ? "Yahoo Finance" : "預設匯率";
+    $("#apiStatus").textContent = successCount ? "連線正常" : "連線失敗";
+    $("#apiStatus").className = successCount ? "status-ok" : "status-error";
+    $("#apiDetail").textContent = failed.length ? `成功 ${successCount} 檔，失敗 ${failed.length} 檔` : `成功更新 ${successCount} 檔股票`;
+
+    if (failed.length) console.warn("以下代號未取得新報價：", failed.join(", "));
+    return successCount > 0;
+  }
+
+  async function refresh() {
+    if (state.refreshing) return;
+    state.refreshing = true;
+
+    const btn = $("#refreshBtn");
+    btn.disabled = true;
+    btn.textContent = "更新中…";
+    $("#apiStatus").textContent = "連線中";
+
+    try {
+      const ok = await fetchYahooWorker();
+      render();
+      state.lastSuccessAt = ok ? new Date() : state.lastSuccessAt;
+      $("#updatedAt").textContent = new Date().toLocaleString("zh-TW", { hour12: false });
+      state.countdown = C.refreshSeconds;
+      toast(ok ? "Yahoo Finance 股價更新完成" : "未取得新報價，保留上次價格");
+      playTone(ok ? "success" : "soft");
+    } catch (error) {
+      console.error(error);
+      render();
+      $("#apiStatus").textContent = "連線失敗";
+      $("#apiStatus").className = "status-error";
+      $("#apiDetail").textContent = error.message;
+      toast(`更新失敗：${error.message}`);
+      playTone("fail");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "立即更新";
+      state.refreshing = false;
+    }
+  }
+
+  function toast(text) {
+    const el = $("#toast");
+    el.textContent = text;
+    el.classList.add("show");
+    clearTimeout(el._timer);
+    el._timer = setTimeout(() => el.classList.remove("show"), 2600);
+  }
+
+  function playTone(type = "soft") {
+    if (!state.sound) return;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const presets = { success: [660, 880], fail: [180, 90], soft: [300, 430], chaos: [120, 720] };
+    const [start, end] = presets[type] || presets.soft;
+    osc.type = type === "fail" ? "sawtooth" : "triangle";
+    osc.frequency.setValueAtTime(start, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(end, ctx.currentTime + 0.22);
+    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.14, ctx.currentTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.35);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.38);
+  }
+
+  function playRandomMp3() {
+    if (!state.sound || !C.mp3Files?.length) return;
+    const src = C.mp3Files[Math.floor(Math.random() * C.mp3Files.length)];
+    const audio = new Audio(src);
+    audio.volume = 0.65;
+    audio.play().catch(() => playTone("chaos"));
+  }
+
+  function burst(x = innerWidth / 2, y = innerHeight / 2, amount = 20) {
+    const chars = ["-$$$", "爆", "哭", "GG", "▼", "💸"];
+    for (let i = 0; i < amount; i++) {
+      const p = document.createElement("span");
+      p.className = "particle";
+      p.textContent = chars[Math.floor(Math.random() * chars.length)];
+      p.style.left = `${x}px`;
+      p.style.top = `${y}px`;
+      p.style.setProperty("--x", `${(Math.random() - 0.5) * 420}px`);
+      p.style.setProperty("--y", `${-80 - Math.random() * 350}px`);
+      p.style.setProperty("--r", `${(Math.random() - 0.5) * 500}deg`);
+      p.style.color = Math.random() > 0.5 ? "var(--red)" : "var(--yellow)";
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1200);
+    }
+  }
+
+  function cardEvent(card) {
+  if (!card) {
+    return;
+  }
+
+  card.classList.remove("hit");
+
+  void card.offsetWidth;
+
+  card.classList.add("hit");
+
+  const rect =
+    card.getBoundingClientRect();
+
+  burst(
+    rect.left + rect.width / 2,
+    rect.top + rect.height / 2,
+    12
+  );
+
+  const holding =
+    C.holdings.find(
+      item => item.id === card.dataset.id
+    );
+
+  if (!holding) {
+    return;
+  }
+
+  // MRVL 固定播放專屬音效
+  if (holding.id === "mrvl") {
+    playFixedMp3(
+      holding.fixedSound ||
+      "assets/sounds/mrvl.mp3"
+    );
+  
+    showMrvlEffect();
+  } else {
+    playRandomMp3();
+  }
+  const holdingResult =
+    holdingData(holding);
+
+  if (holdingResult.pnlTwd < 0) {
+    toast(
+      `${holdingResult.name} 又被套住了 ` +
+      `${money(
+        Math.abs(holdingResult.pnlTwd),
+        "TWD"
+      )}`
+    );
+  } else {
+    toast(
+      `${holdingResult.name} 正在賺錢！`
+    );
+  }
+}
+function playFixedMp3(src) {
+  if (!state.sound) {
+    return;
+  }
+
+  const audio = new Audio(src);
+
+  audio.volume = 0.8;
+
+  audio.play().catch(error => {
+    console.warn(
+      `固定音效播放失敗：${src}`,
+      error
+    );
+
+    playTone("chaos");
+  });
+}
+let mrvlEffectTimer = null;
+
+function showMrvlEffect() {
+  const effect =
+    document.querySelector("#mrvlEffect");
+
+  if (!effect) {
+    console.warn("找不到 #mrvlEffect");
+    return;
+  }
+
+  clearTimeout(mrvlEffectTimer);
+
+  effect.classList.remove("show");
+
+  void effect.offsetWidth;
+
+  effect.classList.add("show");
+
+  effect.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  createMrvlParticles();
+
+  mrvlEffectTimer = setTimeout(() => {
+    hideMrvlEffect();
+  }, 3500);
 }
 
-.right-stack-toggle:hover {
-  transform: translateY(-2px);
-  border-color: rgba(46, 233, 255, 0.85);
-  box-shadow:
-    0 14px 36px rgba(0, 0, 0, 0.55),
-    0 0 26px rgba(46, 233, 255, 0.3);
+function hideMrvlEffect() {
+  const effect =
+    document.querySelector("#mrvlEffect");
+
+  if (!effect) return;
+
+  effect.classList.remove("show");
+
+  effect.setAttribute(
+    "aria-hidden",
+    "true"
+  );
 }
 
-.right-stack-toggle:active {
-  transform: translateY(0) scale(0.96);
-}
+function createMrvlParticles() {
+  const symbols = [
+    "MRVL",
+    "爆",
+    "🔥",
+    "💥",
+    "📉",
+    "💸",
+    "GG"
+  ];
 
-.right-stack-toggle-arrow {
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 8px solid currentColor;
-  transition: transform 0.25s ease;
-}
+  for (
+    let index = 0;
+    index < 45;
+    index++
+  ) {
+    const particle =
+      document.createElement("span");
 
-.right-stack-toggle[aria-expanded="true"] .right-stack-toggle-arrow {
-  transform: rotate(180deg);
-}
+    particle.className =
+      "mrvl-effect-particle";
 
-.right-stack-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--red);
-  border: 2px solid rgba(13, 17, 31, 1);
-  animation: rightStackBadgePulse 1.6s ease-in-out infinite;
-}
+    particle.textContent =
+      symbols[
+        Math.floor(
+          Math.random() *
+          symbols.length
+        )
+      ];
 
-@keyframes rightStackBadgePulse {
-  50% {
-    transform: scale(1.25);
+    particle.style.left =
+      `${window.innerWidth / 2}px`;
+
+    particle.style.top =
+      `${window.innerHeight / 2}px`;
+
+    particle.style.setProperty(
+      "--particle-x",
+      `${(Math.random() - 0.5) * window.innerWidth}px`
+    );
+
+    particle.style.setProperty(
+      "--particle-y",
+      `${(Math.random() - 0.5) * window.innerHeight}px`
+    );
+
+    particle.style.setProperty(
+      "--particle-rotate",
+      `${(Math.random() - 0.5) * 900}deg`
+    );
+
+    particle.style.color =
+      Math.random() > 0.5
+        ? "#ff385c"
+        : "#ffd54a";
+
+    document.body.appendChild(
+      particle
+    );
+
+    setTimeout(() => {
+      particle.remove();
+    }, 1600);
   }
 }
 
-.right-stack-panel {
-  display: flex;
-  flex-direction: column-reverse;
-  align-items: flex-end;
-  gap: 12px;
+  function chaos() {
+    document.body.classList.add("screen-flash");
+    setTimeout(() => document.body.classList.remove("screen-flash"), 450);
+    document.querySelectorAll(".stock-card").forEach((card, i) => {
+      setTimeout(() => {
+        card.classList.add("hit");
+        setTimeout(() => card.classList.remove("hit"), 600);
+      }, i * 55);
+    });
+    burst(innerWidth / 2, innerHeight / 2, 60);
+    playTone("chaos");
+    playRandomMp3();
+    toast("全資產損益大爆擊");
+  }
 
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(8px);
+  function renderSocials() {
+    $("#socialLinks").innerHTML = C.socialLinks.map(x => `<a class="social-link" href="${x.url}" target="_blank" rel="noopener"><span class="social-icon">${x.icon}</span><span>${x.name} →</span></a>`).join("");
+  }
 
-  transition:
-    max-height 0.32s ease,
-    opacity 0.25s ease,
-    transform 0.25s ease;
+  $("#refreshBtn")?.addEventListener("click", refresh);
+  $("#chaosBtn")?.addEventListener("click", chaos);
+  $("#soundBtn")?.addEventListener("click", event => {
+    state.sound = !state.sound;
+    event.currentTarget.textContent = `音效：${state.sound ? "開" : "關"}`;
+    event.currentTarget.setAttribute("aria-pressed", String(state.sound));
+    if (state.sound) playTone("success");
+  });
+  $("#autoRefreshBtn")?.addEventListener("click", event => {
+    state.autoRefresh = !state.autoRefresh;
+    localStorage.setItem("autoRefresh", String(state.autoRefresh));
+    event.currentTarget.textContent = `自動更新：${state.autoRefresh ? "開" : "關"}`;
+    event.currentTarget.setAttribute("aria-pressed", String(state.autoRefresh));
+    state.countdown = C.refreshSeconds;
+    toast(state.autoRefresh ? "已開啟自動更新" : "已關閉自動更新");
+  });
+
+  setInterval(() => {
+    if (!state.autoRefresh) {
+      $("#countdown").textContent = "自動更新已關閉";
+      return;
+    }
+    state.countdown--;
+    if (state.countdown <= 0) refresh();
+    $("#countdown").textContent = `${Math.max(0, state.countdown)} 秒後自動更新`;
+  }, 1000);
+  document
+    .querySelector("#mrvlEffect")
+    ?.addEventListener(
+      "click",
+      hideMrvlEffect
+    );
+  
+  document.addEventListener(
+    "keydown",
+    event => {
+      if (event.key === "Escape") {
+        hideMrvlEffect();
+      }
+    }
+  );
+
+  /* =========================
+   燒香拜拜動畫
+========================= */
+function updatePrayStatsDisplay(stats) {
+  const visitorCountElement =
+    document.querySelector(
+      "#prayVisitorCount"
+    );
+
+  const totalCountElement =
+    document.querySelector(
+      "#prayTotalCount"
+    );
+
+  if (visitorCountElement) {
+    visitorCountElement.textContent =
+      Number(
+        stats?.totalVisitors || 0
+      ).toLocaleString("zh-TW");
+  }
+
+  if (totalCountElement) {
+    totalCountElement.textContent =
+      `累積香火 ${Number(
+        stats?.totalCount || 0
+      ).toLocaleString("zh-TW")} 次`;
+  }
+}
+  function getPrayVisitorId() {
+  const storageKey =
+    "rogerPrayVisitorId";
+
+  let visitorId =
+    localStorage.getItem(storageKey);
+
+  if (!visitorId) {
+    if (
+      typeof crypto !== "undefined" &&
+      typeof crypto.randomUUID === "function"
+    ) {
+      visitorId =
+        crypto
+          .randomUUID()
+          .replaceAll("-", "_");
+    } else {
+      visitorId =
+        `visitor_${Date.now()}_` +
+        Math.random()
+          .toString(36)
+          .slice(2);
+    }
+
+    localStorage.setItem(
+      storageKey,
+      visitorId
+    );
+  }
+
+  return visitorId;
+}
+async function loadPrayStats() {
+  const visitorCountElement =
+    document.querySelector(
+      "#prayVisitorCount"
+    );
+
+  try {
+    const visitorId =
+      encodeURIComponent(
+        getPrayVisitorId()
+      );
+
+    const response = await fetchWithFallback(
+        `/pray/stats?visitorId=${visitorId}`,
+        {
+            cache: "no-store",
+            headers: {
+                Accept: "application/json"
+            }
+        }
+    );
+
+    const result =
+      await response.json();
+
+    if (
+      !response.ok ||
+      !result?.success
+    ) {
+      throw new Error(
+        result?.message ||
+        "無法取得上香統計"
+      );
+    }
+
+    updatePrayStatsDisplay(result);
+  } catch (error) {
+    console.error(
+      "取得上香統計失敗：",
+      error
+    );
+
+    if (visitorCountElement) {
+      visitorCountElement.textContent =
+        "--";
+    }
+  }
+}
+async function recordPray() {
+  const response = await fetchWithFallback(
+    "/pray",
+    {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: JSON.stringify({
+            visitorId: getPrayVisitorId()
+        })
+    }
+);
+
+  const result =
+    await response.json();
+
+  if (
+    !response.ok ||
+    !result?.success
+  ) {
+    throw new Error(
+      result?.message ||
+      "上香紀錄失敗"
+    );
+  }
+
+  updatePrayStatsDisplay(result);
+
+  return result;
+}
+const PRAY_IMAGES = [
+  "assets/images/pray-1.jpg",
+  "assets/images/pray-2.jpg"
+];
+
+const PRAY_MESSAGE =
+  "祝羅傑早日離開這充滿惡意的世界";
+const PRAY_COOLDOWN = 60 * 1000;
+const PRAY_STORAGE_KEY = "roger_pray_last_time";
+let prayAnimationIndex = 0;
+
+function getRandomPrayImage() {
+  const randomIndex = Math.floor(
+    Math.random() * PRAY_IMAGES.length
+  );
+
+  return PRAY_IMAGES[randomIndex];
 }
 
-.right-fixed-stack.is-open .right-stack-panel {
-  max-height: 600px;
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+function createPraySparkles(button) {
+  const layer = document.querySelector(
+    "#prayAnimationLayer"
+  );
+
+  if (!layer || !button) {
+    return;
+  }
+
+  const buttonRect =
+    button.getBoundingClientRect();
+
+  const startX =
+    buttonRect.left + buttonRect.width / 2;
+
+  const startY =
+    buttonRect.top + buttonRect.height / 2;
+
+  for (let index = 0; index < 18; index++) {
+    const spark =
+      document.createElement("span");
+
+    spark.className = "pray-spark";
+
+    spark.style.left = `${startX}px`;
+    spark.style.top = `${startY}px`;
+
+    spark.style.setProperty(
+      "--spark-x",
+      `${(Math.random() - 0.5) * 420}px`
+    );
+
+    spark.style.setProperty(
+      "--spark-y",
+      `${-100 - Math.random() * 360}px`
+    );
+
+    layer.appendChild(spark);
+
+    spark.addEventListener(
+      "animationend",
+      () => {
+        spark.remove();
+      },
+      {
+        once: true
+      }
+    );
+  }
 }
 
-/* ===== 每日運勢 ===== */
+async function createPrayFloatAnimation() {
+  const lastTime = Number(
+      localStorage.getItem(PRAY_STORAGE_KEY) || 0
+  );
+  
+  const remain =
+      PRAY_COOLDOWN - (Date.now() - lastTime);
+  
+  if (remain > 0) {
+  
+      toast(
+          `請等待 ${Math.ceil(remain / 1000)} 秒才能再次上香`
+      );
+  
+      return;
+  }
+  const button = document.querySelector(
+    "#prayFloatingBtn"
+  );
 
-.fortune-fixed-area {
-  position: static;
+  const layer = document.querySelector(
+    "#prayAnimationLayer"
+  );
+
+  if (!button || !layer) {
+    console.warn(
+      "找不到拜拜按鈕或動畫圖層"
+    );
+
+    return;
+  }
+
+  const buttonRect =
+    button.getBoundingClientRect();
+
+  const startX =
+    buttonRect.left + buttonRect.width / 2;
+
+  const startY =
+    buttonRect.top + buttonRect.height / 2;
+
+  const item =
+    document.createElement("div");
+
+  item.className = "pray-float-item";
+
+  /*
+   * 每次稍微改變終點位置，
+   * 連續按下時不會完全重疊。
+   */
+  const horizontalOffset =
+    (Math.random() - 0.5) * 260;
+
+  const verticalOffset =
+    Math.random() * 90;
+
+  const endX =
+    window.innerWidth / 2 + horizontalOffset;
+
+  const endY =
+    window.innerHeight * 0.37 - verticalOffset;
+
+  const rotate =
+    (Math.random() - 0.5) * 10;
+
+  item.style.setProperty(
+    "--pray-start-x",
+    `${startX}px`
+  );
+
+  item.style.setProperty(
+    "--pray-start-y",
+    `${startY}px`
+  );
+
+  item.style.setProperty(
+    "--pray-end-x",
+    `${endX}px`
+  );
+
+  item.style.setProperty(
+    "--pray-end-y",
+    `${endY}px`
+  );
+
+  item.style.setProperty(
+    "--pray-rotate",
+    `${rotate}deg`
+  );
+
+  const image =
+    document.createElement("img");
+
+  image.className = "pray-float-image";
+  image.src = getRandomPrayImage();
+  image.alt = "拜拜祈福圖片";
+
+  /*
+   * 避免瀏覽器保留破圖。
+   */
+  image.addEventListener(
+    "error",
+    () => {
+      console.error(
+        `圖片載入失敗：${image.src}`
+      );
+
+      item.remove();
+    },
+    {
+      once: true
+    }
+  );
+
+  const message =
+    document.createElement("div");
+
+  message.className = "pray-float-text";
+  message.textContent = PRAY_MESSAGE;
+
+  item.appendChild(image);
+  item.appendChild(message);
+
+  layer.appendChild(item);
+
+  item.addEventListener(
+    "animationend",
+    () => {
+      item.remove();
+    },
+    {
+      once: true
+    }
+  );
+
+  createPraySparkles(button);
+  try {
+    await recordPray();
+    localStorage.setItem(
+        PRAY_STORAGE_KEY,
+        Date.now()
+    );
+  } catch (error) {
+    console.error(
+      "上香統計失敗：",
+      error
+    );
+  
+    toast("上香成功，但人數紀錄失敗");
+  }
+  /*
+   * 讓按鈕重新觸發震動。
+   */
+  button.classList.remove("is-praying");
+
+  void button.offsetWidth;
+
+  button.classList.add("is-praying");
+
+  window.setTimeout(() => {
+    button.classList.remove("is-praying");
+  }, 600);
+
+  prayAnimationIndex++;
+}
+
+function setupPrayAnimation() {
+  const button = document.querySelector(
+    "#prayFloatingBtn"
+  );
+
+  if (!button) {
+    console.warn(
+      "找不到 #prayFloatingBtn"
+    );
+
+    return;
+  }
+
+  button.addEventListener(
+    "click",
+    createPrayFloatAnimation
+  );
 }
 
 /* ===== 父親節孵蛋彩蛋 ===== */
 
-.egg-fixed-area {
-  position: static;
+const EGG_REVEAL_MONTH = 8;
+const EGG_REVEAL_DAY = 8;
+
+const EGG_CLICK_TARGET = 12;
+
+const EGG_CLICKS_STORAGE_KEY = "roger_egg_clicks";
+const EGG_HATCHED_STORAGE_KEY = "roger_egg_hatched";
+
+function isEggEventLive() {
+  const taipeiParts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Taipei",
+    month: "numeric",
+    day: "numeric"
+  }).formatToParts(new Date());
+
+  const month = Number(
+    taipeiParts.find(part => part.type === "month")?.value
+  );
+
+  const day = Number(
+    taipeiParts.find(part => part.type === "day")?.value
+  );
+
+  return (
+    month === EGG_REVEAL_MONTH && day === EGG_REVEAL_DAY
+  );
 }
 
-.egg-fixed-button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+function getEggClicks() {
+  return Number(
+    localStorage.getItem(EGG_CLICKS_STORAGE_KEY) || 0
+  );
+}
 
-  min-width: 230px;
-  min-height: 86px;
-  padding: 10px 16px 10px 10px;
+function setEggClicks(value) {
+  localStorage.setItem(
+    EGG_CLICKS_STORAGE_KEY,
+    String(value)
+  );
+}
 
-  color: #ffffff;
-  border: 1px solid rgba(139, 92, 246, 0.55);
-  border-radius: 18px;
+function isEggHatched() {
+  return (
+    localStorage.getItem(EGG_HATCHED_STORAGE_KEY) === "1"
+  );
+}
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(35, 17, 42, 0.97),
-      rgba(13, 17, 31, 0.97)
+function setEggHatched() {
+  localStorage.setItem(EGG_HATCHED_STORAGE_KEY, "1");
+}
+
+function updateEggCrackStage(button, clicks) {
+  const ratio = clicks / EGG_CLICK_TARGET;
+
+  button.classList.remove("crack-1", "crack-2", "crack-3");
+
+  if (ratio >= 0.75) {
+    button.classList.add("crack-3");
+  } else if (ratio >= 0.5) {
+    button.classList.add("crack-2");
+  } else if (ratio >= 0.25) {
+    button.classList.add("crack-1");
+  }
+}
+
+function renderEggHatchedState(button) {
+  button.classList.add("is-hatched");
+
+  const countEl = document.getElementById("eggClickCount");
+  const hintEl = document.getElementById("eggHint");
+
+  if (countEl) {
+    countEl.textContent = String(EGG_CLICK_TARGET);
+  }
+
+  if (hintEl) {
+    hintEl.textContent = "V仔獸已誕生，點我再看一次";
+  }
+
+  updateEggCrackStage(button, EGG_CLICK_TARGET);
+}
+
+function syncRogerModalBodyScroll() {
+  const anyOpen = document.querySelector(
+    ".roger-modal.is-open"
+  );
+
+  document.body.classList.toggle(
+    "roger-modal-open",
+    !!anyOpen
+  );
+}
+
+function openEggHatchModal() {
+  const modal = document.getElementById("eggHatchModal");
+
+  if (!modal) {
+    return;
+  }
+
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  syncRogerModalBodyScroll();
+}
+
+function closeEggHatchModal() {
+  const modal = document.getElementById("eggHatchModal");
+
+  if (!modal) {
+    return;
+  }
+
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+  syncRogerModalBodyScroll();
+}
+
+function hatchEgg(button) {
+  setEggHatched();
+
+  button.classList.add("is-hatching");
+
+  playTone("success");
+  burst(
+    button.getBoundingClientRect().left + 30,
+    button.getBoundingClientRect().top + 30,
+    40
+  );
+
+  window.setTimeout(() => {
+    button.classList.remove("is-hatching");
+    renderEggHatchedState(button);
+    openEggHatchModal();
+    refreshRightStackBadge();
+  }, 620);
+}
+
+function handleEggClick(button, countEl) {
+  if (isEggHatched()) {
+    openEggHatchModal();
+    return;
+  }
+
+  const clicks = Math.min(
+    getEggClicks() + 1,
+    EGG_CLICK_TARGET
+  );
+
+  setEggClicks(clicks);
+
+  if (countEl) {
+    countEl.textContent = String(clicks);
+  }
+
+  updateEggCrackStage(button, clicks);
+
+  button.classList.remove("is-tapped");
+  void button.offsetWidth;
+  button.classList.add("is-tapped");
+
+  window.setTimeout(() => {
+    button.classList.remove("is-tapped");
+  }, 350);
+
+  playTone("soft");
+
+  if (clicks >= EGG_CLICK_TARGET) {
+    hatchEgg(button);
+  }
+}
+
+function setupEggHatch() {
+  const area = document.getElementById("eggFixedArea");
+  const button = document.getElementById("eggFloatingBtn");
+  const countEl = document.getElementById("eggClickCount");
+  const targetEl = document.getElementById("eggClickTarget");
+  const modal = document.getElementById("eggHatchModal");
+  const closeBtn = document.getElementById("closeEggHatchBtn");
+  const image = document.getElementById("eggHatchImage");
+  const imageFallback = document.getElementById(
+    "eggHatchImageFallback"
+  );
+
+  if (!area || !button || !modal) {
+    console.warn("找不到父親節孵蛋彩蛋所需的 HTML 元素");
+    return;
+  }
+
+  if (!isEggEventLive()) {
+    return;
+  }
+
+  area.removeAttribute("hidden");
+
+  if (targetEl) {
+    targetEl.textContent = String(EGG_CLICK_TARGET);
+  }
+
+  const savedClicks = Math.min(
+    getEggClicks(),
+    EGG_CLICK_TARGET
+  );
+
+  if (countEl) {
+    countEl.textContent = String(savedClicks);
+  }
+
+  updateEggCrackStage(button, savedClicks);
+
+  if (isEggHatched()) {
+    renderEggHatchedState(button);
+  }
+
+  button.addEventListener("click", () => {
+    handleEggClick(button, countEl);
+  });
+
+  if (image && imageFallback) {
+    image.addEventListener(
+      "error",
+      () => {
+        image.hidden = true;
+        imageFallback.hidden = false;
+      },
+      { once: true }
     );
+  }
 
-  box-shadow:
-    0 10px 35px rgba(0, 0, 0, 0.48),
-    0 0 18px rgba(139, 92, 246, 0.22);
+  closeBtn?.addEventListener("click", closeEggHatchModal);
 
-  cursor: pointer;
-  text-align: left;
-
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  modal
+    .querySelector("[data-close-egg-modal]")
+    ?.addEventListener("click", closeEggHatchModal);
 }
 
-.egg-fixed-button:hover {
-  transform: translateY(-3px);
-  border-color: rgba(46, 233, 255, 0.85);
-  box-shadow:
-    0 14px 42px rgba(0, 0, 0, 0.55),
-    0 0 28px rgba(46, 233, 255, 0.35);
+/* ===== 每日運勢籤（抽卡合一） ===== */
+
+const FORTUNE_CHARACTERS = [
+  { id: "roger", name: "羅傑", image: "assets/images/people/roger.jpg" },
+  { id: "taishan", name: "泰山", image: "assets/images/people/泰山.jpg" },
+  { id: "krapysister", name: "虧皮妹妹", image: "assets/images/people/虧皮妹.png" },
+  { id: "nl", name: "NL（熊班長）", image: "assets/images/people/nl.jpg" },
+  { id: "shaxy", name: "薛喜", image: "assets/images/people/薛喜.jpg" },
+  { id: "eason", name: "Eason（蕭老師／發仔）", image: "assets/images/people/發仔.png" },
+  { id: "vivi", name: "Vivi", image: "assets/images/people/vivi.png" },
+  { id: "krapy", name: "Krapy（虧皮）", image: "assets/images/people/哈K.jpg" },
+  { id: "tommy", name: "偷米", image: "assets/images/people/tommy.png" },
+  { id: "hagon", name: "哈耿", image: "assets/images/people/哈耿.jpg" },
+  { id: "egghead", name: "蛋頭", image: "assets/images/people/蛋頭.png" },
+  { id: "yuexi", name: "月希", image: "assets/images/people/月希.jpg" },
+  { id: "asen", name: "阿森", image: "assets/images/people/阿森.jpg" },
+  { id: "kent", name: "肯特", image: "assets/images/people/肯特.jpg" },
+  { id: "mmd", name: "咪咪蛋", image: "assets/images/people/mmd.jpg" },
+  { id: "guidong", name: "鬼東", image: "assets/images/people/鬼東.jpg" },
+  { id: "weifu", name: "威傅", image: "assets/images/people/威傅.jpg" },
+  { id: "uzra", name: "Uzra", image: "assets/images/people/uzra.png" },
+  { id: "turtle", name: "龜狗", image: "assets/images/people/龜狗.png" },
+  { id: "overload", name: "超負荷", image: "assets/images/people/超負荷.jpg" }
+];
+
+/*
+ * 每個角色在 6 種運勢等級下的專屬用語。
+ * 目前只有短籤詩（4~8 字），之後要補完整籤詩時，
+ * 直接把對應字串換成長句即可，不用動抽籤邏輯。
+ */
+const FORTUNE_TERMS = {
+  roger: { 大吉: "今日不點燈", 中吉: "貪刀有理", 小吉: "頭鐵保平安", 小凶: "莫名失聯", 中凶: "惡意攻擊纏身", 大凶: "全倉套牢" },
+  taishan: { 大吉: "分身附體", 中吉: "本尊在線", 小吉: "影分身之術", 小凶: "分身走丟", 中凶: "本尊放鴿子", 大凶: "分身也遲到" },
+  krapysister: { 大吉: "保單零理賠", 中吉: "續保平安", 小吉: "業績小紅", 小凶: "該加保了", 中凶: "理賠單雪片飛來", 大凶: "建議加買意外險" },
+  nl: { 大吉: "夫妻同心", 中吉: "老闆罩你", 小吉: "公司照常運作", 小凶: "熊班長心情不美麗", 中凶: "夫妻吵架冷戰中", 大凶: "公司帳本要對帳" },
+  shaxy: { 大吉: "難兄難弟雙贏", 中吉: "戰友挺你", 小吉: "平安過一天", 小凶: "難兄難弟一起虧", 中凶: "戰友也被套", 大凶: "難兄難弟雙雙陣亡" },
+  eason: { 大吉: "胡自摸", 中吉: "麻將贏一把", 小吉: "摸八筒", 小凶: "放槍賠一半", 中凶: "麻將輸到脫褲", 大凶: "通殺出局" },
+  vivi: { 大吉: "小三上位", 中吉: "曖昧升溫", 小吉: "平淡日常", 小凶: "小三被抓包", 中凶: "曖昧變尷尬", 大凶: "三角關係崩壞" },
+  krapy: { 大吉: "損友挺你", 中吉: "搭檔互罩", 小吉: "一起苟活", 小凶: "損友也在虧", 中凶: "搭檔陣亡", 大凶: "損友一起爆倉" },
+  tommy: { 大吉: "賽事奪冠", 中吉: "戰友保底", 小吉: "平安落地", 小凶: "舊部隊被淘汰", 中凶: "戰友已讀不回", 大凶: "賽事直接棄權" },
+  hagon: { 大吉: "鯰魚躍龍門", 中吉: "短影音爆紅", 小吉: "平常心划水", 小凶: "鯰魚翻肚", 中凶: "短影音下架", 大凶: "鯰魚缺氧" },
+  egghead: { 大吉: "饒舌奪冠", 中吉: "節奏抓得穩", 小吉: "平穩過渡", 小凶: "歌詞卡詞", 中凶: "節奏亂了套", 大凶: "全場噓聲" },
+  yuexi: { 大吉: "麻吉罩你", 中吉: "ACG大吉", 小吉: "平淡主持日", 小凶: "麻吉放鳥", 中凶: "節目冷場", 大凶: "麻吉直接絕交" },
+  asen: { 大吉: "賽評神預測", 中吉: "麻吉挺你", 小吉: "平常心觀賽", 小凶: "麻吉沒空", 中凶: "賽評看走眼", 大凶: "麻吉組隊翻船" },
+  kent: { 大吉: "快打全勝", 中吉: "損友保底", 小吉: "平手收場", 小凶: "連續被完封", 中凶: "損友已讀不回", 大凶: "快打連敗到脫段" },
+  mmd: { 大吉: "職業魂覺醒", 中吉: "損友挺你", 小吉: "平淡上分", 小凶: "損友放你鴿子", 中凶: "掉分掉到懷疑人生", 大凶: "損友也棄坑" },
+  guidong: { 大吉: "後盾全開", 中吉: "公司挺你", 小吉: "平常營運", 小凶: "後盾請假", 中凶: "公司要開會檢討", 大凶: "幕後全面失聯" },
+  weifu: { 大吉: "老戰友爆發", 中吉: "語音陪你", 小吉: "平淡開黑", 小凶: "戰友已讀不回", 中凶: "語音突然斷線", 大凶: "老戰友直接下線" },
+  uzra: { 大吉: "亦敵亦友大勝", 中吉: "戰棋玩梗贏", 小吉: "平手不尷尬", 小凶: "玩梗玩過頭", 中凶: "亦敵亦友翻臉", 大凶: "戰棋直接投降" },
+  turtle: { 大吉: "DC班底附體", 中吉: "老友挺你", 小吉: "平淡開團", 小凶: "老友已讀不回", 中凶: "DC群突然安靜", 大凶: "班底集體潛水" },
+  overload: { 大吉: "正代餐上位", 中吉: "相愛相殺贏", 小吉: "平手過招", 小凶: "代餐被抵制", 中凶: "相愛相殺變真吵架", 大凶: "正代餐直接下架" }
+};
+
+const FORTUNE_LEVELS = [
+  { key: "大吉", weight: 10, tier: "legendary" },
+  { key: "中吉", weight: 15, tier: "rare" },
+  { key: "小吉", weight: 25, tier: "common" },
+  { key: "小凶", weight: 25, tier: "common" },
+  { key: "中凶", weight: 15, tier: "common" },
+  { key: "大凶", weight: 10, tier: "common" }
+];
+
+const FORTUNE_GOOD_LEVELS = ["大吉", "中吉", "小吉"];
+
+const FORTUNE_RARITY_POOL = {
+  legendary: ["roger", "shaxy", "nl", "vivi"],
+  rare: ["krapy", "overload", "asen", "kent", "weifu", "egghead"],
+  common: [
+    "mmd",
+    "krapysister",
+    "guidong",
+    "taishan",
+    "tommy",
+    "hagon",
+    "uzra",
+    "eason",
+    "turtle",
+    "yuexi"
+  ]
+};
+
+/*
+ * 運勢等級決定「抽卡池的傾向」，
+ * 大吉時開到傳說卡的機率最高，大凶幾乎只會開到普通卡。
+ */
+const FORTUNE_TIER_WEIGHTS = {
+  legendary: { legendary: 55, rare: 30, common: 15 },
+  rare: { legendary: 15, rare: 45, common: 40 },
+  common: { legendary: 4, rare: 16, common: 80 }
+};
+
+const FORTUNE_RARITY_LABELS = {
+  common: "普通",
+  rare: "稀有",
+  legendary: "傳說"
+};
+
+const FORTUNE_STORAGE_KEY = "roger_fortune_result";
+
+function getTaipeiDateString() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Taipei",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(new Date());
+
+  const year = parts.find(part => part.type === "year")?.value;
+  const month = parts.find(part => part.type === "month")?.value;
+  const day = parts.find(part => part.type === "day")?.value;
+
+  return `${year}-${month}-${day}`;
 }
 
-.egg-fixed-button:active {
-  transform: translateY(0) scale(0.97);
+function pickWeighted(entries, weightOf) {
+  const total = entries.reduce(
+    (sum, entry) => sum + weightOf(entry),
+    0
+  );
+
+  let roll = Math.random() * total;
+
+  for (const entry of entries) {
+    roll -= weightOf(entry);
+
+    if (roll <= 0) {
+      return entry;
+    }
+  }
+
+  return entries[entries.length - 1];
 }
 
-.egg-icon-box {
-  flex: 0 0 66px;
-  display: grid;
-  place-items: center;
-  width: 66px;
-  height: 66px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 14px;
-  background:
-    radial-gradient(
-      circle,
-      rgba(139, 92, 246, 0.22),
-      rgba(7, 9, 18, 0.8)
-    );
-  overflow: hidden;
+function drawFortune() {
+  const level = pickWeighted(
+    FORTUNE_LEVELS,
+    entry => entry.weight
+  );
+
+  const tierWeights = FORTUNE_TIER_WEIGHTS[level.tier];
+
+  const tierEntries = Object.keys(tierWeights).map(
+    tierKey => ({
+      tier: tierKey,
+      weight: tierWeights[tierKey]
+    })
+  );
+
+  const chosenTier = pickWeighted(
+    tierEntries,
+    entry => entry.weight
+  ).tier;
+
+  const pool = FORTUNE_RARITY_POOL[chosenTier];
+
+  const characterId =
+    pool[Math.floor(Math.random() * pool.length)];
+
+  return {
+    level: level.key,
+    tier: chosenTier,
+    characterId
+  };
 }
 
-.egg-shape {
-  position: relative;
-  width: 34px;
-  height: 44px;
-  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
-  background: linear-gradient(160deg, #fff6e2, #ffd9a0 65%, #f6b976);
-  border: 2px solid rgba(255, 255, 255, 0.75);
-  box-shadow: 0 0 16px rgba(255, 213, 74, 0.35);
-  animation: eggIdle 2.4s ease-in-out infinite;
-}
+function getStoredFortune() {
+  const raw = localStorage.getItem(FORTUNE_STORAGE_KEY);
 
-@keyframes eggIdle {
-  50% {
-    transform: translateY(-3px) rotate(-2deg);
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+
+    if (parsed.date !== getTaipeiDateString()) {
+      return null;
+    }
+
+    return parsed;
+  } catch (error) {
+    return null;
   }
 }
 
-.egg-crack {
-  position: absolute;
-  background: rgba(90, 55, 30, 0.75);
-  opacity: 0;
-  transition: opacity 0.2s ease;
+function saveFortuneResult(result) {
+  localStorage.setItem(
+    FORTUNE_STORAGE_KEY,
+    JSON.stringify({
+      date: getTaipeiDateString(),
+      ...result
+    })
+  );
 }
 
-.egg-crack-1 {
-  top: 30%;
-  left: 12%;
-  width: 2px;
-  height: 40%;
-  transform: rotate(18deg);
-}
+function renderFortuneButtonState() {
+  const button = document.getElementById(
+    "fortuneFloatingBtn"
+  );
 
-.egg-crack-2 {
-  top: 15%;
-  left: 55%;
-  width: 2px;
-  height: 35%;
-  transform: rotate(-22deg);
-}
+  const statusEl = document.getElementById(
+    "fortuneStatusRow"
+  );
 
-.egg-crack-3 {
-  top: 45%;
-  left: 68%;
-  width: 2px;
-  height: 30%;
-  transform: rotate(14deg);
-}
+  const hintEl = document.getElementById("fortuneHint");
 
-.egg-fixed-button.crack-1 .egg-crack-1 {
-  opacity: 1;
-}
-
-.egg-fixed-button.crack-2 .egg-crack-1,
-.egg-fixed-button.crack-2 .egg-crack-2 {
-  opacity: 1;
-}
-
-.egg-fixed-button.crack-3 .egg-crack-1,
-.egg-fixed-button.crack-3 .egg-crack-2,
-.egg-fixed-button.crack-3 .egg-crack-3 {
-  opacity: 1;
-}
-
-.egg-fixed-button.is-tapped .egg-shape {
-  animation: eggTap 0.32s ease;
-}
-
-@keyframes eggTap {
-  0% {
-    transform: rotate(0deg) scale(1);
+  if (!button) {
+    return;
   }
 
-  25% {
-    transform: rotate(-8deg) scale(1.05);
-  }
+  const stored = getStoredFortune();
 
-  50% {
-    transform: rotate(8deg) scale(1.05);
-  }
+  if (stored) {
+    button.classList.add("is-drawn");
 
-  75% {
-    transform: rotate(-4deg) scale(1.02);
-  }
+    if (statusEl) {
+      statusEl.innerHTML = `今日運勢：<strong>${stored.level}</strong>`;
+    }
 
-  100% {
-    transform: rotate(0deg) scale(1);
+    if (hintEl) {
+      hintEl.textContent = "點我再看一次";
+    }
+  } else {
+    button.classList.remove("is-drawn");
+
+    if (statusEl) {
+      statusEl.textContent = "今天還沒抽籤";
+    }
+
+    if (hintEl) {
+      hintEl.textContent = "點我抽籤";
+    }
   }
 }
 
-.egg-fixed-button.is-hatching .egg-shape {
-  animation: eggHatchPop 0.6s ease forwards;
-}
+function renderFortuneResult(result) {
+  const character = FORTUNE_CHARACTERS.find(
+    entry => entry.id === result.characterId
+  );
 
-@keyframes eggHatchPop {
-  0% {
-    transform: scale(1) rotate(0deg);
-    opacity: 1;
+  if (!character) {
+    return;
   }
 
-  60% {
-    transform: scale(1.35) rotate(6deg);
-    opacity: 1;
+  const drawStage = document.getElementById(
+    "fortuneDrawStage"
+  );
+
+  const resultEl = document.getElementById("fortuneResult");
+  const image = document.getElementById("fortuneCardImage");
+  const frame = document.getElementById("fortuneCardFrame");
+  const rarityEl = document.getElementById(
+    "fortuneCardRarity"
+  );
+  const nameEl = document.getElementById("fortuneCardName");
+  const levelEl = document.getElementById("fortuneLevel");
+  const termEl = document.getElementById("fortuneTerm");
+
+  if (drawStage) {
+    drawStage.hidden = true;
   }
 
-  100% {
-    transform: scale(0.2) rotate(20deg);
-    opacity: 0;
-  }
-}
-
-.egg-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3px;
-  min-width: 0;
-}
-
-.egg-title {
-  color: #d9c4ff;
-  font-size: 16px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
-}
-
-.egg-progress-row {
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.egg-progress-row strong {
-  margin: 0 4px;
-  color: #2ee9ff;
-  font-size: 21px;
-  font-weight: 900;
-  text-shadow: 0 0 10px rgba(46, 233, 255, 0.55);
-}
-
-.egg-hint {
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 12px;
-}
-
-.egg-fixed-button.is-hatched .egg-hint {
-  color: var(--green);
-}
-
-.egg-hatch-panel {
-  width: min(560px, 96vw);
-}
-
-.egg-hatch-content {
-  padding: 40px 34px 34px;
-  text-align: center;
-}
-
-.egg-hatch-content h2 {
-  margin: 4px 0 22px;
-  font-size: 2rem;
-  background: linear-gradient(100deg, #fff 15%, #ffd783 55%, #75efff);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.egg-hatch-image-wrap {
-  display: grid;
-  place-items: center;
-  margin: 0 auto 22px;
-  width: min(320px, 80%);
-  min-height: 220px;
-  border-radius: 24px;
-  border: 1px solid rgba(139, 92, 246, 0.35);
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.18), rgba(5, 2, 12, 0.4));
-  overflow: hidden;
-}
-
-.egg-hatch-image-wrap img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-.egg-hatch-image-fallback {
-  padding: 40px 20px;
-  color: var(--muted);
-  font-weight: 900;
-  font-size: 1.4rem;
-}
-
-.egg-hatch-message {
-  margin: 0;
-  color: var(--muted);
-  font-weight: 700;
-  line-height: 1.7;
-}
-
-@media (max-width: 700px) {
-  .right-fixed-stack {
-    right: 10px;
-    bottom: 10px;
-    gap: 10px;
+  if (resultEl) {
+    resultEl.hidden = false;
   }
 
-  .right-stack-panel {
-    gap: 10px;
+  if (image) {
+    image.src = character.image;
+    image.alt = character.name;
   }
 
-  .right-stack-toggle {
-    padding: 10px 14px;
-    font-size: 13px;
+  frame?.classList.remove(
+    "rarity-common",
+    "rarity-rare",
+    "rarity-legendary"
+  );
+  frame?.classList.add(`rarity-${result.tier}`);
+
+  if (rarityEl) {
+    rarityEl.textContent =
+      FORTUNE_RARITY_LABELS[result.tier];
+
+    rarityEl.className = `fortune-card-rarity rarity-${result.tier}`;
   }
 
-  .egg-fixed-button {
-    min-width: 0;
-    max-width: calc(100vw - 24px);
+  if (nameEl) {
+    nameEl.textContent = character.name;
   }
 
-  .fortune-fixed-button {
-    min-width: 0;
-    max-width: calc(100vw - 24px);
+  if (levelEl) {
+    levelEl.textContent = result.level;
+
+    levelEl.className = `fortune-level ${
+      FORTUNE_GOOD_LEVELS.includes(result.level)
+        ? "level-good"
+        : "level-bad"
+    }`;
+  }
+
+  if (termEl) {
+    termEl.textContent =
+      FORTUNE_TERMS[result.characterId]?.[result.level] ||
+      "";
   }
 }
 
-/* ===== 每日運勢籤 ===== */
+function resetFortuneDrawStageUI() {
+  const drawStage = document.getElementById(
+    "fortuneDrawStage"
+  );
 
-.fortune-fixed-area {
-  position: static;
-}
+  const resultEl = document.getElementById("fortuneResult");
+  const drawBtn = document.getElementById("fortuneDrawBtn");
 
-.fortune-fixed-button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  const stored = getStoredFortune();
 
-  min-width: 230px;
-  min-height: 86px;
-  padding: 10px 16px 10px 10px;
+  if (stored) {
+    renderFortuneResult(stored);
+    return;
+  }
 
-  color: #ffffff;
-  border: 1px solid rgba(46, 233, 255, 0.5);
-  border-radius: 18px;
+  if (drawStage) {
+    drawStage.hidden = false;
+  }
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(35, 17, 42, 0.97),
-      rgba(13, 17, 31, 0.97)
-    );
+  if (resultEl) {
+    resultEl.hidden = true;
+  }
 
-  box-shadow:
-    0 10px 35px rgba(0, 0, 0, 0.48),
-    0 0 18px rgba(46, 233, 255, 0.2);
-
-  cursor: pointer;
-  text-align: left;
-
-  transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.fortune-fixed-button:hover {
-  transform: translateY(-3px);
-  border-color: rgba(255, 78, 163, 0.85);
-  box-shadow:
-    0 14px 42px rgba(0, 0, 0, 0.55),
-    0 0 28px rgba(255, 78, 163, 0.35);
-}
-
-.fortune-fixed-button:active {
-  transform: translateY(0) scale(0.97);
-}
-
-.fortune-icon-box {
-  flex: 0 0 66px;
-  display: grid;
-  place-items: center;
-  width: 66px;
-  height: 66px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 14px;
-  background:
-    radial-gradient(
-      circle,
-      rgba(46, 233, 255, 0.22),
-      rgba(7, 9, 18, 0.8)
-    );
-  overflow: hidden;
-}
-
-.fortune-orb {
-  position: relative;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 32% 28%, #fff, #a6f4ff 35%, #2ee9ff 70%, #8b5cf6 100%);
-  box-shadow: 0 0 18px rgba(46, 233, 255, 0.55);
-  animation: fortuneOrbFloat 2.6s ease-in-out infinite;
-}
-
-@keyframes fortuneOrbFloat {
-  50% {
-    transform: translateY(-4px) scale(1.05);
+  if (drawBtn) {
+    drawBtn.disabled = false;
+    drawBtn.textContent = "抽籤";
+    drawBtn.classList.remove("is-drawing");
   }
 }
 
-.fortune-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3px;
-  min-width: 0;
+function performFortuneDraw() {
+  const drawBtn = document.getElementById("fortuneDrawBtn");
+
+  if (!drawBtn || drawBtn.disabled) {
+    return;
+  }
+
+  drawBtn.disabled = true;
+  drawBtn.textContent = "抽籤中…";
+  drawBtn.classList.add("is-drawing");
+
+  playTone("soft");
+
+  window.setTimeout(() => {
+    const result = drawFortune();
+
+    saveFortuneResult(result);
+    renderFortuneResult(result);
+    renderFortuneButtonState();
+    refreshRightStackBadge();
+
+    if (result.tier === "legendary") {
+      const rect = drawBtn.getBoundingClientRect();
+      burst(
+        rect.left + rect.width / 2,
+        rect.top + rect.height / 2,
+        45
+      );
+      playTone("success");
+    } else if (result.tier === "rare") {
+      playTone("success");
+    } else {
+      playTone(
+        FORTUNE_GOOD_LEVELS.includes(result.level)
+          ? "soft"
+          : "fail"
+      );
+    }
+  }, 900);
 }
 
-.fortune-title {
-  color: #9be9ff;
-  font-size: 16px;
-  font-weight: 900;
-  letter-spacing: 0.06em;
+function openFortuneModal() {
+  const modal = document.getElementById("fortuneModal");
+
+  if (!modal) {
+    return;
+  }
+
+  resetFortuneDrawStageUI();
+
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  syncRogerModalBodyScroll();
 }
 
-.fortune-status-row {
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 14px;
-  font-weight: 700;
+function closeFortuneModal() {
+  const modal = document.getElementById("fortuneModal");
+
+  if (!modal) {
+    return;
+  }
+
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+  syncRogerModalBodyScroll();
 }
 
-.fortune-hint {
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 12px;
+function setupFortune() {
+  const button = document.getElementById(
+    "fortuneFloatingBtn"
+  );
+
+  const modal = document.getElementById("fortuneModal");
+  const drawBtn = document.getElementById("fortuneDrawBtn");
+  const closeBtn = document.getElementById(
+    "closeFortuneModalBtn"
+  );
+
+  if (!button || !modal || !drawBtn) {
+    console.warn("找不到每日運勢籤所需的 HTML 元素");
+    return;
+  }
+
+  renderFortuneButtonState();
+
+  button.addEventListener("click", openFortuneModal);
+  drawBtn.addEventListener("click", performFortuneDraw);
+  closeBtn?.addEventListener("click", closeFortuneModal);
+
+  modal
+    .querySelector("[data-close-fortune-modal]")
+    ?.addEventListener("click", closeFortuneModal);
 }
 
-.fortune-fixed-button.is-drawn .fortune-hint {
-  color: var(--green);
+/* ===== 右下角堆疊面板收合/展開 ===== */
+
+const RIGHT_STACK_OPEN_STORAGE_KEY = "roger_right_stack_open";
+
+function isRightStackRemeberedOpen() {
+  const saved = localStorage.getItem(
+    RIGHT_STACK_OPEN_STORAGE_KEY
+  );
+
+  // 沒存過就預設收起來，避免一開始就佔用畫面空間
+  return saved === null ? false : saved === "1";
 }
 
-/* 抽籤視窗 */
-
-.fortune-panel {
-  width: min(560px, 96vw);
+function setRightStackOpenPreference(isOpen) {
+  localStorage.setItem(
+    RIGHT_STACK_OPEN_STORAGE_KEY,
+    isOpen ? "1" : "0"
+  );
 }
 
-.fortune-draw-content {
-  padding: 40px 34px 34px;
-  text-align: center;
+function refreshRightStackBadge() {
+  const badge = document.getElementById("rightStackBadge");
+
+  if (!badge) {
+    return;
+  }
+
+  const eggNeedsAttention =
+    isEggEventLive() && !isEggHatched();
+
+  const fortuneNeedsAttention = !getStoredFortune();
+
+  const shouldShow =
+    eggNeedsAttention || fortuneNeedsAttention;
+
+  badge.hidden = !shouldShow;
 }
 
-.fortune-draw-content h2 {
-  margin: 4px 0 22px;
-  font-size: 2rem;
-  background: linear-gradient(100deg, #fff 15%, #75efff 55%, #ff80be);
-  -webkit-background-clip: text;
-  color: transparent;
-}
+function setRightStackOpen(isOpen) {
+  const container = document.getElementById(
+    "rightFixedStack"
+  );
 
-.fortune-draw-stage {
-  display: grid;
-  gap: 14px;
-  justify-items: center;
-  padding: 20px 0 6px;
-}
+  const toggle = document.getElementById(
+    "rightStackToggle"
+  );
 
-.fortune-draw-btn {
-  min-width: 160px;
-  font-size: 1.1rem;
-}
+  if (!container || !toggle) {
+    return;
+  }
 
-.fortune-draw-btn.is-drawing {
-  opacity: 0.7;
-  cursor: wait;
-}
+  container.classList.toggle("is-open", isOpen);
+  toggle.setAttribute("aria-expanded", String(isOpen));
 
-.fortune-draw-note {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.85rem;
-}
+  toggle.setAttribute(
+    "aria-label",
+    isOpen ? "收合互動功能" : "展開更多互動功能"
+  );
 
-/* 結果呈現 */
+  setRightStackOpenPreference(isOpen);
 
-.fortune-result {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  gap: 24px;
-  align-items: center;
-  text-align: left;
-  margin-top: 8px;
-}
-
-.fortune-result-card {
-  display: grid;
-  justify-items: center;
-  gap: 8px;
-}
-
-.fortune-card-frame {
-  width: 140px;
-  height: 140px;
-  border-radius: 20px;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  border: 3px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.fortune-card-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fortune-card-frame.rarity-common {
-  border-color: rgba(170, 161, 189, 0.55);
-  box-shadow: 0 0 14px rgba(170, 161, 189, 0.2);
-}
-
-.fortune-card-frame.rarity-rare {
-  border-color: rgba(46, 233, 255, 0.75);
-  box-shadow: 0 0 22px rgba(46, 233, 255, 0.45);
-}
-
-.fortune-card-frame.rarity-legendary {
-  border-color: rgba(255, 213, 74, 0.9);
-  box-shadow: 0 0 30px rgba(255, 213, 74, 0.6);
-  animation: fortuneLegendaryGlow 1.6s ease-in-out infinite;
-}
-
-@keyframes fortuneLegendaryGlow {
-  50% {
-    box-shadow: 0 0 42px rgba(255, 213, 74, 0.9);
+  if (isOpen) {
+    refreshRightStackBadge();
   }
 }
 
-.fortune-card-rarity {
-  margin: 0;
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-}
+function setupRightStack() {
+  const container = document.getElementById(
+    "rightFixedStack"
+  );
 
-.fortune-card-rarity.rarity-common {
-  color: var(--muted);
-}
+  const toggle = document.getElementById(
+    "rightStackToggle"
+  );
 
-.fortune-card-rarity.rarity-rare {
-  color: var(--cyan);
-}
-
-.fortune-card-rarity.rarity-legendary {
-  color: var(--yellow);
-}
-
-.fortune-card-name {
-  margin: 0;
-  font-weight: 900;
-  font-size: 1.05rem;
-}
-
-.fortune-result-detail {
-  display: grid;
-  gap: 10px;
-}
-
-.fortune-level {
-  margin: 0;
-  font-size: 1.7rem;
-  font-weight: 900;
-}
-
-.fortune-level.level-good {
-  color: var(--green);
-}
-
-.fortune-level.level-bad {
-  color: var(--red);
-}
-
-.fortune-term {
-  margin: 0;
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #fff;
-}
-
-.fortune-poem-placeholder {
-  margin: 4px 0 0;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-
-@media (max-width: 560px) {
-  .fortune-result {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
+  if (!container || !toggle) {
+    console.warn("找不到右下角堆疊面板所需的 HTML 元素");
+    return;
   }
+
+  setRightStackOpen(isRightStackRemeberedOpen());
+  refreshRightStackBadge();
+
+  toggle.addEventListener("click", () => {
+    const isCurrentlyOpen =
+      container.classList.contains("is-open");
+
+    setRightStackOpen(!isCurrentlyOpen);
+  });
 }
 
 /* ===== 留言板 ===== */
 
-.message-board-section {
-  margin: 42px 0;
+const MESSAGE_COOLDOWN = 60 * 1000;
+const MESSAGE_STORAGE_KEY = "roger_message_last_time";
+const MESSAGE_MAX_LENGTH = 60;
+const MESSAGE_NICKNAME_MAX_LENGTH = 12;
+const MESSAGE_URL_PATTERN =
+  /(https?:\/\/|www\.)/i;
+
+function getVisitorId() {
+  const storageKey = "rogerVisitorId";
+
+  let visitorId = localStorage.getItem(storageKey);
+
+  if (!visitorId) {
+    if (
+      typeof crypto !== "undefined" &&
+      typeof crypto.randomUUID === "function"
+    ) {
+      visitorId = crypto.randomUUID().replaceAll("-", "_");
+    } else {
+      visitorId =
+        `visitor_${Date.now()}_` +
+        Math.random().toString(36).slice(2);
+    }
+
+    localStorage.setItem(storageKey, visitorId);
+  }
+
+  return visitorId;
 }
 
-.message-ticker-wrap {
-  overflow: hidden;
-  margin: 0 0 22px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: #0f0b1b;
+function getMessageCooldownRemaining() {
+  const lastTime = Number(
+    localStorage.getItem(MESSAGE_STORAGE_KEY) || 0
+  );
+
+  const remaining =
+    MESSAGE_COOLDOWN - (Date.now() - lastTime);
+
+  return remaining > 0 ? remaining : 0;
 }
 
-.message-ticker {
-  display: flex;
-  gap: 34px;
-  width: max-content;
-  padding: 12px 0;
-  font-weight: 800;
-  animation: messageTicker 32s linear infinite;
+function setMessageCooldownStart() {
+  localStorage.setItem(
+    MESSAGE_STORAGE_KEY,
+    String(Date.now())
+  );
 }
 
-.message-ticker.is-empty {
-  animation: none;
-  padding: 14px 20px;
-  color: var(--muted);
-  font-weight: 700;
+function escapeMessageText(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
 }
 
-.message-ticker span {
-  white-space: nowrap;
-  color: #fff;
+function formatMessageTime(isoString) {
+  const date = new Date(isoString);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return new Intl.DateTimeFormat("zh-TW", {
+    timeZone: "Asia/Taipei",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(date);
 }
 
-.message-ticker span b {
-  margin-right: 6px;
-  color: var(--cyan);
+function renderMessageTicker(messages) {
+  const ticker = document.getElementById("messageTicker");
+
+  if (!ticker) {
+    return;
+  }
+
+  if (!messages || messages.length === 0) {
+    ticker.classList.add("is-empty");
+    ticker.innerHTML =
+      "<span>目前還沒有人留言，來當第一個吧</span>";
+    return;
+  }
+
+  ticker.classList.remove("is-empty");
+
+  const itemsHtml = messages
+    .map(item => {
+      const nickname = escapeMessageText(
+        item.nickname || "匿名訪客"
+      );
+
+      const text = escapeMessageText(item.message || "");
+
+      return `<span><b>${nickname}</b>${text}</span>`;
+    })
+    .join("");
+
+  // 跑馬燈重複貼一次內容，讓 translateX(-50%) 動畫可以無縫接軌
+  ticker.innerHTML = itemsHtml + itemsHtml;
 }
 
-@keyframes messageTicker {
-  to {
-    transform: translateX(-50%);
+function renderMessageList(messages) {
+  const list = document.getElementById("messageList");
+
+  if (!list) {
+    return;
+  }
+
+  if (!messages || messages.length === 0) {
+    list.innerHTML =
+      '<p class="message-list-empty">還沒有留言，留一句話給羅傑吧</p>';
+    return;
+  }
+
+  list.innerHTML = messages
+    .map(item => {
+      const nickname = escapeMessageText(
+        item.nickname || "匿名訪客"
+      );
+
+      const text = escapeMessageText(item.message || "");
+      const time = formatMessageTime(item.createdAt);
+
+      return `
+        <div class="message-item">
+          <span class="message-item-nickname">${nickname}</span>
+          <span class="message-item-text">${text}</span>
+          <span class="message-item-time">${time}</span>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+async function loadMessages() {
+  try {
+    const response = await fetchWithFallback(
+      "/messages",
+      {
+        cache: "no-store",
+        headers: { Accept: "application/json" }
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok || !result?.success) {
+      throw new Error(result?.message || "無法取得留言");
+    }
+
+    renderMessageTicker(result.messages);
+    renderMessageList(result.messages);
+  } catch (error) {
+    console.error("取得留言失敗：", error);
+    renderMessageTicker([]);
+    renderMessageList([]);
   }
 }
 
-.message-form {
-  display: grid;
-  grid-template-columns: 140px 1fr auto;
-  gap: 10px;
+async function submitMessage(nickname, message) {
+  const response = await fetchWithFallback("/messages", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      visitorId: getVisitorId(),
+      nickname,
+      message
+    })
+  });
+
+  const result = await response.json();
+
+  if (!response.ok || !result?.success) {
+    throw new Error(result?.message || "留言送出失敗");
+  }
+
+  return result;
 }
 
-.message-nickname-input,
-.message-text-input {
-  padding: 13px 15px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: #0d0916;
-  color: #fff;
-  font: inherit;
-}
+function updateMessageFormNote() {
+  const noteEl = document.getElementById("messageFormNote");
+  const submitBtn = document.getElementById(
+    "messageSubmitBtn"
+  );
 
-.message-nickname-input:focus,
-.message-text-input:focus {
-  outline: none;
-  border-color: rgba(46, 233, 255, 0.6);
-}
+  const remaining = getMessageCooldownRemaining();
 
-.message-submit-btn {
-  white-space: nowrap;
-}
+  if (remaining > 0) {
+    const seconds = Math.ceil(remaining / 1000);
 
-.message-submit-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
+    if (noteEl) {
+      noteEl.textContent = `還要等 ${seconds} 秒才能再留言`;
+    }
 
-.message-form-note {
-  margin: 10px 2px 0;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
+    if (submitBtn) {
+      submitBtn.disabled = true;
+    }
 
-.message-list {
-  display: grid;
-  gap: 10px;
-  margin-top: 18px;
-}
+    window.setTimeout(updateMessageFormNote, 1000);
+  } else {
+    if (noteEl) {
+      noteEl.textContent = "每人每 60 秒可留言一次";
+    }
 
-.message-item {
-  padding: 14px 18px;
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.045);
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.message-item .message-item-nickname {
-  color: var(--cyan);
-  font-weight: 900;
-  font-size: 0.9rem;
-}
-
-.message-item .message-item-text {
-  color: #fff;
-  font-weight: 700;
-  flex: 1;
-  min-width: 0;
-  word-break: break-word;
-}
-
-.message-item .message-item-time {
-  color: var(--muted);
-  font-size: 0.75rem;
-  white-space: nowrap;
-}
-
-.message-list-empty {
-  color: var(--muted);
-  font-weight: 700;
-  padding: 8px 2px;
-}
-
-@media (max-width: 700px) {
-  .message-form {
-    grid-template-columns: 1fr;
+    if (submitBtn) {
+      submitBtn.disabled = false;
+    }
   }
 }
+
+function setupMessageBoard() {
+  const form = document.getElementById("messageForm");
+  const nicknameInput = document.getElementById(
+    "messageNicknameInput"
+  );
+  const textInput = document.getElementById(
+    "messageTextInput"
+  );
+
+  if (!form || !textInput) {
+    console.warn("找不到留言板所需的 HTML 元素");
+    return;
+  }
+
+  loadMessages();
+  updateMessageFormNote();
+
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (getMessageCooldownRemaining() > 0) {
+      return;
+    }
+
+    const rawMessage = textInput.value.trim();
+    const rawNickname = (
+      nicknameInput?.value || ""
+    ).trim();
+
+    if (!rawMessage) {
+      toast("留言不能是空的喔");
+      return;
+    }
+
+    if (rawMessage.length > MESSAGE_MAX_LENGTH) {
+      toast(`留言請控制在 ${MESSAGE_MAX_LENGTH} 字以內`);
+      return;
+    }
+
+    if (
+      rawNickname.length > MESSAGE_NICKNAME_MAX_LENGTH
+    ) {
+      toast(
+        `暱稱請控制在 ${MESSAGE_NICKNAME_MAX_LENGTH} 字以內`
+      );
+      return;
+    }
+
+    if (MESSAGE_URL_PATTERN.test(rawMessage)) {
+      toast("留言不能包含網址連結");
+      return;
+    }
+
+    const submitBtn = document.getElementById(
+      "messageSubmitBtn"
+    );
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+    }
+
+    try {
+      const result = await submitMessage(
+        rawNickname,
+        rawMessage
+      );
+
+      setMessageCooldownStart();
+      textInput.value = "";
+
+      if (result.messages) {
+        renderMessageTicker(result.messages);
+        renderMessageList(result.messages);
+      } else {
+        loadMessages();
+      }
+
+      toast("留言送出成功！");
+      updateMessageFormNote();
+    } catch (error) {
+      console.error("留言送出失敗：", error);
+      toast("留言送出失敗，稍後再試一次");
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+      }
+    }
+  });
+}
+
+function setupRogerAboutModal() {
+  const aboutButton =
+    document.getElementById("aboutRogerBtn");
+
+  const aboutModal =
+    document.getElementById("aboutRogerModal");
+
+  const closeAboutButton =
+    document.getElementById("closeAboutRogerBtn");
+
+  const openRelationshipButton =
+    document.getElementById("openRelationshipBtn");
+
+  const relationshipModal =
+    document.getElementById("relationshipModal");
+
+  const closeRelationshipButton =
+    document.getElementById("closeRelationshipBtn");
+
+  const backToAboutButton =
+    document.getElementById("backToAboutBtn");
+
+  if (
+    !aboutButton ||
+    !aboutModal ||
+    !closeAboutButton ||
+    !openRelationshipButton ||
+    !relationshipModal ||
+    !closeRelationshipButton ||
+    !backToAboutButton
+  ) {
+    console.warn("找不到羅傑介紹視窗所需的 HTML 元素");
+    return;
+  }
+
+  function updateBodyScroll() {
+    const hasOpenModal =
+      aboutModal.classList.contains("is-open") ||
+      relationshipModal.classList.contains("is-open");
+
+    document.body.classList.toggle(
+      "roger-modal-open",
+      hasOpenModal
+    );
+  }
+
+  function openModal(modal) {
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    updateBodyScroll();
+  }
+
+  function closeModal(modal) {
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    updateBodyScroll();
+  }
+
+  function openAboutModal() {
+    closeModal(relationshipModal);
+    openModal(aboutModal);
+  }
+
+  function closeAllRogerModals() {
+    closeModal(aboutModal);
+    closeModal(relationshipModal);
+  }
+
+  aboutButton.addEventListener(
+    "click",
+    openAboutModal
+  );
+
+  closeAboutButton.addEventListener(
+    "click",
+    () => closeModal(aboutModal)
+  );
+
+  openRelationshipButton.addEventListener(
+    "click",
+    () => {
+      closeModal(aboutModal);
+      openModal(relationshipModal);
+    }
+  );
+
+  closeRelationshipButton.addEventListener(
+    "click",
+    () => closeModal(relationshipModal)
+  );
+
+  backToAboutButton.addEventListener(
+    "click",
+    openAboutModal
+  );
+
+  document
+    .querySelectorAll("[data-close-roger-modal]")
+    .forEach((backdrop) => {
+      backdrop.addEventListener(
+        "click",
+        () => closeModal(aboutModal)
+      );
+    });
+
+  document
+    .querySelectorAll(
+      "[data-close-relationship-modal]"
+    )
+    .forEach((backdrop) => {
+      backdrop.addEventListener(
+        "click",
+        () => closeModal(relationshipModal)
+      );
+    });
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key === "Escape") {
+        closeAllRogerModals();
+      }
+    }
+  );
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    setupRogerAboutModal
+  );
+} else {
+  setupRogerAboutModal();
+}
+  function setupRogerRelationshipGraph() {
+  const container =
+    document.getElementById("rogerRelationshipNetwork");
+
+  const resetButton =
+    document.getElementById("resetRelationshipGraphBtn");
+
+  const detailAvatar =
+    document.getElementById("relationshipDetailAvatar");
+  const detailAvatarImage =
+    document.getElementById("relationshipDetailAvatarImage");
+  const detailGroup =
+    document.getElementById("relationshipDetailGroup");
+
+  const detailName =
+    document.getElementById("relationshipDetailName");
+
+  const detailRelation =
+    document.getElementById("relationshipDetailRelation");
+
+  const detailDescription =
+    document.getElementById(
+      "relationshipDetailDescription"
+    );
+
+  const filterButtons =
+    document.querySelectorAll(
+      "[data-relationship-group]"
+    );
+
+  if (!container) {
+    console.warn("找不到人際關係圖容器");
+    return;
+  }
+
+  if (typeof vis === "undefined") {
+    console.error("vis-network 尚未成功載入");
+    return;
+  }
+
+  const GROUP_NAMES = {
+    center: "中心人物",
+    xd: "XD娛樂",
+    hearthstone: "爐石實況圈",
+    streamer: "實況圈"
+  };
+
+  const people = [
+  {
+    id: "roger",
+    name: "羅傑",
+    shortName: "羅傑",
+    image: "assets/images/people/roger.jpg",
+    group: "center",
+    relation: "中心",
+    description: "共同創辦人、核心藝人，也是整張人際關係圖的中心節點。",
+    x: 0,
+    y: 0
+  },
+  {
+    id: "taishan",
+    name: "泰山",
+    shortName: "泰山",
+    image: "assets/images/people/泰山.jpg",
+    group: "streamer",
+    relation: "分身",
+    description: "經常被觀眾戲稱是羅傑的分身。",
+    x: 200,
+    y: -60
+  },
+  {
+    id: "krapysister",
+    name: "虧皮妹妹",
+    shortName: "虧皮妹",
+    image: "assets/images/people/虧皮妹.png",
+    group: "streamer",
+    relation: "專屬保險業務",
+    description: "為羅傑的專屬保險業員。",
+    x: 220,
+    y: 150
+  },
+  {
+    id: "nl",
+    name: "NL（熊班長）",
+    shortName: "NL",
+    image: "assets/images/people/nl.jpg",
+    group: "xd",
+    relation: "夫妻",
+    description: "XD娛樂共同創辦人、公司老闆，也是羅傑長期合作與互動的重要夥伴。",
+    x: -220,
+    y: -310
+  },
+  {
+    id: "shaxy",
+    name: "薛喜",
+    shortName: "薛喜",
+    image: "assets/images/people/薛喜.jpg",
+    group: "xd",
+    relation: "難兄難弟",
+    description: "XD娛樂旗下核心藝人，也是羅傑過去《爐石戰記》選手時期的戰友。",
+    x: -60,
+    y: -340
+  },
+  {
+    id: "eason",
+    name: "Eason（蕭老師／發仔）",
+    shortName: "Eason",
+    image: "assets/images/people/發仔.png",
+    group: "xd",
+    relation: "麻將損友",
+    description: "XD娛樂旗下核心藝人，主要進行爐石與格鬥遊戲實況。",
+    x: 110,
+    y: -330
+  },
+  {
+    id: "vivi",
+    name: "Vivi",
+    shortName: "Vivi",
+    image: "assets/images/people/vivi.png",
+    group: "xd",
+    relation: "小三",
+    description: "XD娛樂旗下核心藝人，與羅傑具有多年情誼的女性實況主好友。",
+    x: 260,
+    y: -250
+  },
+  {
+    id: "krapy",
+    name: "Krapy（虧皮）",
+    shortName: "Krapy",
+    image: "assets/images/people/哈K.jpg",
+    group: "xd",
+    relation: "損友",
+    description: "XD娛樂旗下核心藝人，是羅傑在射擊遊戲與戰棋內容中的長年搭檔。",
+    x: 340,
+    y: -100
+  },
+  {
+    id: "tommy",
+    name: "偷米",
+    shortName: "偷米",
+    image: "assets/images/people/tommy.png",
+    group: "xd",
+    relation: "麻將損友",
+    description: "XD娛樂旗下核心藝人，前爐石職業選手，也是羅傑過去的賽事戰友。",
+    x: 360,
+    y: 70
+  },
+  {
+    id: "hagon",
+    name: "哈耿",
+    shortName: "哈耿",
+    image: "assets/images/people/哈耿.jpg",
+    group: "xd",
+    relation: "寵物鯰魚",
+    description: "XD娛樂旗下核心藝人，擅長短影音內容與《特戰英豪》實況。",
+    x: 300,
+    y: 230
+  },
+  {
+    id: "egghead",
+    name: "蛋頭",
+    shortName: "蛋頭",
+    image: "assets/images/people/蛋頭.png",
+    group: "xd",
+    relation: "損友",
+    description: "XD娛樂旗下核心藝人，知名嘻哈饒舌歌手兼實況主。",
+    x: 170,
+    y: 340
+  },
+  {
+    id: "yuexi",
+    name: "月希",
+    shortName: "月希",
+    image: "assets/images/people/月希.jpg",
+    group: "xd",
+    relation: "麻吉",
+    description: "XD娛樂旗下核心藝人，也是資深 ACG 與電玩節目主持人。",
+    x: 0,
+    y: 370
+  },
+  {
+    id: "asen",
+    name: "阿森",
+    shortName: "阿森",
+    image: "assets/images/people/阿森.jpg",
+    group: "xd",
+    relation: "麻吉",
+    description: "XD娛樂旗下核心藝人，前 FPS 職業選手兼資深賽評。",
+    x: -170,
+    y: 340
+  },
+  {
+    id: "kent",
+    name: "肯特",
+    shortName: "肯特",
+    image: "assets/images/people/肯特.jpg",
+    group: "xd",
+    relation: "損友",
+    description: "XD娛樂旗下核心藝人，知名格鬥遊戲《快打旋風》好手。",
+    x: -300,
+    y: 230
+  },
+  {
+    id: "mmd",
+    name: "咪咪蛋",
+    shortName: "咪咪蛋",
+    image: "assets/images/people/mmd.jpg",
+    group: "xd",
+    relation: "損友",
+    description: "XD娛樂旗下核心藝人，前閃電狼《英雄聯盟》職業選手。",
+    x: -370,
+    y: 70
+  },
+  {
+    id: "guidong",
+    name: "鬼東",
+    shortName: "鬼東",
+    image: "assets/images/people/鬼東.jpg",
+    group: "xd",
+    relation: "最強後盾",
+    description: "XD娛樂的幕後核心推手，主要負責公司營運與藝人經紀事務。",
+    x: -350,
+    y: -110
+  },
+  {
+    id: "weifu",
+    name: "威傅",
+    shortName: "威傅",
+    image: "assets/images/people/威傅.jpg",
+    group: "hearthstone",
+    relation: "損友",
+    description: "經常出現在羅傑實況精華，也是常一起語音通話的爐石老戰友。",
+    x: -520,
+    y: -270
+  },
+  {
+    id: "uzra",
+    name: "Uzra",
+    shortName: "Uzra",
+    image: "assets/images/people/uzra.png",
+    group: "hearthstone",
+    relation: "損友",
+    description: "戰棋與爐石圈大老，實況上與羅傑亦敵亦友，也是經常互相玩梗的對象。",
+    x: -550,
+    y: 200
+  },
+  {
+    id: "turtle",
+    name: "龜狗",
+    shortName: "龜狗",
+    image: "assets/images/people/龜狗.png",
+    group: "streamer",
+    relation: "損友",
+    description: "早期 DC 語音群的固定班底，也是與羅傑私下交情良好的好友。",
+    x: 540,
+    y: -240
+  },
+  {
+    id: "overload",
+    name: "超負荷",
+    shortName: "超負荷",
+    image: "assets/images/people/超負荷.jpg",
+    group: "streamer",
+    relation: "正代餐",
+    description: "早期紅色學校同僚，實況效果上經常相愛相殺，也是長期的玩梗對象。",
+    x: 550,
+    y: 210
+  }
+];
+
+  const groupColors = {
+    center: {
+      background: "#ef4f88",
+      border: "#ffb15d",
+      highlight: {
+        background: "#ff6d9d",
+        border: "#ffd18f"
+      }
+    },
+    xd: {
+      background: "#7549e8",
+      border: "#c98cff",
+      highlight: {
+        background: "#9d67ff",
+        border: "#edc9ff"
+      }
+    },
+    hearthstone: {
+      background: "#167dcc",
+      border: "#70d7ff",
+      highlight: {
+        background: "#309ce6",
+        border: "#c3efff"
+      }
+    },
+    streamer: {
+      background: "#26935f",
+      border: "#70df9e",
+      highlight: {
+        background: "#35b979",
+        border: "#c3f5d5"
+      }
+    }
+  };
+
+  const relationshipColors = {
+    "夫妻": "#ff73ba",
+    "難兄難弟": "#d68cff",
+    "麻將損友": "#ffbd57",
+    "小三": "#ff5c91",
+    "損友": "#9a8cff",
+    "寵物鯰魚": "#59d8d1",
+    "麻吉": "#5ddc8b",
+    "最強後盾": "#ffd85c",
+    "正代餐": "#ff715c"
+  };
+  const DEFAULT_PERSON_IMAGE =
+  "assets/images/people/default.jpg";
+
+const nodes = new vis.DataSet(
+  people.map((person) => {
+    const isRoger = person.id === "roger";
+
+    const personImage =
+      typeof person.image === "string" &&
+      person.image.trim() !== ""
+        ? person.image
+        : DEFAULT_PERSON_IMAGE;
+    const hasImage =
+      typeof person.image === "string" &&
+      person.image.trim() !== "";
+    return {
+      id: person.id,
+      label: person.shortName,
+      group: person.group,
+
+      shape: hasImage ? "circularImage" : "dot",
+
+      image: hasImage ? person.image : undefined,
+      
+
+      x: person.x,
+      y: person.y,
+
+      fixed: isRoger
+        ? {
+            x: true,
+            y: true
+          }
+        : false,
+
+      size: isRoger ? 55 : 38,
+
+      font: {
+        color: "#ffffff",
+        size: isRoger ? 21 : 16,
+        face: "Noto Sans TC",
+        vadjust: 8,
+        strokeWidth: 5,
+        strokeColor: "rgba(5, 3, 15, 0.9)"
+      },
+
+      borderWidth: isRoger ? 6 : 4,
+      borderWidthSelected: 7,
+
+      shadow: {
+        enabled: true,
+        color: "rgba(0, 0, 0, 0.6)",
+        size: isRoger ? 26 : 17,
+        x: 0,
+        y: 8
+      }
+    };
+  })
+);
+
+  const edges = new vis.DataSet(
+    people
+      .filter((person) => person.id !== "roger")
+      .map((person) => ({
+        id: `roger-${person.id}`,
+        from: "roger",
+        to: person.id,
+        label: person.relation,
+        relation: person.relation,
+        color: {
+          color:
+            relationshipColors[person.relation] ||
+            "#a88cff",
+          highlight:
+            relationshipColors[person.relation] ||
+            "#ffffff",
+          hover:
+            relationshipColors[person.relation] ||
+            "#ffffff",
+          opacity: 0.72
+        },
+        width: 2.5,
+        selectionWidth: 5,
+        hoverWidth: 4,
+        smooth: {
+          enabled: true,
+          type: "continuous",
+          roundness: 0.24
+        },
+        font: {
+          color: "#ffffff",
+          size: 11,
+          face: "Noto Sans TC",
+          strokeWidth: 4,
+          strokeColor: "rgba(4, 2, 12, 0.92)",
+          background: "rgba(20, 12, 40, 0.72)",
+          align: "middle"
+        }
+      }))
+  );
+
+  const networkOptions = {
+    autoResize: true,
+
+    nodes: {
+      chosen: true,
+      imagePadding: 3
+    },
+
+    groups: {
+      center: {
+        color: groupColors.center
+      },
+      xd: {
+        color: groupColors.xd
+      },
+      hearthstone: {
+        color: groupColors.hearthstone
+      },
+      streamer: {
+        color: groupColors.streamer
+      }
+    },
+
+    edges: {
+      arrows: {
+        to: {
+          enabled: false
+        }
+      }
+    },
+
+    interaction: {
+      hover: true,
+      hoverConnectedEdges: true,
+      navigationButtons: true,
+      keyboard: {
+        enabled: true,
+        bindToWindow: false
+      },
+      tooltipDelay: 150,
+      zoomView: true,
+      dragView: true,
+      dragNodes: true
+    },
+
+    physics: {
+      enabled: true,
+      solver: "forceAtlas2Based",
+
+      forceAtlas2Based: {
+        gravitationalConstant: -65,
+        centralGravity: 0.012,
+        springLength: 235,
+        springConstant: 0.045,
+        damping: 0.58,
+        avoidOverlap: 0.9
+      },
+
+      stabilization: {
+        enabled: true,
+        iterations: 700,
+        updateInterval: 40,
+        fit: true
+      }
+    },
+
+    layout: {
+      improvedLayout: false
+    }
+  };
+
+  const network = new vis.Network(
+    container,
+    {
+      nodes,
+      edges
+    },
+    networkOptions
+  );
+
+  let activeGroup = "all";
+
+  function getPerson(personId) {
+    return people.find(
+      (person) => person.id === personId
+    );
+  }
+
+  function setDetail(personId) {
+    const person = getPerson(personId);
+  
+    if (!person) {
+      return;
+    }
+  
+    detailName.textContent = person.name;
+  
+    detailGroup.textContent =
+      GROUP_NAMES[person.group] || "其他";
+  
+    detailRelation.textContent =
+      person.relation;
+  
+    detailDescription.textContent =
+      person.description;
+  
+    detailAvatar.className =
+      `relationship-detail-avatar group-${person.group}`;
+  
+    if (detailAvatarImage) {
+      detailAvatarImage.src = person.image;
+      detailAvatarImage.alt = person.name;
+  
+      detailAvatarImage.onerror = () => {
+        detailAvatarImage.src =
+          "assets/images/people/default.jpg";
+      };
+    }
+  }
+
+  function getVisibleIds(group) {
+    if (group === "all") {
+      return people.map((person) => person.id);
+    }
+
+    return people
+      .filter(
+        (person) =>
+          person.id === "roger" ||
+          person.group === group
+      )
+      .map((person) => person.id);
+  }
+
+  function applyGroupFilter(group) {
+    activeGroup = group;
+
+    const visibleIds =
+      new Set(getVisibleIds(group));
+
+    nodes.update(
+      people.map((person) => ({
+        id: person.id,
+        hidden: !visibleIds.has(person.id)
+      }))
+    );
+
+    edges.update(
+      people
+        .filter((person) => person.id !== "roger")
+        .map((person) => ({
+          id: `roger-${person.id}`,
+          hidden: !visibleIds.has(person.id)
+        }))
+    );
+
+    filterButtons.forEach((button) => {
+      const isActive =
+        button.dataset.relationshipGroup === group;
+
+      button.classList.toggle(
+        "active",
+        isActive
+      );
+    });
+
+    network.unselectAll();
+    setDetail("roger");
+
+    window.setTimeout(() => {
+      network.fit({
+        nodes: Array.from(visibleIds),
+        animation: {
+          duration: 500,
+          easingFunction: "easeInOutQuad"
+        }
+      });
+    }, 100);
+  }
+
+  function highlightPerson(personId) {
+    if (personId === "roger") {
+      network.selectNodes(["roger"]);
+      setDetail("roger");
+      return;
+    }
+
+    const connectedEdgeId =
+      `roger-${personId}`;
+
+    network.setSelection(
+      {
+        nodes: [personId],
+        edges: [connectedEdgeId]
+      },
+      {
+        unselectAll: true,
+        highlightEdges: true
+      }
+    );
+
+    setDetail(personId);
+
+    network.focus(personId, {
+      scale: Math.max(network.getScale(), 0.88),
+      animation: {
+        duration: 420,
+        easingFunction: "easeInOutQuad"
+      }
+    });
+  }
+
+  network.on("click", (params) => {
+    if (params.nodes.length === 0) {
+      network.unselectAll();
+      setDetail("roger");
+      return;
+    }
+
+    highlightPerson(params.nodes[0]);
+  });
+
+  network.on("doubleClick", (params) => {
+    if (params.nodes.length > 0) {
+      network.focus(params.nodes[0], {
+        scale: 1.2,
+        animation: {
+          duration: 450,
+          easingFunction: "easeInOutQuad"
+        }
+      });
+    }
+  });
+
+  network.once("stabilizationIterationsDone", () => {
+    network.setOptions({
+      physics: {
+        enabled: false
+      }
+    });
+
+    network.fit({
+      animation: {
+        duration: 500,
+        easingFunction: "easeInOutQuad"
+      }
+    });
+  });
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      applyGroupFilter(
+        button.dataset.relationshipGroup
+      );
+    });
+  });
+
+  resetButton?.addEventListener("click", () => {
+    applyGroupFilter(activeGroup);
+  });
+
+  const openRelationshipButton =
+    document.getElementById(
+      "openRelationshipBtn"
+    );
+
+  openRelationshipButton?.addEventListener(
+    "click",
+    () => {
+      window.setTimeout(() => {
+        network.redraw();
+
+        network.fit({
+          animation: {
+            duration: 500,
+            easingFunction: "easeInOutQuad"
+          }
+        });
+      }, 300);
+    }
+  );
+
+  setDetail("roger");
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    setupRogerRelationshipGraph
+  );
+} else {
+  setupRogerRelationshipGraph();
+}
+  async function fetchWithFallback(path, options = {}) {
+    const urls = [C.workerUrl, C.workerUrl2].filter(Boolean);
+  
+    let lastError;
+  
+    for (const baseUrl of urls) {
+      try {
+        const response = await fetch(`${baseUrl}${path}`, options);
+  
+        // 免費方案超過每日額度通常會回 429
+        if (response.status === 429) {
+          throw new Error("Worker quota exceeded");
+        }
+  
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+  
+        return response;
+      } catch (error) {
+        console.warn(`${baseUrl} 失敗，切換下一個 Worker`, error);
+        lastError = error;
+      }
+    }
+  
+    throw lastError || new Error("所有 Worker 都無法使用");
+  }
+  
+  renderSocials();
+  render();
+  
+  setupPrayAnimation();
+  loadPrayStats();
+
+  setupEggHatch();
+  setupFortune();
+  setupRightStack();
+  setupMessageBoard();
+
+  const autoRefreshBtn =
+    $("#autoRefreshBtn");
+  if (autoRefreshBtn) {
+    autoRefreshBtn.textContent = `自動更新：${state.autoRefresh ? "開" : "關"}`;
+    autoRefreshBtn.setAttribute("aria-pressed", String(state.autoRefresh));
+  }
+  setTimeout(refresh, 400);
+})();
+
+window.addEventListener("load", () => {
+
+    const notice = document.getElementById("authorNotice");
+    const close = document.getElementById("closeNotice");
+
+    // 一天只顯示一次
+    const today = new Date().toDateString();
+
+    if(localStorage.getItem("noticeDate") === today){
+        notice.style.display = "none";
+        return;
+    }
+
+    close.addEventListener("click", () => {
+        notice.style.display = "none";
+        localStorage.setItem("noticeDate", today);
+    });
+
+});
