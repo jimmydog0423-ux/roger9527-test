@@ -176,6 +176,76 @@
       </article>
     </section>
 
+    <!-- 留言板 -->
+    <section
+      class="message-board-section"
+      aria-label="留言板"
+    >
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">MESSAGE BOARD</p>
+          <h2>留言板</h2>
+        </div>
+
+        <p>留一句話給羅傑，會隨機出現在跑馬燈上</p>
+      </div>
+
+      <div
+        class="message-ticker-wrap"
+        aria-label="留言跑馬燈"
+      >
+        <div
+          id="messageTicker"
+          class="message-ticker"
+        ></div>
+      </div>
+
+      <form
+        id="messageForm"
+        class="message-form"
+      >
+        <input
+          id="messageNicknameInput"
+          class="message-nickname-input"
+          type="text"
+          maxlength="12"
+          placeholder="暱稱（選填）"
+          autocomplete="off"
+        />
+
+        <input
+          id="messageTextInput"
+          class="message-text-input"
+          type="text"
+          maxlength="60"
+          placeholder="留句話吧（60 字以內，不能有連結）"
+          autocomplete="off"
+          required
+        />
+
+        <button
+          id="messageSubmitBtn"
+          class="btn primary message-submit-btn"
+          type="submit"
+        >
+          送出留言
+        </button>
+      </form>
+
+      <p
+        id="messageFormNote"
+        class="message-form-note"
+      >
+        每人每 60 秒可留言一次
+      </p>
+
+      <div
+        id="messageList"
+        class="message-list"
+        aria-live="polite"
+      ></div>
+    </section>
+
     <!-- 台股區 -->
     <section class="market-section">
       <div class="section-head">
