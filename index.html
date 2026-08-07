@@ -300,6 +300,100 @@
     aria-hidden="true"
 ></div>
 
+  <!-- 父親節孵蛋彩蛋按鈕 -->
+  <div
+    id="eggFixedArea"
+    class="egg-fixed-area"
+    hidden
+  >
+  <button
+    id="eggFloatingBtn"
+    class="egg-fixed-button"
+    type="button"
+    aria-label="敲敲看，孵化神秘生物"
+  >
+    <span class="egg-icon-box">
+      <span id="eggShape" class="egg-shape">
+        <span class="egg-crack egg-crack-1"></span>
+        <span class="egg-crack egg-crack-2"></span>
+        <span class="egg-crack egg-crack-3"></span>
+      </span>
+    </span>
+
+    <span class="egg-info">
+      <span class="egg-title" id="eggTitle">
+        父親節神秘彩蛋
+      </span>
+
+      <span class="egg-progress-row">
+        敲了
+        <strong id="eggClickCount">0</strong>
+        /
+        <span id="eggClickTarget">12</span>
+        下
+      </span>
+
+      <span
+        id="eggHint"
+        class="egg-hint"
+      >
+        點我敲蛋！
+      </span>
+    </span>
+  </button>
+</div>
+
+  <!-- 孵化揭曉視窗 -->
+  <div
+    id="eggHatchModal"
+    class="roger-modal egg-hatch-modal"
+    aria-hidden="true"
+  >
+  <div
+    class="roger-modal-backdrop"
+    data-close-egg-modal
+  ></div>
+  <section
+    class="roger-modal-panel egg-hatch-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="eggHatchTitle"
+  >
+    <button
+      id="closeEggHatchBtn"
+      class="roger-modal-close"
+      type="button"
+      aria-label="關閉視窗"
+    >
+      ×
+    </button>
+
+    <div class="egg-hatch-content">
+      <p class="eyebrow">HAPPY FATHER'S DAY</p>
+      <h2 id="eggHatchTitle">恭喜孵化成功！</h2>
+
+      <div class="egg-hatch-image-wrap">
+        <img
+          id="eggHatchImage"
+          src="assets/images/v-zai-shou.png"
+          alt="V仔獸"
+        />
+        <div
+          id="eggHatchImageFallback"
+          class="egg-hatch-image-fallback"
+          hidden
+        >
+          V仔獸
+        </div>
+      </div>
+
+      <p class="egg-hatch-message">
+        V仔獸 誕生了！祝羅傑父親節快樂
+      </p>
+    </div>
+  </section>
+</div>
+
   <!-- 關於羅傑視窗 -->
 <div
   id="aboutRogerModal"
@@ -543,5 +637,28 @@
 
   <script src="config.js"></script>
   <script src="app.js"></script>
+  <div id="authorNotice" class="notice-overlay">
+  <div class="notice-box">
+    <h2>📢 作者公告</h2>
+    <p>
+      hi 我是吉米狗，目前流量大爆炸所以有做分流跟現流會改成每1分鐘才能按一次上香
+    </p>
+
+    <p>
+      若發現 Bug 或想提供建議，<br>
+      歡迎至 GitHub 回報。
+    </p>
+
+    <hr>
+
+    <p>
+      作者：<b>JimmyDog（吉米狗）</b>
+    </p>
+
+    <button id="closeNotice">
+      我知道了
+    </button>
+  </div>
+</div>
 </body>
 </html>
