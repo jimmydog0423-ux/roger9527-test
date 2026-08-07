@@ -1970,7 +1970,7 @@ function setupPrayAnimation() {
 /* ===== 父親節孵蛋彩蛋 ===== */
 
 const EGG_REVEAL_MONTH = 8;
-const EGG_REVEAL_DAY = 7;
+const EGG_REVEAL_DAY = 8;
 
 const EGG_CLICK_TARGET = 12;
 
@@ -2102,6 +2102,7 @@ function hatchEgg(button) {
     button.classList.remove("is-hatching");
     renderEggHatchedState(button);
     openEggHatchModal();
+    refreshRightStackBadge();
   }, 620);
 }
 
@@ -2201,6 +2202,522 @@ function setupEggHatch() {
   modal
     .querySelector("[data-close-egg-modal]")
     ?.addEventListener("click", closeEggHatchModal);
+}
+
+/* ===== 每日運勢籤（抽卡合一） ===== */
+
+const FORTUNE_CHARACTERS = [
+  { id: "roger", name: "羅傑", image: "assets/images/people/roger.jpg" },
+  { id: "taishan", name: "泰山", image: "assets/images/people/泰山.jpg" },
+  { id: "krapysister", name: "虧皮妹妹", image: "assets/images/people/虧皮妹.png" },
+  { id: "nl", name: "NL（熊班長）", image: "assets/images/people/nl.jpg" },
+  { id: "shaxy", name: "薛喜", image: "assets/images/people/薛喜.jpg" },
+  { id: "eason", name: "Eason（蕭老師／發仔）", image: "assets/images/people/發仔.png" },
+  { id: "vivi", name: "Vivi", image: "assets/images/people/vivi.png" },
+  { id: "krapy", name: "Krapy（虧皮）", image: "assets/images/people/哈K.jpg" },
+  { id: "tommy", name: "偷米", image: "assets/images/people/tommy.png" },
+  { id: "hagon", name: "哈耿", image: "assets/images/people/哈耿.jpg" },
+  { id: "egghead", name: "蛋頭", image: "assets/images/people/蛋頭.png" },
+  { id: "yuexi", name: "月希", image: "assets/images/people/月希.jpg" },
+  { id: "asen", name: "阿森", image: "assets/images/people/阿森.jpg" },
+  { id: "kent", name: "肯特", image: "assets/images/people/肯特.jpg" },
+  { id: "mmd", name: "咪咪蛋", image: "assets/images/people/mmd.jpg" },
+  { id: "guidong", name: "鬼東", image: "assets/images/people/鬼東.jpg" },
+  { id: "weifu", name: "威傅", image: "assets/images/people/威傅.jpg" },
+  { id: "uzra", name: "Uzra", image: "assets/images/people/uzra.png" },
+  { id: "turtle", name: "龜狗", image: "assets/images/people/龜狗.png" },
+  { id: "overload", name: "超負荷", image: "assets/images/people/超負荷.jpg" }
+];
+
+/*
+ * 每個角色在 6 種運勢等級下的專屬用語。
+ * 目前只有短籤詩（4~8 字），之後要補完整籤詩時，
+ * 直接把對應字串換成長句即可，不用動抽籤邏輯。
+ */
+const FORTUNE_TERMS = {
+  roger: { 大吉: "今日不點燈", 中吉: "貪刀有理", 小吉: "頭鐵保平安", 小凶: "莫名失聯", 中凶: "惡意攻擊纏身", 大凶: "全倉套牢" },
+  taishan: { 大吉: "分身附體", 中吉: "本尊在線", 小吉: "影分身之術", 小凶: "分身走丟", 中凶: "本尊放鴿子", 大凶: "分身也遲到" },
+  krapysister: { 大吉: "保單零理賠", 中吉: "續保平安", 小吉: "業績小紅", 小凶: "該加保了", 中凶: "理賠單雪片飛來", 大凶: "建議加買意外險" },
+  nl: { 大吉: "夫妻同心", 中吉: "老闆罩你", 小吉: "公司照常運作", 小凶: "熊班長心情不美麗", 中凶: "夫妻吵架冷戰中", 大凶: "公司帳本要對帳" },
+  shaxy: { 大吉: "難兄難弟雙贏", 中吉: "戰友挺你", 小吉: "平安過一天", 小凶: "難兄難弟一起虧", 中凶: "戰友也被套", 大凶: "難兄難弟雙雙陣亡" },
+  eason: { 大吉: "胡自摸", 中吉: "麻將贏一把", 小吉: "摸八筒", 小凶: "放槍賠一半", 中凶: "麻將輸到脫褲", 大凶: "通殺出局" },
+  vivi: { 大吉: "小三上位", 中吉: "曖昧升溫", 小吉: "平淡日常", 小凶: "小三被抓包", 中凶: "曖昧變尷尬", 大凶: "三角關係崩壞" },
+  krapy: { 大吉: "損友挺你", 中吉: "搭檔互罩", 小吉: "一起苟活", 小凶: "損友也在虧", 中凶: "搭檔陣亡", 大凶: "損友一起爆倉" },
+  tommy: { 大吉: "賽事奪冠", 中吉: "戰友保底", 小吉: "平安落地", 小凶: "舊部隊被淘汰", 中凶: "戰友已讀不回", 大凶: "賽事直接棄權" },
+  hagon: { 大吉: "鯰魚躍龍門", 中吉: "短影音爆紅", 小吉: "平常心划水", 小凶: "鯰魚翻肚", 中凶: "短影音下架", 大凶: "鯰魚缺氧" },
+  egghead: { 大吉: "饒舌奪冠", 中吉: "節奏抓得穩", 小吉: "平穩過渡", 小凶: "歌詞卡詞", 中凶: "節奏亂了套", 大凶: "全場噓聲" },
+  yuexi: { 大吉: "麻吉罩你", 中吉: "ACG大吉", 小吉: "平淡主持日", 小凶: "麻吉放鳥", 中凶: "節目冷場", 大凶: "麻吉直接絕交" },
+  asen: { 大吉: "賽評神預測", 中吉: "麻吉挺你", 小吉: "平常心觀賽", 小凶: "麻吉沒空", 中凶: "賽評看走眼", 大凶: "麻吉組隊翻船" },
+  kent: { 大吉: "快打全勝", 中吉: "損友保底", 小吉: "平手收場", 小凶: "連續被完封", 中凶: "損友已讀不回", 大凶: "快打連敗到脫段" },
+  mmd: { 大吉: "職業魂覺醒", 中吉: "損友挺你", 小吉: "平淡上分", 小凶: "損友放你鴿子", 中凶: "掉分掉到懷疑人生", 大凶: "損友也棄坑" },
+  guidong: { 大吉: "後盾全開", 中吉: "公司挺你", 小吉: "平常營運", 小凶: "後盾請假", 中凶: "公司要開會檢討", 大凶: "幕後全面失聯" },
+  weifu: { 大吉: "老戰友爆發", 中吉: "語音陪你", 小吉: "平淡開黑", 小凶: "戰友已讀不回", 中凶: "語音突然斷線", 大凶: "老戰友直接下線" },
+  uzra: { 大吉: "亦敵亦友大勝", 中吉: "戰棋玩梗贏", 小吉: "平手不尷尬", 小凶: "玩梗玩過頭", 中凶: "亦敵亦友翻臉", 大凶: "戰棋直接投降" },
+  turtle: { 大吉: "DC班底附體", 中吉: "老友挺你", 小吉: "平淡開團", 小凶: "老友已讀不回", 中凶: "DC群突然安靜", 大凶: "班底集體潛水" },
+  overload: { 大吉: "正代餐上位", 中吉: "相愛相殺贏", 小吉: "平手過招", 小凶: "代餐被抵制", 中凶: "相愛相殺變真吵架", 大凶: "正代餐直接下架" }
+};
+
+const FORTUNE_LEVELS = [
+  { key: "大吉", weight: 10, tier: "legendary" },
+  { key: "中吉", weight: 15, tier: "rare" },
+  { key: "小吉", weight: 25, tier: "common" },
+  { key: "小凶", weight: 25, tier: "common" },
+  { key: "中凶", weight: 15, tier: "common" },
+  { key: "大凶", weight: 10, tier: "common" }
+];
+
+const FORTUNE_GOOD_LEVELS = ["大吉", "中吉", "小吉"];
+
+const FORTUNE_RARITY_POOL = {
+  legendary: ["roger"],
+  rare: ["nl", "uzra", "vivi", "guidong"],
+  common: FORTUNE_CHARACTERS
+    .map(character => character.id)
+    .filter(
+      id =>
+        id !== "roger" &&
+        !["nl", "uzra", "vivi", "guidong"].includes(id)
+    )
+};
+
+/*
+ * 運勢等級決定「抽卡池的傾向」，
+ * 大吉時開到傳說卡的機率最高，大凶幾乎只會開到普通卡。
+ */
+const FORTUNE_TIER_WEIGHTS = {
+  legendary: { legendary: 55, rare: 30, common: 15 },
+  rare: { legendary: 15, rare: 45, common: 40 },
+  common: { legendary: 4, rare: 16, common: 80 }
+};
+
+const FORTUNE_RARITY_LABELS = {
+  common: "普通",
+  rare: "稀有",
+  legendary: "傳說"
+};
+
+const FORTUNE_STORAGE_KEY = "roger_fortune_result";
+
+function getTaipeiDateString() {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Taipei",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(new Date());
+
+  const year = parts.find(part => part.type === "year")?.value;
+  const month = parts.find(part => part.type === "month")?.value;
+  const day = parts.find(part => part.type === "day")?.value;
+
+  return `${year}-${month}-${day}`;
+}
+
+function pickWeighted(entries, weightOf) {
+  const total = entries.reduce(
+    (sum, entry) => sum + weightOf(entry),
+    0
+  );
+
+  let roll = Math.random() * total;
+
+  for (const entry of entries) {
+    roll -= weightOf(entry);
+
+    if (roll <= 0) {
+      return entry;
+    }
+  }
+
+  return entries[entries.length - 1];
+}
+
+function drawFortune() {
+  const level = pickWeighted(
+    FORTUNE_LEVELS,
+    entry => entry.weight
+  );
+
+  const tierWeights = FORTUNE_TIER_WEIGHTS[level.tier];
+
+  const tierEntries = Object.keys(tierWeights).map(
+    tierKey => ({
+      tier: tierKey,
+      weight: tierWeights[tierKey]
+    })
+  );
+
+  const chosenTier = pickWeighted(
+    tierEntries,
+    entry => entry.weight
+  ).tier;
+
+  const pool = FORTUNE_RARITY_POOL[chosenTier];
+
+  const characterId =
+    pool[Math.floor(Math.random() * pool.length)];
+
+  return {
+    level: level.key,
+    tier: chosenTier,
+    characterId
+  };
+}
+
+function getStoredFortune() {
+  const raw = localStorage.getItem(FORTUNE_STORAGE_KEY);
+
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+
+    if (parsed.date !== getTaipeiDateString()) {
+      return null;
+    }
+
+    return parsed;
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveFortuneResult(result) {
+  localStorage.setItem(
+    FORTUNE_STORAGE_KEY,
+    JSON.stringify({
+      date: getTaipeiDateString(),
+      ...result
+    })
+  );
+}
+
+function renderFortuneButtonState() {
+  const button = document.getElementById(
+    "fortuneFloatingBtn"
+  );
+
+  const statusEl = document.getElementById(
+    "fortuneStatusRow"
+  );
+
+  const hintEl = document.getElementById("fortuneHint");
+
+  if (!button) {
+    return;
+  }
+
+  const stored = getStoredFortune();
+
+  if (stored) {
+    button.classList.add("is-drawn");
+
+    if (statusEl) {
+      statusEl.innerHTML = `今日運勢：<strong>${stored.level}</strong>`;
+    }
+
+    if (hintEl) {
+      hintEl.textContent = "點我再看一次";
+    }
+  } else {
+    button.classList.remove("is-drawn");
+
+    if (statusEl) {
+      statusEl.textContent = "今天還沒抽籤";
+    }
+
+    if (hintEl) {
+      hintEl.textContent = "點我抽籤";
+    }
+  }
+}
+
+function renderFortuneResult(result) {
+  const character = FORTUNE_CHARACTERS.find(
+    entry => entry.id === result.characterId
+  );
+
+  if (!character) {
+    return;
+  }
+
+  const drawStage = document.getElementById(
+    "fortuneDrawStage"
+  );
+
+  const resultEl = document.getElementById("fortuneResult");
+  const image = document.getElementById("fortuneCardImage");
+  const frame = document.getElementById("fortuneCardFrame");
+  const rarityEl = document.getElementById(
+    "fortuneCardRarity"
+  );
+  const nameEl = document.getElementById("fortuneCardName");
+  const levelEl = document.getElementById("fortuneLevel");
+  const termEl = document.getElementById("fortuneTerm");
+
+  if (drawStage) {
+    drawStage.hidden = true;
+  }
+
+  if (resultEl) {
+    resultEl.hidden = false;
+  }
+
+  if (image) {
+    image.src = character.image;
+    image.alt = character.name;
+  }
+
+  frame?.classList.remove(
+    "rarity-common",
+    "rarity-rare",
+    "rarity-legendary"
+  );
+  frame?.classList.add(`rarity-${result.tier}`);
+
+  if (rarityEl) {
+    rarityEl.textContent =
+      FORTUNE_RARITY_LABELS[result.tier];
+
+    rarityEl.className = `fortune-card-rarity rarity-${result.tier}`;
+  }
+
+  if (nameEl) {
+    nameEl.textContent = character.name;
+  }
+
+  if (levelEl) {
+    levelEl.textContent = result.level;
+
+    levelEl.className = `fortune-level ${
+      FORTUNE_GOOD_LEVELS.includes(result.level)
+        ? "level-good"
+        : "level-bad"
+    }`;
+  }
+
+  if (termEl) {
+    termEl.textContent =
+      FORTUNE_TERMS[result.characterId]?.[result.level] ||
+      "";
+  }
+}
+
+function resetFortuneDrawStageUI() {
+  const drawStage = document.getElementById(
+    "fortuneDrawStage"
+  );
+
+  const resultEl = document.getElementById("fortuneResult");
+  const drawBtn = document.getElementById("fortuneDrawBtn");
+
+  const stored = getStoredFortune();
+
+  if (stored) {
+    renderFortuneResult(stored);
+    return;
+  }
+
+  if (drawStage) {
+    drawStage.hidden = false;
+  }
+
+  if (resultEl) {
+    resultEl.hidden = true;
+  }
+
+  if (drawBtn) {
+    drawBtn.disabled = false;
+    drawBtn.textContent = "抽籤";
+    drawBtn.classList.remove("is-drawing");
+  }
+}
+
+function performFortuneDraw() {
+  const drawBtn = document.getElementById("fortuneDrawBtn");
+
+  if (!drawBtn || drawBtn.disabled) {
+    return;
+  }
+
+  drawBtn.disabled = true;
+  drawBtn.textContent = "抽籤中…";
+  drawBtn.classList.add("is-drawing");
+
+  playTone("soft");
+
+  window.setTimeout(() => {
+    const result = drawFortune();
+
+    saveFortuneResult(result);
+    renderFortuneResult(result);
+    renderFortuneButtonState();
+    refreshRightStackBadge();
+
+    if (result.tier === "legendary") {
+      const rect = drawBtn.getBoundingClientRect();
+      burst(
+        rect.left + rect.width / 2,
+        rect.top + rect.height / 2,
+        45
+      );
+      playTone("success");
+    } else if (result.tier === "rare") {
+      playTone("success");
+    } else {
+      playTone(
+        FORTUNE_GOOD_LEVELS.includes(result.level)
+          ? "soft"
+          : "fail"
+      );
+    }
+  }, 900);
+}
+
+function openFortuneModal() {
+  const modal = document.getElementById("fortuneModal");
+
+  if (!modal) {
+    return;
+  }
+
+  resetFortuneDrawStageUI();
+
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  syncRogerModalBodyScroll();
+}
+
+function closeFortuneModal() {
+  const modal = document.getElementById("fortuneModal");
+
+  if (!modal) {
+    return;
+  }
+
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+  syncRogerModalBodyScroll();
+}
+
+function setupFortune() {
+  const button = document.getElementById(
+    "fortuneFloatingBtn"
+  );
+
+  const modal = document.getElementById("fortuneModal");
+  const drawBtn = document.getElementById("fortuneDrawBtn");
+  const closeBtn = document.getElementById(
+    "closeFortuneModalBtn"
+  );
+
+  if (!button || !modal || !drawBtn) {
+    console.warn("找不到每日運勢籤所需的 HTML 元素");
+    return;
+  }
+
+  renderFortuneButtonState();
+
+  button.addEventListener("click", openFortuneModal);
+  drawBtn.addEventListener("click", performFortuneDraw);
+  closeBtn?.addEventListener("click", closeFortuneModal);
+
+  modal
+    .querySelector("[data-close-fortune-modal]")
+    ?.addEventListener("click", closeFortuneModal);
+}
+
+/* ===== 右下角堆疊面板收合/展開 ===== */
+
+const RIGHT_STACK_OPEN_STORAGE_KEY = "roger_right_stack_open";
+
+function isRightStackRemeberedOpen() {
+  const saved = localStorage.getItem(
+    RIGHT_STACK_OPEN_STORAGE_KEY
+  );
+
+  // 沒存過就預設展開，讓第一次來的訪客看得到功能
+  return saved === null ? true : saved === "1";
+}
+
+function setRightStackOpenPreference(isOpen) {
+  localStorage.setItem(
+    RIGHT_STACK_OPEN_STORAGE_KEY,
+    isOpen ? "1" : "0"
+  );
+}
+
+function refreshRightStackBadge() {
+  const badge = document.getElementById("rightStackBadge");
+
+  if (!badge) {
+    return;
+  }
+
+  const eggNeedsAttention =
+    isEggEventLive() && !isEggHatched();
+
+  const fortuneNeedsAttention = !getStoredFortune();
+
+  const shouldShow =
+    eggNeedsAttention || fortuneNeedsAttention;
+
+  badge.hidden = !shouldShow;
+}
+
+function setRightStackOpen(isOpen) {
+  const container = document.getElementById(
+    "rightFixedStack"
+  );
+
+  const toggle = document.getElementById(
+    "rightStackToggle"
+  );
+
+  if (!container || !toggle) {
+    return;
+  }
+
+  container.classList.toggle("is-open", isOpen);
+  toggle.setAttribute("aria-expanded", String(isOpen));
+
+  toggle.setAttribute(
+    "aria-label",
+    isOpen ? "收合互動功能" : "展開更多互動功能"
+  );
+
+  setRightStackOpenPreference(isOpen);
+
+  if (isOpen) {
+    refreshRightStackBadge();
+  }
+}
+
+function setupRightStack() {
+  const container = document.getElementById(
+    "rightFixedStack"
+  );
+
+  const toggle = document.getElementById(
+    "rightStackToggle"
+  );
+
+  if (!container || !toggle) {
+    console.warn("找不到右下角堆疊面板所需的 HTML 元素");
+    return;
+  }
+
+  setRightStackOpen(isRightStackRemeberedOpen());
+  refreshRightStackBadge();
+
+  toggle.addEventListener("click", () => {
+    const isCurrentlyOpen =
+      container.classList.contains("is-open");
+
+    setRightStackOpen(!isCurrentlyOpen);
+  });
 }
 
 function setupRogerAboutModal() {
@@ -3082,6 +3599,8 @@ if (document.readyState === "loading") {
   loadPrayStats();
 
   setupEggHatch();
+  setupFortune();
+  setupRightStack();
 
   const autoRefreshBtn =
     $("#autoRefreshBtn");
