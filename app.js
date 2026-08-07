@@ -1970,7 +1970,7 @@ function setupPrayAnimation() {
 /* ===== 父親節孵蛋彩蛋 ===== */
 
 const EGG_REVEAL_AT =
-  new Date("2026-08-08T00:00:00+08:00").getTime();
+  new Date("2026-08-07T00:00:00+08:00").getTime();
 
 const EGG_CLICK_TARGET = 12;
 
