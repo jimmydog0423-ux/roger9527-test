@@ -1970,7 +1970,7 @@ function setupPrayAnimation() {
 /* ===== 父親節孵蛋彩蛋 ===== */
 
 const EGG_REVEAL_MONTH = 8;
-const EGG_REVEAL_DAY = 8;
+const EGG_REVEAL_DAY = 7;
 
 const EGG_CLICK_TARGET = 12;
 
