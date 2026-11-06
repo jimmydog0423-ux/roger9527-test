@@ -1,3 +1,13 @@
+## 2026/11/06 連線修復與手動更新
+
+- 在原始 `roger9527/config.js` 找回第二個 Worker：`https://crimson-union-c21f.jimmydog0702.workers.dev`；主要 Worker：`https://lucky-rice-01c0.jimmydog0423.workers.dev`。
+- `config.js` 同時提供 `workerUrl` 和 `workerUrl2`，`worker-client.js` 集中處理備援。只讀的 GET 遇錯會改用備援，結果會標明來自主要或備援。
+- 上香 POST 優先寫入已通過 `/pray/stats` 驗證的 Worker，遇到逾時、CORS、中斷或 500 時不盲目重試，避免寫入成功卻因網路回應失敗而重複計數；只有明確 404 / 405 時才可能切換寫入端。
+- 取消上香統計每 30 秒輪詢與頁面重新聚焦時查詢；改為進站讀取一次、按「重新查詢香火」時再讀取、成功上香後根據 POST 回應更新統計。
+- 取消整體股市走勢每 2 分鐘自動刷新；改為進站讀取一次，點「更新走勢」時才重新連線。
+- 上香冷卻倒數仍由瀏覽器每秒更新按鈕文字，**不會發出任何連線請求**；敲木魚也是本機計數。
+- 注意：兩個 Worker 如果使用不同 Cloudflare 帳號、不同 D1 資料庫，將顯示各自的統計，**不能當作同一份全站香火總數**。必須在 Cloudflare 確認兩台的資料庫來源相同或使用共同 API。前端 GitHub 程式碼不能修復伺服器端 D1 綁定、CORS 或已停用的 Worker。
+
 # 2026/11 網站改版：羅傑線上追思靈堂（粉絲惡搞）
 
 **目前首頁已改為上香／敲木魚互動式靈堂，原本股票戰情室不再從首頁載入。** 以下舊版 README 內容保留供參考，舊的 `app.js`、`styles.css` 與股票設定依然留在 Git 倉庫，但目前首頁改用 `memorial.js`、`memorial.css`。
