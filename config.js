@@ -1,6 +1,7 @@
 window.APP_CONFIG = {
   refreshSeconds: 60,
   workerUrl: "https://lucky-rice-01c0.jimmydog0423.workers.dev",
+  workerUrl2: "https://crimson-union-c21f.jimmydog0702.workers.dev",
   fallbackUsdTwd: 32.38,
 
   socialLinks: [
