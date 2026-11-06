@@ -1,883 +1,140 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#100b1f" />
-
-  <title>羅傑全資產戰情室｜吉米狗製作</title>
-
-  <link rel="icon" href="data:," />
-
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  />
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  />
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&display=swap"
-    rel="stylesheet"
-  />
-
-  <link
-    rel="stylesheet"
-    href="styles.css"
-  />
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script
-  src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"
-  ></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090908">
+  <meta name="description" content="羅傑 Roger9527 線上追思靈堂：上香、敲木魚、累積功德。粉絲惡搞創作，純屬娛樂，非真實訃聞。">
+  <meta property="og:title" content="羅傑 Roger9527｜線上追思靈堂">
+  <meta property="og:description" content="台股炸裂、美股負五萬美、11月回國不開台。來上炷香，替羅傑敲一下木魚！純屬粉絲惡搞。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/images/下載.png">
+  <title>羅傑 Roger9527｜線上追思靈堂（惡搞）</title>
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="memorial.css">
+  <script defer src="config.js"></script>
+  <script defer src="memorial.js"></script>
 </head>
-
 <body>
-  <div class="noise"></div>
-  <div id="particles" aria-hidden="true"></div>
-
-  <header class="hero">
-    <div>
-      <div class="live-row">
-        <span class="live-dot"></span>
-        <span>LIVE PORTFOLIO ARENA</span>
-      </div>
-
-      <h1>羅傑全資產戰情室</h1>
-
-      <p class="subtitle">
-        每 60 秒更新、支援手動重整、互動音效與損益爆擊
-      </p>
-    </div>
-
-    <div class="hero-actions">
-      <button
-        id="aboutRogerBtn"
-        class="btn about-roger-btn"
-        type="button"
-      >
-        關於羅傑
-      </button>
-      <button
-        id="refreshBtn"
-        class="btn primary"
-        type="button"
-      >
-        立即更新
-      </button>
-
-      <button
-        id="chaosBtn"
-        class="btn danger"
-        type="button"
-      >
-        損益大爆擊
-      </button>
-
-      <button
-        id="soundBtn"
-        class="btn ghost"
-        type="button"
-        aria-pressed="true"
-      >
-        音效：開
-      </button>
-
-      <button
-        id="autoRefreshBtn"
-        class="btn ghost"
-        type="button"
-        aria-pressed="true"
-      >
-        自動更新：開
-      </button>
+  <header class="masthead">
+    <div class="masthead-brand">ROGER 9527 · 線上追思紀念館</div>
+    <div class="masthead-tools">
+      <span class="breath">本館香火永續，開台時間未知</span>
+      <button class="text-button" type="button" id="soundToggle" aria-pressed="true">音效：開</button>
+      <button class="text-button" type="button" id="shareBtn">分享靈堂</button>
     </div>
   </header>
 
-  <main>
-    <section class="summary-grid">
-      <article class="summary-card total">
-        <span>目前總損益</span>
-        <strong id="totalPnl">計算中…</strong>
-        <small id="totalPnlPct">—</small>
-      </article>
-
-      <article class="summary-card">
-        <span>總投入成本</span>
-        <strong id="totalCost">—</strong>
-        <small>台幣估算</small>
-      </article>
-
-      <article class="summary-card">
-        <span>最新美元匯率</span>
-        <strong id="usdTwd">—</strong>
-        <small id="fxSource">Yahoo Finance</small>
-      </article>
-
-      <article class="summary-card">
-        <span>更新時間</span>
-        <strong id="updatedAt">尚未更新</strong>
-        <small id="countdown">60 秒後自動更新</small>
-      </article>
+  <main class="page">
+    <section class="intro" aria-labelledby="mainTitle">
+      <p class="eyebrow">IN LOVING MEMORY · PARODY EDITION</p>
+      <h1 id="mainTitle">羅傑線上靈堂</h1>
+      <p class="intro-sub">一炷清香寄思念，萬千好傑寶等開台</p>
     </section>
-    <section class="total-chart-section">
-      <div class="total-chart-head">
-        <div>
-          <p class="eyebrow">TOTAL ASSET TREND</p>
-          <h2>全資產總市值走勢</h2>
+
+    <div class="altar-area">
+      <aside class="elegy" aria-hidden="true">台股跌停神仙難救</aside>
+
+      <section class="shrine" aria-label="羅傑追思主祭壇">
+        <div class="mourning-seal" aria-hidden="true">奠</div>
+        <div class="portrait-frame">
+          <img src="assets/images/下載.png" alt="羅傑黑白紀念肖像" width="300" height="342" fetchpriority="high">
+          <div class="portrait-label">羅傑 · ROGER9527</div>
         </div>
-    
-        <div class="total-chart-value">
-          <span>目前總市值</span>
-          <strong id="currentPortfolioValue">—</strong>
+        <h2>羅傑 千古</h2>
+        <p class="subtitle">生前最愛：要拚 · 靠賽 · 下次一定開</p>
+        <p class="prayer-quote">
+          股海無情，香火有情。<br>
+          人雖未開台，觀眾永遠在等。
+        </p>
+        <div class="altar-table" aria-label="祭祀香爐與長明燈">
+          <div class="offerings">
+            <div class="candle" aria-hidden="true"></div>
+            <div class="incense-urn" id="incenseUrn" aria-label="互動香爐">
+              <div class="sticks" id="incenseSticks" aria-hidden="true"></div>
+              <div class="urn-body" aria-hidden="true"></div>
+              <div class="urn-rim" aria-hidden="true"></div>
+            </div>
+            <div class="candle" aria-hidden="true"></div>
+          </div>
         </div>
-      </div>
-    
-      <div class="total-chart-wrap">
-        <canvas id="totalPortfolioChart"></canvas>
-      </div>
-    
-      <div class="total-chart-footer">
-        <span id="totalChartStartDate">—</span>
-        <span>資料以新台幣估算</span>
-        <span id="totalChartEndDate">—</span>
-      </div>
-    </section>
-    <section
-      class="ticker-wrap"
-      aria-label="即時跑馬燈"
-    >
-      <div id="ticker" class="ticker"></div>
-    </section>
+        <p class="shrine-caption">獻上一炷香，香爐便會冒煙 · 點擊下方按鈕即可祭拜</p>
+      </section>
 
-    <section class="rank-grid">
-      <article class="rank-card">
-        <span>目前最大虧損</span>
-        <strong id="worstHolding">—</strong>
-        <small id="worstPnl">—</small>
+      <aside class="elegy" aria-hidden="true">美股負五萬歸期無台</aside>
+    </div>
+
+    <div class="ribbons">一拜股市　再拜痔瘡　三拜十一月還是不開台</div>
+
+    <section class="ritual-grid" aria-label="互動祭拜區">
+      <article class="panel">
+        <p class="panel-kicker">OFFER INCENSE · 線上上香</p>
+        <h3>請替羅傑上一炷香</h3>
+        <p class="panel-desc">一人一分鐘一炷香，願賠掉的五萬美金都能回來。</p>
+        <button class="ritual-button" id="prayBtn" type="button">誠心上香 · 敬獻一炷</button>
+        <dl class="stats" aria-label="全站上香統計">
+          <div>
+            <dt>累積上香人數</dt>
+            <dd id="totalVisitors" aria-live="polite">—</dd>
+          </div>
+          <div>
+            <dt>累積上香次數</dt>
+            <dd id="totalIncense" aria-live="polite">—</dd>
+          </div>
+        </dl>
+        <p id="statsStatus" class="stats-status" role="status">連線取得全站香火統計中…</p>
+        <p class="stats-status">你已經上香 <strong id="myIncense">—</strong> 次（以此瀏覽器辨識）</p>
       </article>
 
-      <article class="rank-card">
-        <span>目前最佳表現</span>
-        <strong id="bestHolding">—</strong>
-        <small id="bestPnl">—</small>
+      <article class="panel">
+        <p class="panel-kicker">WOODEN FISH · 功德木魚</p>
+        <h3>一敲功德加一</h3>
+        <p class="panel-desc">敲醒沉睡的羅傑，也許下一敲他就想開台。</p>
+        <div class="woodfish-wrap">
+          <button type="button" id="woodfishBtn" class="woodfish-button" aria-label="敲木魚，累積一次功德" title="點擊敲木魚">
+            <span>敲我積功德</span>
+          </button>
+        </div>
+        <p class="woodfish-count">你的累積木魚功德 <strong id="woodfishCount">0</strong> 下</p>
+        <p class="stats-status">可無限敲擊 · 木魚次數僅保存在此瀏覽器</p>
       </article>
-
-      <article class="rank-card status-card">
-        <span>行情連線狀態</span>
-        <strong id="apiStatus">準備連線</strong>
-        <small id="apiDetail">
-          Cloudflare Worker + Yahoo Finance
-        </small>
-      </article>
     </section>
 
-    <!-- 留言板 -->
-    <section
-      class="message-board-section"
-      aria-label="留言板"
-    >
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">MESSAGE BOARD</p>
-          <h2>留言板</h2>
-        </div>
-
-        <p>留一句話給羅傑，會隨機出現在跑馬燈上</p>
+    <section class="ledger" aria-labelledby="causeTitle">
+      <h3 id="causeTitle">本館追思事蹟 · 三大往生原因</h3>
+      <div class="causes">
+        <article class="cause">
+          <p class="cause-number">其一 · 股海劫難</p>
+          <h4>台股全面炸裂</h4>
+          <p>進場前是投資，進場後是超渡；紅色看不見，只剩一片綠。</p>
+        </article>
+        <article class="cause">
+          <p class="cause-number">其二 · 美股爆擊</p>
+          <h4>美股負五萬美</h4>
+          <p>帳面蒸發 50,000 美元，據惡搞設定連痔瘡都跟著一起炸裂。</p>
+        </article>
+        <article class="cause">
+          <p class="cause-number">其三 · 開台絕響</p>
+          <h4>十一月回國不開台</h4>
+          <p>千呼萬喚始不出，留下聊天室苦苦守候，從此直播只存在傳說。</p>
+        </article>
       </div>
-
-      <div
-        class="message-ticker-wrap"
-        aria-label="留言跑馬燈"
-      >
-        <div
-          id="messageTicker"
-          class="message-ticker"
-        ></div>
-      </div>
-
-      <form
-        id="messageForm"
-        class="message-form"
-      >
-        <input
-          id="messageNicknameInput"
-          class="message-nickname-input"
-          type="text"
-          maxlength="12"
-          placeholder="暱稱（選填）"
-          autocomplete="off"
-        />
-
-        <input
-          id="messageTextInput"
-          class="message-text-input"
-          type="text"
-          maxlength="60"
-          placeholder="留句話吧（60 字以內，不能有連結）"
-          autocomplete="off"
-          required
-        />
-
-        <button
-          id="messageSubmitBtn"
-          class="btn primary message-submit-btn"
-          type="submit"
-        >
-          送出留言
-        </button>
-      </form>
-
-      <p
-        id="messageFormNote"
-        class="message-form-note"
-      >
-        每人每 60 秒可留言一次
-      </p>
     </section>
 
-    <!-- 台股區 -->
-    <section class="market-section">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">TAIWAN MARKET</p>
-          <h2>台股持倉</h2>
-        </div>
-
-        <p>台灣市場持有股票與 ETF</p>
-      </div>
-
-      <section
-        id="twPortfolio"
-        class="portfolio-grid"
-        aria-live="polite"
-      ></section>
-    </section>
-
-    <!-- 美股區 -->
-    <section class="market-section">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">UNITED STATES MARKET</p>
-          <h2>美股持倉</h2>
-        </div>
-
-        <p>美國市場股票與 ETF</p>
-      </div>
-
-      <section
-        id="usPortfolio"
-        class="portfolio-grid"
-        aria-live="polite"
-      ></section>
-    </section>
-
-    <section class="links-section">
-      <div>
-        <p class="eyebrow">STREAMER LINKS</p>
-        <h2>前往實況主頻道</h2>
-      </div>
-
-      <div
-        id="socialLinks"
-        class="social-links"
-      ></div>
-    </section>
+    <p class="disclaimer">
+      【重要聲明】本網站是粉絲惡搞創作，以上「往生原因」及追思內容均為虛構玩笑，不代表羅傑本人實際死亡或確有相關健康狀況、投資損失。<br>
+      全站上香人數與次數使用原專案 Cloudflare Worker / D1 記錄；木魚數為各裝置獨立計算。
+    </p>
   </main>
 
-  <footer>
-    <span>
-      資料僅供娛樂展示，不構成投資建議。
-    </span>
-
-    <strong>製作人：吉米狗</strong>
+  <footer class="footer">
+    吉米狗製作 · 好傑寶線上祭拜所 · <a href="https://github.com/jimmydog0423-ux/roger9527-test" target="_blank" rel="noopener noreferrer">專案原始碼</a>
   </footer>
-  <div
-  id="mrvlEffect"
-  class="mrvl-effect"
-  aria-hidden="true"
->
-  <div class="mrvl-effect-backdrop"></div>
 
-  <div class="mrvl-effect-content">
-    <div class="mrvl-effect-flash"></div>
-
-    <img
-      id="mrvlEffectImage"
-      src="assets/images/mrvl-effect.png"
-      alt="MRVL 特效圖片"
-    />
-
-    <div class="mrvl-effect-title">
-      MRVL 爆擊
-    </div>
-
-    <div class="mrvl-effect-subtitle">
-      邁威爾專屬事件觸發
-    </div>
-  </div>
-</div>
-  <!-- 右下角固定功能堆疊區（可收合，避免功能越加越多互相卡住） -->
-  <div
-    id="rightFixedStack"
-    class="right-fixed-stack"
-  >
-  <!-- 展開/收合按鈕：永遠顯示，固定貼在堆疊最底部 -->
-  <button
-    id="rightStackToggle"
-    class="right-stack-toggle"
-    type="button"
-    aria-expanded="false"
-    aria-controls="rightStackPanel"
-    aria-label="展開更多互動功能"
-  >
-    <span
-      id="rightStackBadge"
-      class="right-stack-badge"
-      hidden
-    ></span>
-    <span class="right-stack-toggle-arrow"></span>
-    <span class="right-stack-toggle-label">互動</span>
-  </button>
-
-  <!-- 可收合面板：上香、孵蛋、運勢籤都收在這裡面 -->
-  <div
-    id="rightStackPanel"
-    class="right-stack-panel"
-  >
-  <!-- 燒香拜拜按鈕 -->
-  <div class="pray-fixed-area">
-  <button
-    id="prayFloatingBtn"
-    class="pray-fixed-button"
-    type="button"
-    aria-label="上香祈福"
-  >
-    <span class="pray-icon-box">
-      <img
-        src="assets/images/incense.png"
-        alt=""
-      />
-    </span>
-
-    <span class="pray-info">
-      <span class="pray-title">
-        點我上香
-      </span>
-
-      <span class="pray-visitor-row">
-        已有
-        <strong id="prayVisitorCount">0</strong>
-        人上香
-      </span>
-
-      <span
-        id="prayTotalCount"
-        class="pray-total-count"
-      >
-        累積香火 0 次
-      </span>
-    </span>
-  </button>
-</div>
-
-  <!-- 父親節孵蛋彩蛋按鈕 -->
-  <div
-    id="eggFixedArea"
-    class="egg-fixed-area"
-    hidden
-  >
-  <button
-    id="eggFloatingBtn"
-    class="egg-fixed-button"
-    type="button"
-    aria-label="敲敲看，孵化神秘生物"
-  >
-    <span class="egg-icon-box">
-      <span id="eggShape" class="egg-shape">
-        <span class="egg-crack egg-crack-1"></span>
-        <span class="egg-crack egg-crack-2"></span>
-        <span class="egg-crack egg-crack-3"></span>
-      </span>
-    </span>
-
-    <span class="egg-info">
-      <span class="egg-title" id="eggTitle">
-        父親節神秘彩蛋
-      </span>
-
-      <span class="egg-progress-row">
-        敲了
-        <strong id="eggClickCount">0</strong>
-        /
-        <span id="eggClickTarget">12</span>
-        下
-      </span>
-
-      <span
-        id="eggHint"
-        class="egg-hint"
-      >
-        點我敲蛋！
-      </span>
-    </span>
-  </button>
-</div>
-
-  <!-- 每日運勢籤按鈕 -->
-  <div
-    id="fortuneFixedArea"
-    class="fortune-fixed-area"
-  >
-  <button
-    id="fortuneFloatingBtn"
-    class="fortune-fixed-button"
-    type="button"
-    aria-label="抽今日運勢籤"
-  >
-    <span class="fortune-icon-box">
-      <span class="fortune-orb"></span>
-    </span>
-
-    <span class="fortune-info">
-      <span class="fortune-title">
-        每日運勢籤
-      </span>
-
-      <span
-        id="fortuneStatusRow"
-        class="fortune-status-row"
-      >
-        今天還沒抽籤
-      </span>
-
-      <span
-        id="fortuneHint"
-        class="fortune-hint"
-      >
-        點我抽籤
-      </span>
-    </span>
-  </button>
-</div>
-</div>
-</div>
-
-  <!-- 拜拜動畫產生區 -->
-  <div
-    id="prayAnimationLayer"
-    class="pray-animation-layer"
-    aria-hidden="true"
-></div>
-
-  <!-- 每日運勢揭曉視窗 -->
-  <div
-    id="fortuneModal"
-    class="roger-modal fortune-modal"
-    aria-hidden="true"
-  >
-  <div
-    class="roger-modal-backdrop"
-    data-close-fortune-modal
-  ></div>
-  <section
-    class="roger-modal-panel fortune-panel"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="fortuneModalTitle"
-  >
-    <button
-      id="closeFortuneModalBtn"
-      class="roger-modal-close"
-      type="button"
-      aria-label="關閉視窗"
-    >
-      ×
-    </button>
-
-    <div class="fortune-draw-content">
-      <p class="eyebrow">TODAY'S FORTUNE</p>
-      <h2 id="fortuneModalTitle">今日運勢籤</h2>
-
-      <div
-        id="fortuneDrawStage"
-        class="fortune-draw-stage"
-      >
-        <button
-          id="fortuneDrawBtn"
-          class="btn primary fortune-draw-btn"
-          type="button"
-        >
-          抽籤
-        </button>
-      </div>
-
-      <div
-        id="fortuneResult"
-        class="fortune-result"
-        hidden
-      >
-        <div
-          id="fortuneResultCard"
-          class="fortune-result-card"
-        >
-          <div
-            id="fortuneCardFrame"
-            class="fortune-card-frame"
-          >
-            <img
-              id="fortuneCardImage"
-              src=""
-              alt=""
-            />
-          </div>
-          <p
-            id="fortuneCardRarity"
-            class="fortune-card-rarity"
-          ></p>
-          <p
-            id="fortuneCardName"
-            class="fortune-card-name"
-          ></p>
-        </div>
-
-        <div class="fortune-result-detail">
-          <p
-            id="fortuneLevel"
-            class="fortune-level"
-          ></p>
-          <p
-            id="fortuneTerm"
-            class="fortune-term"
-          ></p>
-          <p class="fortune-poem-placeholder">
-            完整籤詩敬請期待，之後會補上。
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-  <!-- 孵化揭曉視窗 -->
-  <div
-    id="eggHatchModal"
-    class="roger-modal egg-hatch-modal"
-    aria-hidden="true"
-  >
-  <div
-    class="roger-modal-backdrop"
-    data-close-egg-modal
-  ></div>
-  <section
-    class="roger-modal-panel egg-hatch-panel"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="eggHatchTitle"
-  >
-    <button
-      id="closeEggHatchBtn"
-      class="roger-modal-close"
-      type="button"
-      aria-label="關閉視窗"
-    >
-      ×
-    </button>
-
-    <div class="egg-hatch-content">
-      <p class="eyebrow">HAPPY FATHER'S DAY</p>
-      <h2 id="eggHatchTitle">恭喜孵化成功！</h2>
-
-      <div class="egg-hatch-image-wrap">
-        <img
-          id="eggHatchImage"
-          src="assets/images/v-zai-shou.png"
-          alt="V仔獸"
-        />
-        <div
-          id="eggHatchImageFallback"
-          class="egg-hatch-image-fallback"
-          hidden
-        >
-          V仔獸
-        </div>
-      </div>
-
-      <p class="egg-hatch-message">
-        V仔獸 誕生了！祝羅傑父親節快樂
-      </p>
-    </div>
-  </section>
-</div>
-
-  <!-- 關於羅傑視窗 -->
-<div
-  id="aboutRogerModal"
-  class="roger-modal"
-  aria-hidden="true"
->
-  <div
-    class="roger-modal-backdrop"
-    data-close-roger-modal
-  ></div>
-
-  <section
-    class="roger-modal-panel"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="aboutRogerTitle"
-  >
-    <button
-      id="closeAboutRogerBtn"
-      class="roger-modal-close"
-      type="button"
-      aria-label="關閉視窗"
-    >
-      ×
-    </button>
-
-    <div class="roger-about-layout">
-
-      <div class="roger-photo-area">
-        <img
-          src="assets/images/roger-profile.jpg"
-          alt="羅傑"
-          class="roger-profile-image"
-        />
-
-        <div class="roger-photo-caption">
-          <span>實況主</span>
-          <strong>羅傑 Roger</strong>
-        </div>
-      </div>
-
-      <div class="roger-introduction">
-        <p class="eyebrow">ABOUT ROGER</p>
-
-        <h2 id="aboutRogerTitle">
-          關於羅傑
-        </h2>
-
-        <p>
-          羅傑，本名羅晟原，人稱「2486」、「電競不沾鍋」，是一位以高血壓操作、莫名失聯、以及各種精華聞名的頂級實況主。
-          憑藉著「要拚」的頭鐵風格，以及跟聊天室互相問候祖先的高度互動，成功圈養了一群自稱「好傑寶」，實則每天
-          都在等他開台出醜、爆氣的資深黑粉。
-        </p>
-
-        <p>
-          實況內容極其硬核，表面上涵蓋《爐石戰記》、戰棋速八、各式 3A 大作，
-          但實際上核心主體為：不開台遲到、股市點燈（買哪隻跌哪隻）、以及長達數小時的無意義日常抓交替。
-          其直播間堪稱現代網路迷因的萬惡根源，充斥著恩怨情仇、假帳號到處出征。
-        </p>
-
-        <div class="roger-info-list">
-          <div>
-            <span>名稱</span>
-            <strong>羅傑</strong>
-          </div>
-
-          <div>
-            <span>英文名稱</span>
-            <strong>Roger</strong>
-          </div>
-
-          <div>
-            <span綽號</span>
-            <strong>2486、高金生、V老大的狗、說教男</strong>
-          </div>
-
-          <div>
-            <span>特色</span>
-            <strong>要拚、貪刀、不開台</strong>
-          </div>
-        </div>
-
-        <button
-          id="openRelationshipBtn"
-          class="roger-relationship-btn"
-          type="button"
-        >
-          查看完整人際關係圖
-        </button>
-      </div>
-
-    </div>
-  </section>
-</div>
-
-<!-- 羅傑人際關係圖視窗 -->
-<div
-  id="relationshipModal"
-  class="roger-modal relationship-modal"
-  aria-hidden="true"
->
-  <div
-    class="roger-modal-backdrop"
-    data-close-relationship-modal
-  ></div>
-
-  <section
-    class="roger-modal-panel relationship-panel"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="relationshipTitle"
-  >
-    <button
-      id="closeRelationshipBtn"
-      class="roger-modal-close"
-      type="button"
-      aria-label="關閉人際關係圖"
-    >
-      ×
-    </button>
-
-    <div class="relationship-header">
-      <div>
-        <p class="eyebrow">RELATIONSHIP MAP</p>
-        <h2 id="relationshipTitle">
-          羅傑完整人際關係圖
-        </h2>
-      </div>
-
-      <button
-        id="backToAboutBtn"
-        class="btn ghost"
-        type="button"
-      >
-        返回人物介紹
-      </button>
-    </div>
-
-    <div class="relationship-toolbar">
-  <div class="relationship-filters">
-    <button
-      class="relationship-filter active"
-      type="button"
-      data-relationship-group="all"
-    >
-      全部人物
-    </button>
-
-    <button
-      class="relationship-filter"
-      type="button"
-      data-relationship-group="xd"
-    >
-      XD娛樂
-    </button>
-
-    <button
-      class="relationship-filter"
-      type="button"
-      data-relationship-group="hearthstone"
-    >
-      爐石實況圈
-    </button>
-
-    <button
-      class="relationship-filter"
-      type="button"
-      data-relationship-group="streamer"
-    >
-      實況圈
-    </button>
-  </div>
-
-  <button
-    id="resetRelationshipGraphBtn"
-    class="btn ghost relationship-reset-btn"
-    type="button"
-  >
-    重設位置
-  </button>
-</div>
-
-<div class="relationship-graph-layout">
-
-  <div class="relationship-network-column">
-    <div
-      id="rogerRelationshipNetwork"
-      class="relationship-network"
-      aria-label="羅傑互動人際關係圖"
-    ></div>
-  </div>
-
-  <aside
-    id="relationshipDetail"
-    class="relationship-detail"
-  >
-    <div
-      id="relationshipDetailAvatar"
-      class="relationship-detail-avatar group-center"
-    >
-      <img
-        id="relationshipDetailAvatarImage"
-        src="assets/images/people/roger.jpg"
-        alt="羅傑"
-      />
-    </div>
-
-    <p
-      id="relationshipDetailGroup"
-      class="relationship-detail-group"
-    >
-      中心人物
-    </p>
-
-    <h3 id="relationshipDetailName">
-      羅傑
-    </h3>
-
-    <div class="relationship-detail-relation">
-      <span>與羅傑的關係</span>
-      <strong id="relationshipDetailRelation">
-        中心
-      </strong>
-    </div>
-
-    <p id="relationshipDetailDescription">
-      共同創辦人、核心藝人，也是整張人際關係圖的中心節點。
-    </p>
-  </aside>
-
-</div>
-  </section>
-</div>
-  <div
-    id="toast"
-    class="toast"
-    role="status"
-  >
-    
-  </div>
-
-  <script src="config.js"></script>
-  <script src="app.js"></script>
-  <div id="authorNotice" class="notice-overlay">
-  <div class="notice-box">
-    <h2>📢 作者公告</h2>
-    <p>
-      hi 我是吉米狗，8/7更新如下
-    </p>
-    <p>
-      1.新增每日運勢
-      2.新增留言版
-      3.8/8父親節彩蛋
-    </p>
-    <hr>
-
-    <p>
-      作者：<b>JimmyDog（吉米狗）</b>
-    </p>
-
-    <button id="closeNotice">
-      我知道了
-    </button>
-  </div>
-</div>
+  <div id="effectLayer" aria-hidden="true"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
