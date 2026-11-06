@@ -127,3 +127,66 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--gold-soft); out
 }
 @media(max-width:390px){.altar-area{grid-template-columns:1fr}.elegy{display:none}.stats{gap:4px}.panel{padding:25px 17px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important;}}
+
+
+/* 實況主頻道：沿用舊版 Twitch / Facebook / YouTube 入口 */
+.streamer-channels {
+  max-width: 930px;
+  margin: 28px auto 0;
+  padding: 27px clamp(18px, 4vw, 36px);
+  border: 1px solid var(--line);
+  background: linear-gradient(140deg, rgba(46,31,22,.93),rgba(16,14,12,.94));
+}
+.streamer-channels-header { margin-bottom: 19px; text-align: center; }
+.streamer-channels-header h2 {
+  margin: 9px 0 8px;
+  color: var(--gold-soft);
+  font: 900 clamp(1.4rem, 3vw, 1.8rem) "Noto Serif TC", serif;
+  letter-spacing: .13em;
+}
+.streamer-channels-header > p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.7;
+}
+.streamer-channel-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+}
+.streamer-channel-link {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 16px 13px;
+  border: 1px solid rgba(215,174,106,.26);
+  background: rgba(255,246,225,.035);
+  color: var(--bone);
+  text-decoration: none;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+.streamer-channel-link:hover {
+  border-color: var(--gold);
+  background: rgba(215,174,106,.14);
+  transform: translateY(-2px);
+}
+.streamer-channel-logo {
+  flex: 0 0 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--gold);
+  color: var(--gold-soft);
+  font-size: .82rem;
+  font-weight: 900;
+}
+.streamer-channel-copy { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.streamer-channel-copy strong { font-size: .92rem; }
+.streamer-channel-copy small { font-size: .7rem; color: var(--muted); }
+.streamer-channel-arrow { margin-left: auto; color: var(--gold); font-size: 1.2rem; }
+@media (max-width: 760px) {
+  .streamer-channel-list { grid-template-columns: 1fr; }
+  .streamer-channel-link { padding: 13px 15px; }
+}
