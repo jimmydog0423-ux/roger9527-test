@@ -16,10 +16,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="memorial.css">
   <link rel="stylesheet" href="market-trends.css">
-  <script defer src="config.js"></script>
+  <script defer src="config.js?v=dual-worker-20261106"></script>
+  <script defer src="worker-client.js?v=dual-worker-20261106"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
-  <script defer src="memorial.js"></script>
-  <script defer src="market-trends.js"></script>
+  <script defer src="memorial.js?v=dual-worker-20261106"></script>
+  <script defer src="market-trends.js?v=dual-worker-20261106"></script>
 </head>
 <body>
   <header class="masthead">
@@ -43,7 +44,7 @@
         <div>
           <p class="panel-kicker">LAST PORTFOLIO · 股海遺產</p>
           <h2 id="marketTitle" class="market-memorial-heading">羅傑生前股海戰績</h2>
-          <p class="market-memorial-copy">僅保留台股與美股整體持倉走勢，不顯示個股。</p>
+          <p class="market-memorial-copy">僅保留台股與美股整體持倉走勢，不顯示個股。進站查詢一次，也可手動更新。</p>
         </div>
         <div class="market-memorial-meta">
           <time id="trendUpdatedAt" aria-live="polite">等待行情更新…</time>
@@ -128,6 +129,7 @@
           </div>
         </dl>
         <p id="statsStatus" class="stats-status" role="status">連線取得全站香火統計中…</p>
+        <button class="text-button" id="prayRefreshBtn" type="button" style="margin-top:8px">重新查詢香火</button>
         <p class="stats-status">你已經上香 <strong id="myIncense">—</strong> 次（以此瀏覽器辨識）</p>
       </article>
 
