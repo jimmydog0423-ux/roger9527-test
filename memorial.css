@@ -1,0 +1,129 @@
+
+:root {
+  --black: #090908;
+  --dark: #171513;
+  --panel: #211c17;
+  --gold: #d7ae6a;
+  --gold-soft: #f1d5a0;
+  --bone: #f1ece1;
+  --muted: #ad9f8e;
+  --line: rgba(221,190,136,.27);
+  --red: #6e2023;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; min-height: 100vh; overflow-x: hidden;
+  color: var(--bone); background:
+    radial-gradient(ellipse at 50% -10%, #44281e 0, transparent 39%),
+    radial-gradient(ellipse at 0 65%, #241712 0, transparent 37%),
+    radial-gradient(ellipse at 100% 65%, #241712 0, transparent 37%), var(--black);
+  font-family: "Noto Sans TC", sans-serif;
+}
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: 20; pointer-events: none;
+  opacity: .18; background: repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.11) 4px 5px);
+}
+button { font: inherit; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 5px; }
+.masthead {
+  width: min(1120px, calc(100% - 32px)); margin: auto;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line);
+}
+.masthead-brand { font-size: .78rem; letter-spacing: .26em; color: var(--gold-soft); font-weight: 900; }
+.masthead-tools { display: flex; align-items: center; gap: 15px; }
+.breath { font-size: .7rem; color: var(--muted); letter-spacing: .09em; }
+.breath::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px; background: #a53b34; border-radius: 50%; box-shadow: 0 0 12px #9d2727; }
+.text-button { border: 1px solid var(--line); border-radius: 24px; padding: 8px 14px; background: transparent; color: var(--gold-soft); cursor: pointer; font-size: .77rem; }
+.text-button:hover { background: rgba(215,174,106,.11); }
+.page { max-width: 1160px; margin: auto; padding: 0 20px 52px; }
+.intro { text-align: center; padding: 37px 0 24px; position: relative; }
+.eyebrow { margin: 0; color: var(--gold); font-size: .7rem; letter-spacing: .42em; font-weight: 700; }
+.intro h1 { margin: 12px 0 10px; font-family: "Noto Serif TC", serif; font-size: clamp(2.25rem, 5vw, 4.25rem); letter-spacing: .19em; font-weight: 900; text-shadow: 0 5px 45px rgba(209,131,59,.24); }
+.intro-sub { color: var(--muted); font-size: .9rem; letter-spacing: .09em; margin: 0; }
+.altar-area { position: relative; display: grid; grid-template-columns: 75px minmax(0,1fr) 75px; gap: 22px; align-items: stretch; margin: 10px auto 0; max-width: 930px; }
+.elegy { background: linear-gradient(90deg,#1d1812,#352217 50%,#191511); border: 1px solid #7b5334; padding: 23px 9px; text-align: center; writing-mode: vertical-rl; display: flex; align-items: center; justify-content: center; font-family: "Noto Serif TC",serif; color: var(--gold-soft); font-size: clamp(1.05rem,2.3vw,1.48rem); letter-spacing: .3em; line-height: 1.5; box-shadow: 0 0 22px rgba(0,0,0,.5),inset 0 0 0 4px #19130e; }
+.shrine { position: relative; text-align: center; padding: 15px clamp(14px, 4vw, 36px) 32px; border: 1px solid var(--line); background: radial-gradient(ellipse at 50% 25%,rgba(108,74,39,.27),transparent 58%), linear-gradient(180deg,#251b15 0%,#0c0b0a 100%); box-shadow: 0 35px 75px rgba(0,0,0,.56),inset 0 0 0 6px rgba(0,0,0,.23); overflow: hidden; }
+.shrine::before,.shrine::after { content: ""; position: absolute; width: 34px; height: 100%; top: 0; border-left: 1px solid var(--line); border-right: 1px solid var(--line); background: linear-gradient(90deg,rgba(0,0,0,.55),transparent 60%); pointer-events: none; }
+.shrine::before { left: 8px; } .shrine::after { right: 8px; }
+.mourning-seal { display: inline-grid; place-items: center; width: 49px; height: 49px; border: 2px solid var(--gold); border-radius: 50%; font-size: 1.7rem; font-family: "Noto Serif TC",serif; margin: 0 0 14px; color: var(--gold-soft); }
+.portrait-frame { width: min(100%,276px); margin: 0 auto; border: 9px solid #0b0a09; outline: 2px solid #987346; box-shadow: 0 0 0 7px rgba(141,101,57,.22),0 22px 40px rgba(0,0,0,.65); background: #292929; }
+.portrait-frame img { width: 100%; aspect-ratio: 1/1.14; display: block; object-fit: cover; object-position: center; filter: grayscale(1) contrast(1.1) brightness(.9); }
+.portrait-label { background: #171310; color: var(--gold-soft); padding: 8px 4px; font-size: .78rem; letter-spacing: .15em; }
+.shrine h2 { font-family: "Noto Serif TC",serif; font-size: clamp(1.75rem,4vw,2.5rem); letter-spacing: .25em; margin: 29px 0 7px; color: #f4e8d8; }
+.shrine .subtitle { margin: 0; color: var(--gold); font-size: .78rem; letter-spacing: .22em; }
+.prayer-quote { font-family: "Noto Serif TC",serif; font-size: clamp(.95rem,2vw,1.2rem); margin: 25px auto 0; line-height: 2; color: #d8c7b0; letter-spacing: .13em; }
+.altar-table { border-top: 4px solid #815130; width: min(440px,100%); margin: 21px auto 0; padding: 7px 0 0; background: linear-gradient(180deg,rgba(97,48,23,.28),transparent); display: grid; justify-items: center; }
+.offerings { display: flex; align-items: end; justify-content: center; gap: 18px; width: 100%; }
+.candle { position: relative; width: 18px; height: 55px; border-radius: 3px 3px 0 0; background: linear-gradient(90deg,#752221,#ca4b39,#6b1d1c); border: 1px solid #a74f38; box-shadow: 0 0 12px rgba(183,42,29,.14); }
+.candle::after { content: ""; position: absolute; width: 13px; height: 22px; background: radial-gradient(ellipse at 50% 65%,#fff6c5 0 22%,#efb550 44%,rgba(244,91,25,.3) 70%,transparent 75%); top: -24px; left: 2px; border-radius: 55% 55% 45% 45%; filter: drop-shadow(0 0 7px #ee9b32); animation: flame 1.25s ease-in-out infinite alternate; transform-origin: bottom center; }
+.candle:last-child::after { animation-delay: -.5s; }
+@keyframes flame { to { transform: rotate(9deg) scale(.84,1.1); } }
+.incense-urn { width: 140px; height: 83px; position: relative; display: grid; place-items: end center; }
+.urn-body { z-index: 2; position: absolute; left: 9px; right: 9px; bottom: 0; height: 48px; border-radius: 8px 8px 48px 48px; border: 1px solid #a67b47; background: linear-gradient(100deg,#674426,#d6ad6c 47%,#674426); box-shadow: inset 0 -10px 22px rgba(31,22,16,.5),0 8px 14px rgba(0,0,0,.4); }
+.urn-body::after { content: "香"; font-family: "Noto Serif TC",serif; display: grid; place-items: center; color: #4a271c; font-weight: 900; height: 34px; }
+.urn-rim { position: absolute; z-index: 4; left: 2px; right: 2px; bottom: 40px; height: 12px; border-radius: 50%; border: 2px solid #947042; background: linear-gradient(#caad77,#68472d); }
+.sticks { position: absolute; z-index: 3; left: 9px; right: 9px; bottom: 46px; height: 75px; pointer-events: none; }
+.joss { position: absolute; width: 3px; height: 65px; bottom: -1px; left: var(--pos); background: linear-gradient(0deg,#b07b40 0 26%,#a53f29 26% 93%,#ffbc52 94%); transform: rotate(var(--tilt)); transform-origin: bottom; animation: stickIn .42s ease-out both; }
+.joss::before { content: ""; position: absolute; top: -3px; left: -3px; width: 9px; height: 8px; background: #ffd495; border-radius: 50%; box-shadow: 0 0 11px #f17c36; }
+.stick-smoke { position: absolute; width: 21px; height: 60px; left: -9px; bottom: 57px; opacity: .7; filter: blur(3px); background: radial-gradient(ellipse at 50% 70%,rgba(229,216,196,.5),transparent 75%); animation: smokeRise 3.8s ease-out infinite; }
+.stick-smoke::after { content: ""; display: block; position: absolute; top: -12px; left: 0; width: 22px; height: 26px; border: 3px solid rgba(224,219,212,.35); border-radius: 50%; border-right-color: transparent; border-bottom-color: transparent; }
+@keyframes smokeRise { 0%{ transform: translateY(3px) translateX(0) scale(.6); opacity: 0; } 30%{ opacity:.68; } 100% { transform: translateY(-72px) translateX(19px) scale(1.8); opacity:0; } }
+@keyframes stickIn { from{opacity:0;transform:translateY(32px) rotate(var(--tilt));} to{opacity:1;transform:translateY(0) rotate(var(--tilt));} }
+.shrine-caption { margin: 14px 0 0; color: var(--muted); font-size: .75rem; }
+.ribbons { text-align: center; padding: 27px 0 4px; color: #a28a6d; font-family: "Noto Serif TC",serif; letter-spacing: .25em; font-size: .94rem; }
+.ritual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 930px; margin: 25px auto 0; }
+.panel { border: 1px solid var(--line); background: linear-gradient(145deg,rgba(45,34,23,.8),rgba(17,15,13,.96)); box-shadow: 0 14px 36px rgba(0,0,0,.23); padding: 27px 25px; text-align: center; min-width: 0; }
+.panel-kicker { color: var(--gold); text-transform: uppercase; font-weight: 800; letter-spacing: .22em; margin: 0; font-size: .69rem; }
+.panel h3 { font-family: "Noto Serif TC",serif; margin: 10px 0 12px; font-size: 1.45rem; letter-spacing: .14em; }
+.panel-desc { margin: 0 0 17px; line-height: 1.8; color: var(--muted); font-size: .85rem; }
+.ritual-button { width: 100%; max-width: 285px; padding: 15px; border: 1px solid #bb9857; color: #1c120c; background: linear-gradient(110deg,#e9c78c,#be8f4b); border-radius: 5px; font-weight: 900; letter-spacing: .2em; cursor: pointer; box-shadow: 0 4px 0 #684c2d,0 9px 22px rgba(0,0,0,.36); transition: transform .12s,filter .2s; }
+.ritual-button:hover { filter: brightness(1.12); } .ritual-button:active { transform: translateY(3px); box-shadow: 0 1px 0 #684c2d; }
+.ritual-button:disabled { opacity: .6; cursor: wait; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); margin: 24px 0 0; padding-top: 18px; gap: 12px; }
+.stats dt { font-size: .74rem; color: var(--muted); }
+.stats dd { margin: 7px 0 0; color: var(--gold-soft); font: 900 clamp(1.38rem,3.4vw,2rem) "Noto Serif TC",serif; }
+.stats-status { margin: 12px 0 0; color: var(--muted); font-size: .73rem; min-height: 1.4em; }
+.woodfish-wrap { position: relative; display: grid; justify-items: center; align-items: center; height: 138px; margin: 9px 0 10px; }
+.woodfish-button { position: relative; width: 155px; height: 111px; border: 0; border-radius: 50% 50% 44% 44%; background: radial-gradient(ellipse at 50% 28%,#c88c4a 0%,#94562b 44%,#48230f 85%); box-shadow: inset 0 -12px 20px rgba(26,10,1,.7),inset 0 6px 15px rgba(237,176,102,.3),0 12px 15px #060505; cursor: pointer; display: grid; place-items: center; transform-origin: center bottom; }
+.woodfish-button::before { content: ""; width: 78px; height: 28px; position: absolute; top: 16px; border-radius: 50% 50% 20% 20%; border-top: 7px solid #4b220f; background: rgba(255,218,133,.15); }
+.woodfish-button::after { content: ""; position: absolute; top: 51px; width: 105px; height: 10px; border-radius: 50%; background: #24140a; box-shadow: 0 3px 3px rgba(244,166,80,.2); }
+.woodfish-button span { position: absolute; z-index: 1; bottom: 15px; font-family: "Noto Serif TC",serif; color: #edba70; letter-spacing: .1em; font-size: .7rem; }
+.woodfish-button:active, .woodfish-button.hit { animation: fishHit .22s ease-out; }
+@keyframes fishHit { 40% {transform: translateY(7px) scale(1.07,.9);} 100%{transform:none;} }
+.woodfish-count { color: var(--muted); font-size: .83rem; margin: 0; }
+.woodfish-count strong { color: var(--gold-soft); font-size: 1.45rem; margin: 0 5px; }
+.ledger { max-width: 930px; margin: 24px auto 0; padding: 27px clamp(18px,4vw,40px); border-top: 1px solid #8c6743; border-bottom: 1px solid #8c6743; background: linear-gradient(90deg,#161310,#241c15 50%,#161310); }
+.ledger h3 { font-family: "Noto Serif TC",serif; color: var(--gold-soft); margin: 0 0 17px; text-align: center; letter-spacing: .18em; font-size: 1.4rem; }
+.causes { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 15px; }
+.cause { padding: 0 12px; border-left: 2px solid #67462d; }
+.cause-number { margin: 0 0 10px; font-size: .7rem; letter-spacing: .15em; color: var(--gold); }
+.cause h4 { margin: 0 0 8px; font-size: 1rem; letter-spacing: .06em; }
+.cause p { margin: 0; line-height: 1.8; font-size: .83rem; color: #bbae9e; }
+.disclaimer { margin: 30px auto 0; max-width: 860px; padding: 14px 16px; text-align: center; color: var(--muted); border: 1px dashed var(--line); font-size: .75rem; line-height: 1.9; }
+.footer { text-align: center; padding: 28px 0 44px; font-size: .74rem; letter-spacing: .08em; color: #8f7a66; }
+.footer a { color: var(--gold); }
+#effectLayer { position: fixed; inset: 0; z-index: 40; pointer-events: none; overflow: hidden; }
+.effect-paper { position: absolute; width: 14px; height: 23px; border: 1px solid rgba(205,168,107,.9); background: #ceaf77; opacity: 0; animation: paperFly 1.75s ease-out forwards; }
+.effect-paper::after { content: ""; display: block; margin: 4px auto; height: 10px; width: 6px; border: 1px solid rgba(94,56,20,.65); }
+@keyframes paperFly { 0% {opacity:0;transform:translate(0,0) rotate(0);} 20% {opacity:.9;} 100% {opacity:0;transform:translate(var(--fly-x),var(--fly-y)) rotate(var(--spin));} }
+.floating-blessing { position: absolute; color: #efce8d; font-family: "Noto Serif TC",serif; font-size: 1.2rem; white-space: nowrap; text-shadow: 0 3px 17px #000; animation: blessingFly 1.5s ease-out forwards; }
+@keyframes blessingFly { from { opacity:0;transform:translate(-50%,10px) scale(.8);} 25%{opacity:1;} to{opacity:0;transform:translate(-50%,-112px) scale(1.15);} }
+#toast { position: fixed; z-index: 100; bottom: 24px; left: 50%; width: max-content; max-width: min(90vw,500px); transform: translate(-50%,28px); padding: 12px 20px; background: #efdfbf; color: #25170c; border: 1px solid #bb8b4b; font-weight: 800; font-size: .83rem; border-radius: 4px; opacity: 0; transition: .24s; pointer-events: none; box-shadow: 0 10px 30px rgba(0,0,0,.5); text-align: center; }
+#toast.show { opacity: 1; transform: translate(-50%,0); }
+@media(max-width:760px){
+  .altar-area {grid-template-columns: 32px minmax(0,1fr) 32px;gap:7px;}
+  .elegy {padding:10px 3px;letter-spacing:.1em;font-size:.77rem;}
+  .shrine {padding:15px 15px 25px;}
+  .shrine::before,.shrine::after {display:none;}
+  .ritual-grid {grid-template-columns:1fr;gap:13px;}
+  .causes {grid-template-columns:1fr;gap:18px;}
+  .cause {padding-left:14px;}
+  .intro {padding-top:26px;}
+  .intro h1 {letter-spacing:.06em;}
+  .breath {display:none;}
+  .masthead-brand {letter-spacing:.1em;}
+}
+@media(max-width:390px){.altar-area{grid-template-columns:1fr}.elegy{display:none}.stats{gap:4px}.panel{padding:25px 17px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important;}}
