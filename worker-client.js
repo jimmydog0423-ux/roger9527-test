@@ -69,7 +69,9 @@
 
   function getMarket(symbols) {
     const path = "/?symbols=" + encodeURIComponent(symbols.join(",")) + "&t=" + Date.now();
-    return safeGet("market", path, json => json && json.data && typeof json.data === "object");
+    return safeGet("market", path, json => json && json.data && typeof json.data === "object" &&
+      symbols.some(symbol => json.data[symbol]?.success &&
+        Array.isArray(json.data[symbol]?.history) && json.data[symbol].history.length >= 2));
   }
 
   async function postPray(visitorId) {
