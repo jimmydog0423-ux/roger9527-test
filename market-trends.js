@@ -5,7 +5,7 @@
   // 頁面上的 -700,000 TWD 與 -50,000 USD 是使用者指定的固定追思設定，
   // 不由行情計算、也不應被當成真實投資損益。
   const config = window.APP_CONFIG || {};
-  const workerUrl = String(config.workerUrl || "").replace(/\/+$/, "");
+  const api = window.APP_WORKER;
   const holdings = Array.isArray(config.holdings) ? config.holdings : [];
   const $ = (selector) => document.querySelector(selector);
   const panels = [
@@ -163,25 +163,14 @@
     for (const panel of panels) $(panel.status).textContent = "正在讀取最新行情…";
 
     try {
-      if (!workerUrl) throw new Error("尚未設定行情 Worker");
       const symbols = [...new Set(holdings.filter(h => h.currency === "USD" || h.currency === "TWD")
         .map(h => h.apiSymbol).filter(Boolean))];
       if (symbols.length === 0) throw new Error("原網站沒有持倉設定");
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 12000);
-      let response;
-      try {
-        response = await fetch(workerUrl + "/?symbols=" + encodeURIComponent(symbols.join(",")) + "&t=" + Date.now(), {
-          cache: "no-store", headers: { Accept: "application/json" }, signal: controller.signal
-        });
-      } finally {
-        clearTimeout(timer);
-      }
-      if (!response.ok) throw new Error("行情服務 HTTP " + response.status);
-      const payload = await response.json();
-      if (!payload || !payload.data) throw new Error("行情服務資料格式錯誤");
-      for (const panel of panels) draw(panel, payload.data);
-      $("#trendUpdatedAt").textContent = "最近更新：" + new Date().toLocaleTimeString("zh-TW", { hour12: false });
+      const { data, source } = await api.getMarket(symbols);
+      for (const panel of panels) draw(panel, data.data);
+      $("#trendUpdatedAt").textContent = "最近更新：" +
+        new Date().toLocaleTimeString("zh-TW", { hour12: false }) +
+        " · " + source + " Worker";
     } catch (error) {
       console.warn("整體持倉走勢更新失敗：", error);
       for (const panel of panels) {
@@ -202,5 +191,4 @@
 
   $("#trendRefreshBtn").addEventListener("click", refresh);
   refresh();
-  setInterval(refresh, 120000);
 })();
