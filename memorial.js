@@ -3,7 +3,7 @@
   "use strict";
 
   const config = window.APP_CONFIG || {};
-  const workerUrl = String(config.workerUrl || "").replace(/\/+$/, "");
+  const api = window.APP_WORKER;
   const $ = (selector) => document.querySelector(selector);
   const numberText = (value) => Number(value).toLocaleString("zh-TW");
   const VISITOR_KEY = "rogerPrayVisitorId"; // 和原網站共用匿名訪客
@@ -41,7 +41,7 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => el.classList.remove("show"), 3500);
   }
-  function updateStats(data) {
+  function updateStats(data, source = "已連線") {
     if (!data || data.success !== true) throw new Error("統計服務回傳格式不正確");
     if (![data.totalCount, data.totalVisitors].every((v) => Number.isFinite(Number(v)) && Number(v) >= 0)) {
       throw new Error("統計服務未回傳正確人數");
@@ -49,31 +49,29 @@
     $("#totalVisitors").textContent = numberText(data.totalVisitors);
     $("#totalIncense").textContent = numberText(data.totalCount);
     $("#myIncense").textContent = numberText(data.visitorCount || 0);
-    $("#statsStatus").textContent = "全站即時香火統計 · 每 30 秒更新";
+    $("#statsStatus").textContent = "全站香火統計已連線（" + source + " Worker）· 僅進站及手動操作時更新";
   }
   async function fetchStats() {
-    if (!workerUrl || statsLoading || prayPending) return;
+    if (statsLoading || prayPending) return;
     statsLoading = true;
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000);
+    const btn = $("#prayRefreshBtn");
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "查詢中…";
+    }
     try {
-      const resp = await fetch(workerUrl + "/pray/stats?visitorId=" + encodeURIComponent(visitorId()), {
-        headers: { Accept: "application/json" },
-        cache: "no-store",
-        signal: controller.signal
-      });
-      if (!resp.ok) throw new Error("HTTP " + resp.status);
-      updateStats(await resp.json());
-    } catch (err) {
-      console.warn("無法取得上香人數：", err);
-      if ($("#totalVisitors").textContent === "—") {
-        $("#statsStatus").textContent = "暫時無法連線統計服務，請稍後重新整理";
-      } else {
-        $("#statsStatus").textContent = "統計服務暫時無法更新，顯示上次結果";
-      }
+      const { data, source } = await api.getPrayStats(visitorId());
+      updateStats(data, source);
+    } catch (error) {
+      console.warn("上香統計連線失敗：", error);
+      $("#statsStatus").textContent = "兩個 Worker 均無法提供統計，請按重新查詢；請確認 D1 綁定與 CORS";
+      // 未取得資料時保持「—」，不將錯誤當作 0 人。
     } finally {
-      clearTimeout(timer);
       statsLoading = false;
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "重新查詢香火";
+      }
     }
   }
 
@@ -179,33 +177,17 @@
     const urnRect = $("#incenseUrn").getBoundingClientRect();
     floatingText(urnRect.left + urnRect.width / 2, urnRect.top, "一路好走，下次記得開台");
     playBell();
-
-    if (!workerUrl) {
-      toast("香已點燃，但尚未設定線上統計服務");
-      prayPending = false;
-      showCooldown();
-      return;
-    }
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000);
     try {
-      const resp = await fetch(workerUrl + "/pray", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ visitorId: visitorId() }),
-        signal: controller.signal
-      });
-      if (!resp.ok) throw new Error("HTTP " + resp.status);
-      const result = await resp.json();
-      updateStats(result);
+      // POST 僅向已驗證有上香服務的 Worker 寫入；結果不明時不自動重送。
+      const { data, source } = await api.postPray(visitorId());
+      updateStats(data, source);
       writeStorage(LAST_PRAY_KEY, Date.now());
-      toast("上香成功！願羅傑下輩子別再買在最高點");
-    } catch (err) {
-      console.warn("上香統計失敗：", err);
-      toast("香已點燃，但線上紀錄失敗，請稍後再試");
-      $("#statsStatus").textContent = "上香紀錄未確認，請稍後再試";
+      toast("上香成功！已記錄至" + source + " Worker");
+    } catch (error) {
+      console.warn("上香寫入尚未確認：", error);
+      $("#statsStatus").textContent = "上香紀錄未確認；可按「重新查詢香火」核對全站數字";
+      toast("香已點燃，但雲端紀錄未確認，請勿連續重複送出");
     } finally {
-      clearTimeout(timer);
       prayPending = false;
       showCooldown();
     }
@@ -247,6 +229,7 @@
   }
 
   $("#prayBtn").addEventListener("click", pray);
+  $("#prayRefreshBtn")?.addEventListener("click", fetchStats);
   $("#woodfishBtn").addEventListener("click", hitWoodfish);
   $("#shareBtn").addEventListener("click", share);
   $("#soundToggle").addEventListener("click", () => {
@@ -262,6 +245,5 @@
   showCooldown();
   fetchStats();
   setInterval(showCooldown, 1000);
-  setInterval(fetchStats, 30000);
-  window.addEventListener("focus", fetchStats);
+
 })();
